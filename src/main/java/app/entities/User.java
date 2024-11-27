@@ -12,16 +12,14 @@ public class User {
     private String city;
     private String zipCode;
 
-    public User(int userId, String email, String password, Boolean isAdmin, String firstName, String lastName, String address, String city, String zipCode) {
+    public User(int userId, String email, String password, Boolean isAdmin, String firstName, String lastName) {
         this.userId = userId;
         this.email = email;
         this.password = password;
         this.isAdmin = isAdmin;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
-        this.city = city;
-        this.zipCode = zipCode;
+
     }
 
     public void setUserId(int userId) {
