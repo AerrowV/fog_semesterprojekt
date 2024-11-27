@@ -6,14 +6,13 @@ public class CarportSpec {
     private int length;
     private int width;
     private boolean roofType;
-    private int roofTilt;
 
-    public CarportSpec(int carportId, int length, int width, boolean roofType, int roofTilt) {
+
+    public CarportSpec(int carportId, int length, int width, boolean roofType) {
         this.carportId = carportId;
         this.length = length;
         this.width = width;
         this.roofType = roofType;
-        this.roofTilt = roofTilt;
     }
 
     public int getCarportId() {
@@ -46,14 +45,6 @@ public class CarportSpec {
 
     public void setRoofType(boolean roofType) {
         this.roofType = roofType;
-    }
-
-    public int getRoofTilt() {
-        return roofTilt;
-    }
-
-    public void setRoofTilt(int roofTilt) {
-        this.roofTilt = roofTilt;
     }
 }
 
