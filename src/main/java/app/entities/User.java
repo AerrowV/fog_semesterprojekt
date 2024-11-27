@@ -8,20 +8,33 @@ public class User {
     private Boolean isAdmin;
     private String firstName;
     private String lastName;
-    private String address;
-    private String city;
-    private String zipCode;
+    private int address_id;
 
-    public User(int userId, String email, String password, Boolean isAdmin, String firstName, String lastName, String address, String city, String zipCode) {
+
+    public User(int userId, String email, String password, Boolean isAdmin) {
+        this.userId = userId;
+        this.email = email;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
+
+    public User(int userId, String email, String password, Boolean isAdmin, String firstName, String lastName) {
         this.userId = userId;
         this.email = email;
         this.password = password;
         this.isAdmin = isAdmin;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address = address;
-        this.city = city;
-        this.zipCode = zipCode;
+    }
+
+    public User(int userId, String email, String password, Boolean isAdmin, String firstName, String lastName, int address_id) {
+        this.userId = userId;
+        this.email = email;
+        this.password = password;
+        this.isAdmin = isAdmin;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address_id = address_id;
     }
 
     public void setUserId(int userId) {
@@ -68,28 +81,24 @@ public class User {
         this.lastName = lastName;
     }
 
-    public String getAddress() {
-        return address;
+    public int getAddress_id() {
+        return address_id;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setAddress_id(int address_id) {
+        this.address_id = address_id;
     }
 
-    public String getCity() {
-        return city;
+
+    public int getUserId() {
+        return userId;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
     }
 
-    public String getZipCode() {
-        return zipCode;
-    }
 
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
+
 }
 

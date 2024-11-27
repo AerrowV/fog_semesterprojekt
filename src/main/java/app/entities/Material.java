@@ -1,6 +1,6 @@
 package app.entities;
 
-public class Item {
+public class Material {
 
     private int itemId;
     private String description;
@@ -9,10 +9,8 @@ public class Item {
     private String unit;
     private String function;
     private int price;
-    private int orderId;
-    private int carportId;
 
-    public Item(int itemId, String description, int length, int amount, String unit, String function, int price) {
+    public Material(int itemId, String description, int length, int amount, String unit, String function, int price) {
         this.itemId = itemId;
         this.description = description;
         this.length = length;
@@ -20,18 +18,6 @@ public class Item {
         this.unit = unit;
         this.function = function;
         this.price = price;
-    }
-
-    public Item(int itemId, String description, int length, int amount, String unit, String function, int price, int orderId, int carportId) {
-        this.itemId = itemId;
-        this.description = description;
-        this.length = length;
-        this.amount = amount;
-        this.unit = unit;
-        this.function = function;
-        this.price = price;
-        this.orderId = orderId;
-        this.carportId = carportId;
     }
 
     public int getItemId() {
@@ -90,19 +76,4 @@ public class Item {
         this.price = price;
     }
 
-    public int getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
-
-    public int getCarportId() {
-        return carportId;
-    }
-
-    public void setCarportId(int carportId) {
-        this.carportId = carportId;
-    }
 }
