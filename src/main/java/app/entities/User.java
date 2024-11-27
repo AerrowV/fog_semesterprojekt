@@ -10,6 +10,14 @@ public class User {
     private String lastName;
     private int address_id;
 
+
+    public User(int userId, String email, String password, Boolean isAdmin) {
+        this.userId = userId;
+        this.email = email;
+        this.password = password;
+        this.isAdmin = isAdmin;
+    }
+
     public User(int userId, String email, String password, Boolean isAdmin, String firstName, String lastName) {
         this.userId = userId;
         this.email = email;
@@ -80,5 +88,17 @@ public class User {
     public void setAddress_id(int address_id) {
         this.address_id = address_id;
     }
+
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
+
+
+
 }
 
