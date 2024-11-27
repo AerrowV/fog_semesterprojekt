@@ -1,6 +1,7 @@
 package app;
 
 import app.config.ThymeleafConfig;
+import app.controllers.MaterialController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -21,5 +22,9 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
             config.staticFiles.add("/templates");
         }).start(7070);
+
+        app.get("/", ctx -> ctx.render("index.html"));
+        //app.get("/chooseCarport", ctx -> ctx.render("chooseCarport.html"));
+        //app.post("/chooseCarport", ctx -> MaterialController.saveCustomerSpecifications(ctx, connectionPool));
     }
 }
