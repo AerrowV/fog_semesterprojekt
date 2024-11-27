@@ -15,7 +15,6 @@ public class UserController {
         try {
             User user = UserMapper.login(email, password, connectionPool);
             ctx.sessionAttribute("currentUser", user);
-            ctx.sessionAttribute("userEmail", user.getEmail());
 
             if (user.getIsAdmin()) {
                 ctx.redirect("/admin/orders");
