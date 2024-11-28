@@ -20,6 +20,15 @@ public class Material {
         this.price = price;
     }
 
+    public Material(String description, int length, int amount, String unit, String function, int price) {
+        this.description = description;
+        this.length = length;
+        this.amount = amount;
+        this.unit = unit;
+        this.function = function;
+        this.price = price;
+    }
+
     public int getMaterialId() {
         return materialId;
     }
