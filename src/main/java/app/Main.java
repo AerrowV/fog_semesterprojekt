@@ -6,7 +6,6 @@ import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import app.controllers.UserController;
-import app.controllers.MaterialController;
 
 public class Main {
 
@@ -25,15 +24,12 @@ public class Main {
             config.staticFiles.add("/templates");
         }).start(7070);
 
-        app.get("/", ctx -> ctx.render("admin.html"));
-        app.get("/admin", ctx -> ctx.render("admin.html"));
         app.get("/", ctx -> ctx.render("index.html"));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
         app.get("/register", ctx -> ctx.render("register.html"));
         app.post("/register", ctx -> UserController.createUser(ctx, connectionPool));
         app.post("/logout", ctx -> UserController.logout(ctx, connectionPool));
-
-
+        app.get("/admin", ctx -> ctx.render("admin.html"));
         app.get("/materials", ctx -> MaterialController.showAllMaterials(ctx, connectionPool));
         app.get("/materials/create", ctx -> ctx.render("create-material.html"));
         app.post("/materials/create", ctx -> MaterialController.createMaterial(ctx, connectionPool));
