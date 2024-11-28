@@ -6,15 +6,15 @@ import io.javalin.http.Context;
 public class CarportController {
     public static void saveCustomerSpecifications(Context ctx, ConnectionPool connectionPool) {
 
-        //int carportSpecs = ctx.sessionAttribute("menu1");
-        System.out.println("WOW");
-
-        String width = ctx.formParam(ctx.formParam("width"));
-        String length = ctx.formParam(ctx.formParam("length"));
-
-
-        System.out.println(length + " " + width);
-
+        try {
+            int length = Integer.parseInt(ctx.formParam("length"));
+            int width = Integer.parseInt(ctx.formParam("width"));
+            System.out.println(length + " " + width);
+        } catch (NumberFormatException | NullPointerException e) {
+            System.err.println("Error parsing form parameters: " + e.getMessage());
+        }
     }
+
+
 
 }
