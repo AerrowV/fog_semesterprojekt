@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+h1 {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.material-table {
+    width: 80%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.material-table th, .material-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.material-table th {
+    background-color: #4CAF50;
+    color: white;
+    text-transform: uppercase;
+}
+
+.material-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.material-table td a {
+    color: #007BFF;
+    text-decoration: none;
+    margin-right: 10px;
+}
+
+.material-table td a:hover {
+    text-decoration: underline;
+}
+
+.material-table td form button {
+    background-color: #FF4D4D;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.material-table td form button:hover {
+    background-color: #CC0000;
+}
+
+a {
+    display: block;
+    width: fit-content;
+    margin: 20px auto;
+    color: #4CAF50;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.display {
+    display: inline;
+}

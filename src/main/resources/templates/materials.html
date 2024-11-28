@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Materials</title>
+    <link rel="materialStyleSheet" th:href="@{/css/materialStyleSheet.css}"/>
+</head>
+<body>
+<h1>Materials List</h1>
+<table class="material-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Description</th>
+        <th>Length</th>
+        <th>Amount</th>
+        <th>Unit</th>
+        <th>Function</th>
+        <th>Price</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="material : ${materials}">
+        <td th:text="${material.itemId}"></td>
+        <td th:text="${material.description}"></td>
+        <td th:text="${material.length}"></td>
+        <td th:text="${material.amount}"></td>
+        <td th:text="${material.unit}"></td>
+        <td th:text="${material.function}"></td>
+        <td th:text="${material.price}"></td>
+        <td>
+            <a th:href="@{/materials/update/{id}(id=${material.itemId})}">Update</a>
+            <form th:action="@{/materials/delete}" method="post" class="display">
+                <input type="hidden" name="id" th:value="${material.itemId}">
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/admin}">Back to Admin Dashboard</a>
+</body>
+</html>
