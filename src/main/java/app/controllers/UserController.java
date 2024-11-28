@@ -48,5 +48,13 @@ public class UserController {
             ctx.attribute("message", "Passwords do not match");
             ctx.render("register.html");
         }
+
+    }
+
+    public static void logout(Context ctx, ConnectionPool connectionPool) {
+        ctx.sessionAttribute("currentUser", null);
+        ctx.sessionAttribute("user_id", null);
+
+        ctx.redirect("/");
     }
 }

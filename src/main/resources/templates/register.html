@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account</title>
+    <link href="../public/css/style-login-register.css" th:href="@{/css/style-login-register.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="login-container">
+    <div class="login-box">
+        <img src="../public/images/img.png" alt="Fog Logo" class="logo"
+             th:src="@{/images/img.png}">
+        <h1>Opret en konto</h1>
+        <p>Udfyld felterne for at oprette en ny konto</p>
+        <form method="post">
+            <label>Mailadresse</label>
+            <input type="email" name="email" placeholder="Mailadresse" required>
+            <label>Adgangskode</label>
+            <input type="password" name="password1" placeholder="Adgangskode" required>
+            <label>Bekræft adgangskode</label>
+            <input type="password" name="password2" placeholder="Bekræft adgangskode" required>
+            <button type="submit" class="login-button" formaction="/register">Opret konto</button>
+            <p class="errormessage" th:text="${#ctx.message}"></p>
+        </form>
+        <p class="create-account">
+            Allerede oprettet? <a th:href="@{/}">Log ind</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>

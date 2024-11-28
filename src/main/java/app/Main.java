@@ -1,10 +1,11 @@
 package app;
 
 import app.config.ThymeleafConfig;
-import app.controllers.MaterialController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
+import app.controllers.UserController;
+import app.controllers.MaterialController;
 
 public class Main {
 
@@ -22,6 +23,13 @@ public class Main {
             config.fileRenderer(new JavalinThymeleaf(ThymeleafConfig.templateEngine()));
             config.staticFiles.add("/templates");
         }).start(7070);
+
+        app.get("/", ctx -> ctx.render("index.html"));
+        app.post("/login", ctx -> UserController.login(ctx, connectionPool));
+        app.get("/register", ctx -> ctx.render("register.html"));
+        app.post("/register", ctx -> UserController.createUser(ctx, connectionPool));
+        app.post("/logout", ctx -> UserController.logout(ctx, connectionPool));
+
 
         app.get("/materials", ctx -> MaterialController.showAllMaterials(ctx, connectionPool));
         app.get("/materials/create", ctx -> ctx.render("create-material.html"));
