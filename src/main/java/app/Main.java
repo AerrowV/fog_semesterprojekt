@@ -1,6 +1,7 @@
 package app;
 
 import app.config.ThymeleafConfig;
+import app.controllers.MaterialController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -24,6 +25,8 @@ public class Main {
             config.staticFiles.add("/templates");
         }).start(7070);
 
+        app.get("/", ctx -> ctx.render("admin.html"));
+        app.get("/admin", ctx -> ctx.render("admin.html"));
         app.get("/", ctx -> ctx.render("index.html"));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
         app.get("/register", ctx -> ctx.render("register.html"));

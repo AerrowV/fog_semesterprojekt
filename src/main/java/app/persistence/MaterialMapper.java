@@ -11,7 +11,8 @@ import java.sql.*;
     public class MaterialMapper {
 
         public static void createMaterial(Material material, ConnectionPool connectionPool) throws DatabaseException {
-            String sql = "INSERT INTO material (material_description, material_length, material_amount, material_unit, material_function, material_price) VALUES (?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO material (material_description, material_length, material_amount, material_unit, material_function, material_price) " +
+                    "VALUES (?, ?, ?, ?, ?, ?)";
 
             try (Connection connection = connectionPool.getConnection();
                  PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -25,7 +26,7 @@ import java.sql.*;
 
                 int rowsAffected = ps.executeUpdate();
                 if (rowsAffected != 1) {
-                    throw new DatabaseException("Error creating material");
+                    throw new DatabaseException("Error creating material.");
                 }
             } catch (SQLException e) {
                 throw new DatabaseException("Failed to create material: " + e.getMessage());

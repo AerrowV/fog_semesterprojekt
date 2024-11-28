@@ -16,7 +16,7 @@ public class MaterialController {
             ctx.render("materials.html");
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to load materials: " + e.getMessage());
-            ctx.render("materials.html");
+            ctx.render("admin.html");
         }
     }
 
@@ -27,27 +27,42 @@ public class MaterialController {
             int amount = Integer.parseInt(ctx.formParam("amount"));
             String unit = ctx.formParam("unit");
             String function = ctx.formParam("function");
-            int price = Integer.parseInt(ctx.formParam("price"));
 
-            Material material = new Material(0, description, length, amount, unit, function, price);
+            String priceParam = ctx.formParam("price");
+            if (priceParam == null || priceParam.isEmpty()) {
+                throw new IllegalArgumentException("Price is required and cannot be empty.");
+            }
+
+            int price = Integer.parseInt(priceParam);
+            if (price < 0) {
+                throw new IllegalArgumentException("Price cannot be negative.");
+            }
+
+            Material material = new Material(description, length, amount, unit, function, price);
             MaterialMapper.createMaterial(material, connectionPool);
 
             ctx.redirect("/materials");
+        } catch (NumberFormatException e) {
+            ctx.attribute("message", "Invalid input: " + e.getMessage());
+            ctx.render("create-material.html");
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to create material: " + e.getMessage());
-            ctx.render("materials.html");
+            ctx.render("create-material.html");
+        } catch (IllegalArgumentException e) {
+            ctx.attribute("message", e.getMessage());
+            ctx.render("create-material.html");
         }
     }
 
     public static void showUpdateMaterialForm(Context ctx, ConnectionPool connectionPool) {
         try {
-            int id = Integer.parseInt(ctx.formParam("id"));
+            int id = Integer.parseInt(ctx.queryParam("id"));
             Material material = MaterialMapper.getMaterialById(id, connectionPool);
             ctx.attribute("material", material);
             ctx.render("update-material.html");
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to fetch material: " + e.getMessage());
-            ctx.render("materials.html");
+            ctx.render("admin.html");
         }
     }
 
@@ -67,7 +82,7 @@ public class MaterialController {
             ctx.redirect("/materials");
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to update material: " + e.getMessage());
-            ctx.render("materials.html");
+            ctx.render("admin.html");
         }
     }
 
@@ -78,7 +93,7 @@ public class MaterialController {
             ctx.redirect("/materials");
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to delete material: " + e.getMessage());
-            ctx.render("materials.html");
+            ctx.render("admin.html");
         }
     }
 }

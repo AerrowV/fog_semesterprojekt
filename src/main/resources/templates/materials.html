@@ -22,7 +22,7 @@
     </thead>
     <tbody>
     <tr th:each="material : ${materials}">
-        <td th:text="${material.itemId}"></td>
+        <td th:text="${material.materialId}"></td>
         <td th:text="${material.description}"></td>
         <td th:text="${material.length}"></td>
         <td th:text="${material.amount}"></td>
@@ -30,9 +30,12 @@
         <td th:text="${material.function}"></td>
         <td th:text="${material.price}"></td>
         <td>
-            <a th:href="@{/materials/update/{id}(id=${material.itemId})}">Update</a>
-            <form th:action="@{/materials/delete}" method="post" class="display">
-                <input type="hidden" name="id" th:value="${material.itemId}">
+            <form th:action="@{/materials/update}" method="post" class="inline-form">
+                <input type="hidden" name="id" th:value="${material.materialId}">
+                <a th:href="@{/materials/update(id=${material.materialId})}">Update</a>
+            </form>
+            <form th:action="@{/materials/delete}" method="post" class="inline-form">
+                <input type="hidden" name="id" th:value="${material.materialId}">
                 <button type="submit">Delete</button>
             </form>
         </td>
