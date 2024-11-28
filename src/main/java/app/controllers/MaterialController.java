@@ -20,10 +20,6 @@ public class MaterialController {
         }
     }
 
-    public static void showCreateMaterialForm(Context ctx) {
-        ctx.render("materials.html");
-    }
-
     public static void createMaterial(Context ctx, ConnectionPool connectionPool) {
         try {
             String description = ctx.formParam("description");

@@ -24,7 +24,7 @@ public class Main {
         }).start(7070);
 
         app.get("/materials", ctx -> MaterialController.showAllMaterials(ctx, connectionPool));
-        app.get("/materials/create", ctx -> MaterialController.showCreateMaterialForm(ctx));
+        app.get("/materials/create", ctx -> ctx.render("create-material.html"));
         app.post("/materials/create", ctx -> MaterialController.createMaterial(ctx, connectionPool));
         app.get("/materials/update/", ctx -> MaterialController.showUpdateMaterialForm(ctx, connectionPool));
         app.post("/materials/update", ctx -> MaterialController.updateMaterial(ctx, connectionPool));
