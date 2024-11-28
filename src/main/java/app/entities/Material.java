@@ -2,7 +2,7 @@ package app.entities;
 
 public class Material {
 
-    private int itemId;
+    private int materialId;
     private String description;
     private int length;
     private int amount;
@@ -10,8 +10,8 @@ public class Material {
     private String function;
     private int price;
 
-    public Material(int itemId, String description, int length, int amount, String unit, String function, int price) {
-        this.itemId = itemId;
+    public Material(int materialId, String description, int length, int amount, String unit, String function, int price) {
+        this.materialId = materialId;
         this.description = description;
         this.length = length;
         this.amount = amount;
@@ -20,12 +20,12 @@ public class Material {
         this.price = price;
     }
 
-    public int getItemId() {
-        return itemId;
+    public int getMaterialId() {
+        return materialId;
     }
 
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
+    public void setMaterialId(int materialId) {
+        this.materialId = materialId;
     }
 
     public String getDescription() {
