@@ -22,4 +22,6 @@ public class Main {
             config.staticFiles.add("/templates");
         }).start(7070);
     }
+
+
 }

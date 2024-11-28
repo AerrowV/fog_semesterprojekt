@@ -17,7 +17,7 @@ public class UserController {
             ctx.sessionAttribute("currentUser", user);
 
             if (user.getIsAdmin()) {
-                ctx.redirect("/admin/orders");
+                ctx.redirect("/admin");
             } else {
                 ctx.sessionAttribute("currentUser", user);
                 ctx.sessionAttribute("user_id", user.getUserId());
