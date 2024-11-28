@@ -1,22 +1,22 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <link th:href="@{/css/chooseCarportStyle.css}" rel="stylesheet">
+  <link href="../public/css/chooseCarportStyle.css" th:href="@{/css/chooseCarportStyle.css}" rel="stylesheet">
 
 
   <title>Fog</title>
 </head>
 <body>
 
-<form th:action="" method="post">
+<form method="post">
 <div class="box">
   <h2>Carport med fladt tag</h2>
   <p>Udfyld nedenstående omhyggeligt og tryk "Bestil tilbud".
     Så vender vi hurtigst muligt tilbage med et tilbud til dig.</p>
   <div class="dropdown">
     <label for="menu1">Carport bredde</label>
-    <select id="menu1" name="menu1" required>
+    <select id="menu1" name="width" required>
       <option value="" disabled selected></option>
       <option value="option1">240 cm</option>
       <option value="option2">270 cm</option>
@@ -35,7 +35,7 @@
   </div>
   <div class="dropdown">
     <label for="menu2">Carport længde</label>
-    <select id="menu2" name="menu2" required>
+    <select id="menu2" name="length" required>
       <option value="" disabled selected></option>
       <option value="option1">240 cm</option>
       <option value="option2">270 cm</option>

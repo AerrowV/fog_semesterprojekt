@@ -1,19 +1,16 @@
 package app.controllers;
 
-import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import io.javalin.http.Context;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MaterialController {
+public class CarportController {
     public static void saveCustomerSpecifications(Context ctx, ConnectionPool connectionPool) {
 
         //int carportSpecs = ctx.sessionAttribute("menu1");
+        System.out.println("WOW");
 
-        int length = Integer.parseInt(ctx.formParam("menu2"));
-        int width = Integer.parseInt(ctx.formParam("menu1"));
+        String width = ctx.formParam(ctx.formParam("width"));
+        String length = ctx.formParam(ctx.formParam("length"));
 
 
         System.out.println(length + " " + width);

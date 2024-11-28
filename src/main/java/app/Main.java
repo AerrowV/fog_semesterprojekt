@@ -1,7 +1,7 @@
 package app;
 
 import app.config.ThymeleafConfig;
-import app.controllers.MaterialController;
+import app.controllers.CarportController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -24,7 +24,7 @@ public class Main {
         }).start(7070);
 
         app.get("/", ctx -> ctx.render("index.html"));
-        //app.get("/chooseCarport", ctx -> ctx.render("chooseCarport.html"));
-        //app.post("/chooseCarport", ctx -> MaterialController.saveCustomerSpecifications(ctx, connectionPool));
+        app.get("/chooseCarport", ctx -> ctx.render("chooseCarport.html"));
+        app.post("/chooseCarport", ctx -> CarportController.saveCustomerSpecifications(ctx, connectionPool));
     }
 }
