@@ -8,7 +8,7 @@ public class User {
     private Boolean isAdmin;
     private String firstName;
     private String lastName;
-    private int address_id;
+    private int addressId;
 
 
     public User(int userId, String email, String password, Boolean isAdmin) {
@@ -27,14 +27,14 @@ public class User {
         this.lastName = lastName;
     }
 
-    public User(int userId, String email, String password, Boolean isAdmin, String firstName, String lastName, int address_id) {
+    public User(int userId, String email, String password, Boolean isAdmin, String firstName, String lastName, int addressId) {
         this.userId = userId;
         this.email = email;
         this.password = password;
         this.isAdmin = isAdmin;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.address_id = address_id;
+        this.addressId = addressId;
     }
 
     public void setUserId(int userId) {
@@ -81,12 +81,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public int getAddress_id() {
-        return address_id;
+    public int getAddressId() {
+        return addressId;
     }
 
-    public void setAddress_id(int address_id) {
-        this.address_id = address_id;
+    public void setAddressId(int addressId) {
+        this.addressId = addressId;
     }
 
 
