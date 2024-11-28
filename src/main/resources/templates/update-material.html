@@ -7,7 +7,7 @@
 <body>
 <h1>Update Material</h1>
 <form th:action="@{/materials/update}" method="post">
-    <input type="hidden" name="id" th:value="${material.itemId}" />
+    <input type="hidden" name="id" th:value="${material.materialId}" />
 
     <label for="description">Description:</label>
     <input type="text" id="description" name="description" th:value="${material.description}" required><br>

@@ -96,7 +96,7 @@ import java.sql.*;
                 ps.setString(4, material.getUnit());
                 ps.setString(5, material.getFunction());
                 ps.setInt(6, material.getPrice());
-                ps.setInt(7, material.getItemId());
+                ps.setInt(7, material.getMaterialId());
 
                 int rowsAffected = ps.executeUpdate();
                 if (rowsAffected != 1) {
