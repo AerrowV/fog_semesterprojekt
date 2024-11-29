@@ -15,16 +15,14 @@ public class CarportController {
             int length = Integer.parseInt(ctx.formParam("length"));
             int width = Integer.parseInt(ctx.formParam("width"));
 
-            CarportMapper.saveSpecs(length, width, hasRoof, connectionPool);
+            CarportMapper.carportSpecs(length, width, hasRoof, connectionPool);
 
 
         } catch (NumberFormatException | NullPointerException | DatabaseException e) {
             System.err.println("Error parsing form parameters: " + e.getMessage());
         }
-
     }
 
-    //Stolper til carport
     public static void carportPosts(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         int postId = 45;
         Material post = MaterialMapper.getMaterialById(postId, connectionPool);
@@ -41,12 +39,9 @@ public class CarportController {
         int rafterId = 45;
 
         switch ((width - 300) / 60) {
-            
 
         }
     }
-
-
 }
 
 

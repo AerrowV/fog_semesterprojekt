@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class CarportMapper {
 
-    public static void saveSpecs(int length, int width, boolean hasRoof, ConnectionPool connectionPool) throws DatabaseException {
+    public static void carportSpecs(int length, int width, boolean hasRoof, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "insert into carport_spec (carport_length, carport_width, carport_roof) values (?, ?, ?)";
 
         try (Connection connection = connectionPool.getConnection()) {
@@ -23,12 +23,10 @@ public class CarportMapper {
             }
         } catch (SQLException e) {
             String msg = "Error";
-            if (e.getMessage().startsWith("ERROR: duplicate key value ")) {
+            if (e.getMessage().startsWith("ERROR: duplicate key value")) {
                 msg = "dublicate key";
             }
             throw new DatabaseException(msg);
         }
     }
-
-
 }
