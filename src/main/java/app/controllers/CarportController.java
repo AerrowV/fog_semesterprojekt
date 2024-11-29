@@ -23,59 +23,186 @@ public class CarportController {
         }
 
     }
-    //Understernbrædder	til	forenden
-    public static void underFasciaBoardFront(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
-        int boardId = 0;
+    //Understernbrædder	til	for og bag enden
+    public static void underFasciaBoardFrontandBack(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+        int boardId;
 
         if (width >= 240 && width <= 300) {
             boardId = 1;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
+            board.setAmount(2);
             board.setDescription("understernbrædder til for & bag ende");
         } else if (width >= 301 && width <= 360) {
             boardId = 2;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
+            board.setAmount(2);
             board.setDescription("understernbrædder til for & bag ende");
         } else if (width >= 361 && width <= 420) {
             boardId = 3;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
+            board.setAmount(2);
             board.setDescription("understernbrædder til for & bag ende");
         } else if (width >= 421 && width <= 480) {
             boardId = 4;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
+            board.setAmount(2);
             board.setDescription("understernbrædder til for & bag ende");
         } else if (width >= 481 && width <= 540) {
             boardId = 5;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
+            board.setAmount(2);
             board.setDescription("understernbrædder til for & bag ende");
         } else if (width >= 541 && width <= 600) {
             boardId = 6;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
+            board.setAmount(2);
             board.setDescription("understernbrædder til for & bag ende");
         }
     }
 
     //Understernbrædder	til	siderne
     public static void underFasciaBoardSides(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+        int boardId;
+
+        if (length >= 240 && length <= 300) {
+            boardId = 1;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(2);
+            board.setDescription("vandbrædt på stern i sider");
+        } else if (length >= 301 && length <= 360) {
+            boardId = 2;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(2);
+            board.setDescription("vandbrædt på stern i sider");
+        } else if (length >= 361 && length <= 420) {
+            boardId = 3;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(2);
+            board.setDescription("vandbrædt på stern i sider");
+        } else if (length >= 421 && length <= 480) {
+            boardId = 4;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(2);
+            board.setDescription("vandbrædt på stern i sider");
+        } else if (length >= 481 && length <= 540) {
+            boardId = 5;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(2);
+            board.setDescription("vandbrædt på stern i sider");
+        } else if (length >= 541 && length <= 600) {
+            boardId = 6;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(2);
+            board.setDescription("vandbrædt på stern i sider");
+        } else if (length >= 601 && length <= 660) {
+            boardId = 2;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(4);
+            board.setDescription("vandbrædt på stern i sider");
+        } else if (length >= 661 && length <= 720) {
+            boardId = 2;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(4);
+            board.setDescription("vandbrædt på stern i sider");
+        } else if (length >= 721 && length <= 780) {
+            boardId = 3;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(4);
+            board.setDescription("vandbrædt på stern i sider");
+        }
 
     }
 
     //Oversternbrædder	til	forenden
     public static void overFasciaBoardFront(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+        int boardId;
 
+        if (width >= 240 && width <= 300) {
+            boardId = 7;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(1);
+            board.setDescription("oversternbrædder til forenden");
+        } else if (width >= 301 && width <= 360) {
+            boardId = 8;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(1);
+            board.setDescription("oversternbrædder til forenden");
+        } else if (width >= 361 && width <= 420) {
+            boardId = 9;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(1);
+            board.setDescription("oversternbrædder til forenden");
+        } else if (width >= 421 && width <= 480) {
+            boardId = 10;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(1);
+            board.setDescription("oversternbrædder til forenden");
+        } else if (width >= 481 && width <= 540) {
+            boardId = 11;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(1);
+            board.setDescription("oversternbrædder til forenden");
+        } else if (width >= 541 && width <= 600) {
+            boardId = 12;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(1);
+            board.setDescription("oversternbrædder til forenden");
+        }
     }
     //Oversternbrædder	til	siderne
     public static void overFasciaBoardSides(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+        int boardId;
 
+        if (length >= 240 && length <= 300) {
+            boardId = 7;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(2);
+            board.setDescription("oversternbrædder til siderne");
+        } else if (length >= 301 && length <= 360) {
+            boardId = 8;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(2);
+            board.setDescription("oversternbrædder til siderne");
+        } else if (length >= 361 && length <= 420) {
+            boardId = 9;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(2);
+            board.setDescription("oversternbrædder til siderne");
+        } else if (length >= 421 && length <= 480) {
+            boardId = 10;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(2);
+            board.setDescription("oversternbrædder til siderne");
+        } else if (length >= 481 && length <= 540) {
+            boardId = 11;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(2);
+            board.setDescription("oversternbrædder til siderne");
+        } else if (length >= 541 && length <= 600) {
+            boardId = 12;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(2);
+            board.setDescription("oversternbrædder til siderne");
+        } else if (length >= 601 && length <= 660) {
+            boardId = 8;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(4);
+            board.setDescription("oversternbrædder til siderne");
+        } else if (length >= 661 && length <= 720) {
+            boardId = 8;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(4);
+            board.setDescription("oversternbrædder til siderne");
+        } else if (length >= 721 && length <= 780) {
+            boardId = 9;
+            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
+            board.setAmount(4);
+            board.setDescription("oversternbrædder til siderne");
+        }
     }
 
     public static void outerWaterBoardFrontend(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
-        int boardId = 0;
+        int boardId;
 
         if (width >= 240 && width <= 300) {
             boardId = 53;
@@ -112,7 +239,7 @@ public class CarportController {
     }
 
     public static void outerWaterBoardSides(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
-        int boardId = 0;
+        int boardId;
 
         if (length >= 240 && length <= 300) {
             boardId = 53;
@@ -178,7 +305,7 @@ public class CarportController {
     }
     //Bræt
     public static void sternBoard(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
-        int boardId = 0;
+        int boardId;
 
 
         if (length >= 240 && length <= 300) {
