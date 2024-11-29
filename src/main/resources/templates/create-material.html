@@ -26,6 +26,7 @@
     <input type="number" id="price" name="price" required><br>
 
     <button type="submit">Create Material</button>
+    <p class="errormessage" th:text="${#ctx.message}"></p>
 </form>
 <a th:href="@{/materials}">Back to Material List</a>
 </body>

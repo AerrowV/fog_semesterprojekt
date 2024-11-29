@@ -1,28 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Page</title>
-    <link href="../public/css/style-login-register.css" th:href="@{/css/style-login-register.css}" rel="stylesheet">
+    <title>Johannesfog.dk</title>
+    <link rel="stylesheet" th:href="@{/css/styleSheet.css}">
 </head>
 <body>
-<div class="login-container">
-    <div class="login-box">
-        <img src="../public/images/img.png" alt="Fog Logo" class="logo"
-             th:src="@{/images/img.png}">
-        <h1>Login</h1>
-        <p>Log på med din mailadresse</p>
-        <form th:action="@{/login}" method="post">
-            <label for="email">Mailadresse</label>
-            <input type="email" id="email" name="email" placeholder="Mailadresse" required>
-            <label for="password">Adgangskode</label>
-            <input type="password" id="password" name="password" placeholder="Adgangskode" required>
-            <button type="submit" class="login-button">Log på</button>
-            <a th:href="@{/register}" class="create-account1">Create Account</a>
-            <p class="errormessage" th:text="${#ctx.message}"></p>
-        </form>
+<header class="top-bar">
+    <div class="header-container">
+        <div class="logo-container">
+            <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+            <span>Bolig & design</span>
+        </div>
+        <div class="menu-container">
+            <div class="login-container">
+                <a th:href="@{/login}" class="login-link">
+                    <img th:src="@{/images/user-icon.png}" alt="User Icon" class="icon">
+                    Fog Konto
+                </a>
+            </div>
+        </div>
     </div>
-</div>
+    <div class="info-bar">
+        <div class="info-item">
+            <p>30 dages returret</p>
+        </div>
+        <div class="info-item">
+            <p>Klik og hent inden for 3 timer*</p>
+        </div>
+        <div class="info-item">
+            <p>1-3 dages levering*</p>
+        </div>
+        <div class="info-item">
+            <p>Lån en trailer gratis</p>
+        </div>
+    </div>
+</header>
+
+<main class="button">
+    <div class="button-content">
+        <h1>Johannesfog.dk</h1>
+        <button class="button-button">Quick Selv-Byg Carport</button>
+    </div>
+    <div class="carport-image-container">
+        <img th:src="@{/images/carport.png}" alt="Fog Carport" class="carport-image">
+    </div>
+</main>
+
+<footer>
+    <p>2024 Johannesfog.dk. Alle rettigheder forbeholdes.</p>
+</footer>
 </body>
 </html>
