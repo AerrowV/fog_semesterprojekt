@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    height: 100vh;
+    background-color: #f0f0f0;
+}
+h2 {
+    text-align: left;
+}
+
+.box {
+    background-color: #ffffff;
+    width: 620px;
+    padding: 20px;
+    text-align: left;
+}
+.dropdown {
+    margin: 10px 0;
+}
+
+select {
+    display: block;
+    margin: 15px 0 15px 0;
+    width: 100%;
+}
