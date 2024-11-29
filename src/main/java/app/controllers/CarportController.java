@@ -68,47 +68,47 @@ public class CarportController {
             boardId = 1;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
             board.setAmount(2);
-            board.setDescription("vandbrædt på stern i sider");
+            board.setDescription("understernbrædder til siderne");
         } else if (length >= 301 && length <= 360) {
             boardId = 2;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
             board.setAmount(2);
-            board.setDescription("vandbrædt på stern i sider");
+            board.setDescription("understernbrædder til siderne");
         } else if (length >= 361 && length <= 420) {
             boardId = 3;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
             board.setAmount(2);
-            board.setDescription("vandbrædt på stern i sider");
+            board.setDescription("understernbrædder til siderne");
         } else if (length >= 421 && length <= 480) {
             boardId = 4;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
             board.setAmount(2);
-            board.setDescription("vandbrædt på stern i sider");
+            board.setDescription("understernbrædder til siderne");
         } else if (length >= 481 && length <= 540) {
             boardId = 5;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
             board.setAmount(2);
-            board.setDescription("vandbrædt på stern i sider");
+            board.setDescription("understernbrædder til siderne");
         } else if (length >= 541 && length <= 600) {
             boardId = 6;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
             board.setAmount(2);
-            board.setDescription("vandbrædt på stern i sider");
+            board.setDescription("understernbrædder til siderne");
         } else if (length >= 601 && length <= 660) {
             boardId = 2;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
             board.setAmount(4);
-            board.setDescription("vandbrædt på stern i sider");
+            board.setDescription("understernbrædder til siderne");
         } else if (length >= 661 && length <= 720) {
             boardId = 2;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
             board.setAmount(4);
-            board.setDescription("vandbrædt på stern i sider");
+            board.setDescription("understernbrædder til siderne");
         } else if (length >= 721 && length <= 780) {
             boardId = 3;
             Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
             board.setAmount(4);
-            board.setDescription("vandbrædt på stern i sider");
+            board.setDescription("understernbrædder til siderne");
         }
 
     }
