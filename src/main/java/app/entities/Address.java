@@ -5,15 +5,13 @@ public class Address {
     private int addressId;
     private String streetName;
     private String houseNumber;
-    private String city;
-    private int zipCode;
+    private int zipCodeId;
 
-    public Address(int addressId, String streetName, String houseNumber, String city, int zipCode) {
+    public Address(int addressId, String streetName, String houseNumber, String city, int zipCodeId) {
         this.addressId = addressId;
         this.streetName = streetName;
         this.houseNumber = houseNumber;
-        this.city = city;
-        this.zipCode = zipCode;
+        this.zipCodeId = zipCodeId;
     }
 
     public int getAddressId() {
@@ -40,19 +38,11 @@ public class Address {
         this.houseNumber = houseNumber;
     }
 
-    public String getCity() {
-        return city;
+    public int getZipCodeId() {
+        return zipCodeId;
     }
 
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public int getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(int zipCode) {
-        this.zipCode = zipCode;
+    public void setZipCodeId(int zipCodeId) {
+        this.zipCodeId = zipCodeId;
     }
 }
