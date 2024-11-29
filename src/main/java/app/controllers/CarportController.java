@@ -41,6 +41,7 @@ public class CarportController {
         int rafterId = 45;
 
         switch ((width - 300) / 60) {
+            
 
         }
     }
