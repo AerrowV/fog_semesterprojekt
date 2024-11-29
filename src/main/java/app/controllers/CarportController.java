@@ -24,39 +24,34 @@ public class CarportController {
 
     }
     //Understernbrædder	til	forenden
-    public static void underFasciaBoardFront(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static Material underFasciaBoardFront(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
+        int amount=0;
+        Material material = null;
 
         if (width >= 240 && width <= 300) {
             boardId = 1;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("understernbrædder til for & bag ende");
         } else if (width >= 301 && width <= 360) {
             boardId = 2;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("understernbrædder til for & bag ende");
         } else if (width >= 361 && width <= 420) {
             boardId = 3;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("understernbrædder til for & bag ende");
         } else if (width >= 421 && width <= 480) {
             boardId = 4;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("understernbrædder til for & bag ende");
         } else if (width >= 481 && width <= 540) {
             boardId = 5;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("understernbrædder til for & bag ende");
         } else if (width >= 541 && width <= 600) {
             boardId = 6;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("understernbrædder til for & bag ende");
+        }
+
+        if (boardId > 0) {
+            material = MaterialMapper.getMaterialById(boardId, connectionPool);
+            material.setAmount(1);
+            material.setDescription("understernbrædder til for & bag ende");
+        }
+        if (material != null) {
+            return material;
+        } else {
+            throw new DatabaseException("Width value is out of valid range.");
         }
     }
 
@@ -74,96 +69,80 @@ public class CarportController {
 
     }
 
-    public static void outerWaterBoardFrontend(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static Material outerWaterBoardFrontend(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
+        Material material = null;
 
         if (width >= 240 && width <= 300) {
             boardId = 53;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("vandbrædt på stern i forende");
         } else if (width >= 301 && width <= 360) {
             boardId = 54;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("vandbrædt på stern i forende");
         } else if (width >= 361 && width <= 420) {
             boardId = 55;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("vandbrædt på stern i forende");
         } else if (width >= 421 && width <= 480) {
             boardId = 56;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("vandbrædt på stern i forende");
         } else if (width >= 481 && width <= 540) {
             boardId = 57;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("vandbrædt på stern i forende");
         } else if (width >= 541 && width <= 600) {
             boardId = 53;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(2);
-            board.setDescription("vandbrædt på stern i forende");
         }
 
+        if (boardId > 0) {
+            material = MaterialMapper.getMaterialById(boardId, connectionPool);
+            material.setAmount(width >= 541 && width <= 600 ? 2 : 1); // Set amount conditionally
+            material.setDescription("vandbrædt på stern i forende");
+        }
+
+        if (material != null) {
+            return material;
+        } else {
+            throw new DatabaseException("Width value is out of valid range.");
+        }
     }
 
-    public static void outerWaterBoardSides(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+
+    public static Material outerWaterBoardSides(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
+        int amount = 1;
+        Material material = null;
 
         if (length >= 240 && length <= 300) {
             boardId = 53;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("vandbrædt på stern i sider");
         } else if (length >= 301 && length <= 360) {
             boardId = 54;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("vandbrædt på stern i sider");
         } else if (length >= 361 && length <= 420) {
             boardId = 55;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("vandbrædt på stern i sider");
         } else if (length >= 421 && length <= 480) {
             boardId = 56;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("vandbrædt på stern i sider");
         } else if (length >= 481 && length <= 540) {
             boardId = 57;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(1);
-            board.setDescription("vandbrædt på stern i sider");
         } else if (length >= 541 && length <= 600) {
             boardId = 53;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(2);
-            board.setDescription("vandbrædt på stern i sider");
+            amount = 2;
         } else if (length >= 601 && length <= 660) {
             boardId = 54;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(2);
-            board.setDescription("vandbrædt på stern i sider");
+            amount = 2;
         } else if (length >= 661 && length <= 720) {
             boardId = 54;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(2);
-            board.setDescription("vandbrædt på stern i sider");
+            amount = 2;
         } else if (length >= 721 && length <= 780) {
             boardId = 55;
-            Material board = MaterialMapper.getMaterialById(boardId, connectionPool);
-            board.setAmount(2);
-            board.setDescription("vandbrædt på stern i sider");
+            amount = 2;
         }
 
+        if (boardId > 0) {
+            material = MaterialMapper.getMaterialById(boardId, connectionPool);
+            material.setAmount(amount);
+            material.setDescription("vandbrædt på stern i sider");
+        }
 
-
+        if (material != null) {
+            return material;
+        } else {
+            throw new DatabaseException("Length value is out of valid range.");
+        }
     }
+
 
     //Stolper til carport
     public static void carportPosts(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
