@@ -14,11 +14,23 @@
             <span>Bolig & design</span>
         </div>
         <div class="menu-container">
-            <div class="login-container">
+            <div th:if="${session.currentUser == null}" class="login-container">
                 <a th:href="@{/login}" class="login-link">
                     <img th:src="@{/images/user-icon.png}" alt="User Icon" class="icon">
                     Fog Konto
                 </a>
+            </div>
+            <div th:if="${session.currentUser != null}" class="user-container">
+                <a th:href="@{/showOrders}" class="my-orders-link">
+                    <img th:src="@{/images/orders-icon.png}" alt="Orders Icon" class="icon">
+                    Mine Ordre
+                </a>
+                <form th:action="@{/logout}" method="post" style="display: inline;">
+                    <button type="submit" class="logout-link">
+                        <img th:src="@{/images/logout-icon.png}" alt="Logout Icon" class="icon">
+                        Log Ud
+                    </button>
+                </form>
             </div>
         </div>
     </div>

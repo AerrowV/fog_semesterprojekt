@@ -33,15 +33,16 @@ body {
     height: 50px;
 }
 
-.login-container {
+.user-container, .login-container {
     display: flex;
     align-items: center;
+    gap: 1rem;
 }
 
-.login-link {
+.login-link, .my-orders-link, .logout-link {
     text-decoration: none;
     color: #333;
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -54,16 +55,16 @@ body {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.icon {
-    height: 20px;
-    width: 20px;
-}
-
-.login-link:hover {
+.login-link:hover, .my-orders-link:hover, .logout-link:hover {
     background-color: #0056b3;
     color: white;
     border-color: #0056b3;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.icon {
+    height: 20px;
+    width: 20px;
 }
 
 .info-bar {
@@ -104,6 +105,7 @@ body {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
 }
 
 .button-button:hover {
