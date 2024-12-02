@@ -19,13 +19,12 @@ public class UserController {
             if (user.getIsAdmin()) {
                 ctx.redirect("/admin");
             } else {
-                ctx.sessionAttribute("currentUser", user);
                 ctx.sessionAttribute("user_id", user.getUserId());
-                ctx.redirect("/shopping");
+                ctx.redirect("/");
             }
         } catch (DatabaseException e) {
             ctx.attribute("message", e.getMessage());
-            ctx.render("index.html");
+            ctx.render("login.html");
         }
     }
 
