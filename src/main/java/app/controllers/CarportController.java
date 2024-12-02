@@ -22,6 +22,7 @@ public class CarportController {
             carportStykliste(length, width, connectionPool);
 
 
+
         } catch (NumberFormatException | NullPointerException | DatabaseException e) {
             System.err.println("Error parsing form parameters: " + e.getMessage());
         }
@@ -50,6 +51,7 @@ public class CarportController {
             material = MaterialMapper.getMaterialById(boardId, connectionPool);
             material.setAmount(2);
             material.setDescription("understernbrædder til for & bag ende");
+            material.setPrice(material.getAmount() * material.getPrice());
 
             return material;
     }
@@ -92,6 +94,7 @@ public class CarportController {
             material = MaterialMapper.getMaterialById(boardId, connectionPool);
             material.setAmount(amount);
             material.setDescription("understernbrædder til siderne");
+            material.setPrice(material.getAmount() * material.getPrice());
 
             return material;
     }
@@ -125,6 +128,7 @@ public class CarportController {
         material = MaterialMapper.getMaterialById(boardId, connectionPool);
         material.setAmount(amount);
         material.setDescription("oversternbrædder til forenden");
+        material.setPrice(material.getAmount() * material.getPrice());
 
         return material;
     }
@@ -166,6 +170,7 @@ public class CarportController {
         material = MaterialMapper.getMaterialById(boardId, connectionPool);
         material.setAmount(amount);
         material.setDescription("oversternbrædder til siderne");
+        material.setPrice(material.getAmount() * material.getPrice());
 
         return material;
     }
@@ -188,17 +193,13 @@ public class CarportController {
             boardId = 53;
         }
 
-        if (boardId > 0) {
+
             material = MaterialMapper.getMaterialById(boardId, connectionPool);
             material.setAmount(width >= 541 && width <= 600 ? 2 : 1);
             material.setDescription("vandbrædt på stern i forende");
-        }
+            material.setPrice(material.getAmount() * material.getPrice());
 
-        if (material != null) {
             return material;
-        } else {
-            throw new DatabaseException("Width value is out of valid range.");
-        }
     }
 
 
@@ -235,6 +236,7 @@ public class CarportController {
             material = MaterialMapper.getMaterialById(boardId, connectionPool);
             material.setAmount(amount);
             material.setDescription("vandbrædt på stern i sider");
+            material.setPrice(material.getAmount() * material.getPrice());
 
             return material;
     }
@@ -286,6 +288,7 @@ public class CarportController {
         material = MaterialMapper.getMaterialById(boardId, connectionPool);
         material.setAmount(amount);
         material.setDescription("understernbrædder til siderne");
+        material.setPrice(material.getAmount() * material.getPrice());
 
         return material;
     }
@@ -329,6 +332,7 @@ public class CarportController {
 
         Material rafter = MaterialMapper.getMaterialById(rafterId, connectionPool);
         rafter.setAmount(amount);
+        rafter.setPrice(rafter.getAmount() * rafter.getPrice());
 
         return rafter;
     }
@@ -346,6 +350,23 @@ public class CarportController {
         stykliste.add(underFasciaBoardSides(length,width,connectionPool));
 
         return stykliste;
+    }
+
+
+    public static double calculatorForPrice(int length, int width, Context ctx, ConnectionPool connectionPool) throws DatabaseException {
+
+        ArrayList<Material> stykliste = carportStykliste(length, width, connectionPool);
+
+        double totalPrice=0.0;
+
+        for (Material material : stykliste) {
+            totalPrice += material.getPrice();
+        }
+
+        return totalPrice;
+
+
+
     }
 }
 
