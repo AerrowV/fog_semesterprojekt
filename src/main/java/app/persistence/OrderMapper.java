@@ -80,8 +80,7 @@ public class OrderMapper {
                         rs.getInt("order_id"),
                         rs.getTimestamp("order_date"),
                         rs.getString("order_status"),
-                        rs.getInt("user_id"),
-                        rs.getInt("carport_id")
+                        rs.getInt("user_id")
                 ));
             }
         } catch (SQLException e) {
