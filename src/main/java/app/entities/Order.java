@@ -1,19 +1,21 @@
 package app.entities;
 
+import java.sql.Timestamp;
+
 public class Order {
 
     private int orderId;
-    private String orderDate;
+    private Timestamp orderDate;
     private String orderStatus;
     private int userId;
 
-    public Order(int orderId, String orderDate, String orderStatus) {
+    public Order(int orderId, Timestamp orderDate, String orderStatus) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
     }
 
-    public Order(int orderId, String orderDate, String orderStatus, int userId) {
+    public Order(int orderId, Timestamp orderDate, String orderStatus, int userId) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
@@ -28,11 +30,11 @@ public class Order {
         this.orderId = orderId;
     }
 
-    public String getOrderDate() {
+    public Timestamp getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(String orderDate) {
+    public void setOrderDate(Timestamp orderDate) {
         this.orderDate = orderDate;
     }
 

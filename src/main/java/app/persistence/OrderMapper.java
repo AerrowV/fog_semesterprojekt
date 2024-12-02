@@ -54,7 +54,7 @@ public class OrderMapper {
             if (rs.next()) {
                 return new Order(
                         rs.getInt("order_id"),
-                        rs.getString("order_date"),
+                        rs.getTimestamp("order_date"),
                         rs.getString("order_status"),
                         rs.getInt("user_id")
                 );
@@ -78,7 +78,7 @@ public class OrderMapper {
             while (rs.next()) {
                 orders.add(new Order(
                         rs.getInt("order_id"),
-                        rs.getString("order_date"),
+                        rs.getTimestamp("order_date"),
                         rs.getString("order_status"),
                         rs.getInt("user_id")
                 ));

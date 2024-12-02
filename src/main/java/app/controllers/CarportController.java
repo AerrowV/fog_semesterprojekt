@@ -359,7 +359,7 @@ public class CarportController {
     int carportId = 1;
 
         for (Material material : stykliste) {
-            CarportMapper.saveMaterial_spec(carportId, material.getMaterialId(), material.getAmount(), connectionPool);
+            CarportMapper.saveMaterialSpec(carportId, material.getMaterialId(), material.getAmount(), connectionPool);
         }
     }
 
