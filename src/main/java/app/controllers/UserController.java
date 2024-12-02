@@ -37,7 +37,7 @@ public class UserController {
         if (password1.equals(password2)) {
             try {
                 UserMapper.createUser(email, password1, connectionPool);
-                ctx.attribute("message", "You have successfully created a new customer");
+                ctx.attribute("message", "Account created");
                 ctx.render("login.html");
             } catch (DatabaseException e) {
                 ctx.attribute("message", e.getMessage());
