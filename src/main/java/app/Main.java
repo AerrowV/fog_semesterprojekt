@@ -3,6 +3,7 @@ package app;
 import app.config.ThymeleafConfig;
 import app.controllers.CarportController;
 import app.controllers.MaterialController;
+import app.controllers.OrderController;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -40,5 +41,8 @@ public class Main {
         app.post("/materials/delete", ctx -> MaterialController.deleteMaterial(ctx, connectionPool));
         app.get("/chooseCarport", ctx -> ctx.render("chooseCarport.html"));
         app.post("/chooseCarport", ctx -> CarportController.saveCustomerSpecifications(ctx, connectionPool));
+
+        app.get("/orders", ctx -> OrderController.showOrders(ctx, connectionPool));
+        app.get("/admin/orders", ctx -> OrderController.showAllOrdersWithDetails(ctx, connectionPool));
     }
 }
