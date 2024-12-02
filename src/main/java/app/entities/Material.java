@@ -85,4 +85,16 @@ public class Material {
         this.price = price;
     }
 
+    @Override
+    public String toString() {
+        return "Material{" +
+                "materialId=" + materialId +
+                ", description='" + description + '\'' +
+                ", length=" + length +
+                ", amount=" + amount +
+                ", unit='" + unit + '\'' +
+                ", function='" + function + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

@@ -19,6 +19,8 @@ public class CarportController {
 
             CarportMapper.carportSpecs(length, width, hasRoof, connectionPool);
 
+            carportStykliste(length, width, connectionPool);
+
 
         } catch (NumberFormatException | NullPointerException | DatabaseException e) {
             System.err.println("Error parsing form parameters: " + e.getMessage());
@@ -167,7 +169,7 @@ public class CarportController {
 
         return material;
     }
-
+    //vandbrædt på stern i forende
     public static Material outerWaterBoardFrontend(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         Material material = null;
@@ -200,7 +202,7 @@ public class CarportController {
     }
 
 
-
+    //vandbrædt på stern i sider
     public static Material outerWaterBoardSides(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 1;
@@ -332,19 +334,18 @@ public class CarportController {
     }
 
     public static ArrayList<Material> carportStykliste(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
-        ArrayList<Material> materials = new ArrayList<>();
-        materials.add(outerWaterBoardFrontend(length,width,connectionPool));
-        materials.add(outerWaterBoardSides(length,width,connectionPool));
-        materials.add(carportRafter(length,width,connectionPool));
-        materials.add(sternBoard(length,width,connectionPool));
-        materials.add(carportPosts(length,width,connectionPool));
-        materials.add(overFasciaBoardFront(length,width,connectionPool));
-        materials.add(overFasciaBoardSides(length,width,connectionPool));
-        materials.add(underFasciaBoardFrontandBack(length,width,connectionPool));
-        materials.add(underFasciaBoardSides(length,width,connectionPool));
+        ArrayList<Material> stykliste = new ArrayList<>();
+        stykliste.add(outerWaterBoardFrontend(length,width,connectionPool));
+        stykliste.add(outerWaterBoardSides(length,width,connectionPool));
+        stykliste.add(carportRafter(length,width,connectionPool));
+        stykliste.add(sternBoard(length,width,connectionPool));
+        stykliste.add(carportPosts(length,width,connectionPool));
+        stykliste.add(overFasciaBoardFront(length,width,connectionPool));
+        stykliste.add(overFasciaBoardSides(length,width,connectionPool));
+        stykliste.add(underFasciaBoardFrontandBack(length,width,connectionPool));
+        stykliste.add(underFasciaBoardSides(length,width,connectionPool));
 
-        return materials;
-
+        return stykliste;
     }
 }
 
