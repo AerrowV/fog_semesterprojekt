@@ -39,7 +39,7 @@ public class UserController {
             try {
                 UserMapper.createUser(email, password1, connectionPool);
                 ctx.attribute("message", "You have successfully created a new customer");
-                ctx.render("index.html");
+                ctx.render("login.html");
             } catch (DatabaseException e) {
                 ctx.attribute("message", e.getMessage());
                 ctx.render("register.html");
