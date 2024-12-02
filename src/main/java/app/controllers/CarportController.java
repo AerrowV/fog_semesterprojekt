@@ -7,6 +7,8 @@ import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
 import io.javalin.http.Context;
 
+import java.util.ArrayList;
+
 public class CarportController {
 
     public static void saveCustomerSpecifications(Context ctx, ConnectionPool connectionPool) {
@@ -198,6 +200,7 @@ public class CarportController {
     }
 
 
+
     public static Material outerWaterBoardSides(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 1;
@@ -326,6 +329,22 @@ public class CarportController {
         rafter.setAmount(amount);
 
         return rafter;
+    }
+
+    public static ArrayList<Material> carportStykliste(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+        ArrayList<Material> materials = new ArrayList<>();
+        materials.add(outerWaterBoardFrontend(length,width,connectionPool));
+        materials.add(outerWaterBoardSides(length,width,connectionPool));
+        materials.add(carportRafter(length,width,connectionPool));
+        materials.add(sternBoard(length,width,connectionPool));
+        materials.add(carportPosts(length,width,connectionPool));
+        materials.add(overFasciaBoardFront(length,width,connectionPool));
+        materials.add(overFasciaBoardSides(length,width,connectionPool));
+        materials.add(underFasciaBoardFrontandBack(length,width,connectionPool));
+        materials.add(underFasciaBoardSides(length,width,connectionPool));
+
+        return materials;
+
     }
 }
 
