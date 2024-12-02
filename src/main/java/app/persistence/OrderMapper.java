@@ -55,8 +55,8 @@ public class OrderMapper {
                 return new Order(
                         rs.getInt("order_id"),
                         rs.getTimestamp("order_date"),
-                        rs.getString("order_status")
-
+                        rs.getString("order_status"),
+                        rs.getInt("user_id")
                 );
             } else {
                 throw new DatabaseException("Order not found.");
@@ -80,8 +80,7 @@ public class OrderMapper {
                         rs.getInt("order_id"),
                         rs.getTimestamp("order_date"),
                         rs.getString("order_status"),
-                        rs.getInt("user_id"),
-                        rs.getInt("carport_id")
+                        rs.getInt("user_id")
                 ));
             }
         } catch (SQLException e) {
@@ -90,30 +89,10 @@ public class OrderMapper {
         return orders;
     }
 
-    public static List<Order> getOrderByUserId(int userId, ConnectionPool connectionPool) throws DatabaseException {
-        List<Order> orders = new ArrayList<>();
-        String sql = "SELECT * FROM orders WHERE user_id = ?";
+    public static void saveStykliste(ConnectionPool connectionPool, Order order) throws DatabaseException {
+        String sql = "INSERT INTO material_spec (user_id, order_date, order_status) VALUES (?, CURRENT_DATE, ?) RETURNING order_id";
 
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setInt(1, userId);
-            ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                orders.add(new Order(
-                        rs.getInt("order_id"),
-                        rs.getTimestamp("order_date"),
-                        rs.getString("order_status")
-
-                ));
-            } if(orders.isEmpty()) {
-                throw new DatabaseException("Order not found.");
-            }
-
-        } catch (SQLException e) {
-            throw new DatabaseException("Error retrieving order: " + e.getMessage());
-        }
-        return orders;
     }
 }

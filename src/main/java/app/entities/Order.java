@@ -8,7 +8,6 @@ public class Order {
     private Timestamp orderDate;
     private String orderStatus;
     private int userId;
-    int carportId;
 
     public Order(int orderId, Timestamp orderDate, String orderStatus) {
         this.orderId = orderId;
@@ -16,12 +15,11 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public Order(int orderId, Timestamp orderDate, String orderStatus, int userId, int carportId) {
+    public Order(int orderId, Timestamp orderDate, String orderStatus, int userId) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
         this.userId = userId;
-        this.carportId = carportId;
     }
 
     public int getOrderId() {
