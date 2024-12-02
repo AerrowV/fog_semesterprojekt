@@ -15,7 +15,7 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
-    public Order(int orderId, Timestamp orderDate, String orderStatus, int userId, int carportId) {
+    public Order(int orderId, Timestamp orderDate, String orderStatus, int userId) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;

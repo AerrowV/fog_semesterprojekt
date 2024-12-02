@@ -55,8 +55,8 @@ public class OrderMapper {
                 return new Order(
                         rs.getInt("order_id"),
                         rs.getTimestamp("order_date"),
-                        rs.getString("order_status")
-
+                        rs.getString("order_status"),
+                        rs.getInt("user_id")
                 );
             } else {
                 throw new DatabaseException("Order not found.");
@@ -87,6 +87,13 @@ public class OrderMapper {
             throw new DatabaseException("Error retrieving all orders: " + e.getMessage());
         }
         return orders;
+    }
+
+    public static void saveStykliste(ConnectionPool connectionPool, Order order) throws DatabaseException {
+        String sql = "INSERT INTO material_spec (user_id, order_date, order_status) VALUES (?, CURRENT_DATE, ?) RETURNING order_id";
+
+
+
     }
 
     public static List<Order> getOrderByUserId(int userId, ConnectionPool connectionPool) throws DatabaseException {
