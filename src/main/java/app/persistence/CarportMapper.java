@@ -32,7 +32,7 @@ public class CarportMapper {
         }
     }
 
-    public static void saveMaterial_spec(int carportId, int material_id, int material_order_amount, ConnectionPool connectionPool) throws DatabaseException {
+    public static void saveMaterialSpec(int carportId, int material_id, int material_order_amount, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "insert into material_spec (carport_id, material_id, material_order_amount) values (?, ?, ?)";
 
         try (Connection connection = connectionPool.getConnection()) {
