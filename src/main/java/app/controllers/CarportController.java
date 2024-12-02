@@ -234,7 +234,7 @@ public class CarportController {
 
         if (boardId > 0) {
             material = MaterialMapper.getMaterialById(boardId, connectionPool);
-            material.setAmount(width >= 541 && width <= 600 ? 2 : 1); // Set amount conditionally
+            material.setAmount(width >= 541 && width <= 600 ? 2 : 1);
             material.setDescription("vandbrædt på stern i forende");
         }
 
