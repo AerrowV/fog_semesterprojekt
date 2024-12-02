@@ -88,4 +88,11 @@ public class OrderMapper {
         }
         return orders;
     }
+
+    public static void saveStykliste(ConnectionPool connectionPool, Order order) throws DatabaseException {
+        String sql = "INSERT INTO material_spec (user_id, order_date, order_status) VALUES (?, CURRENT_DATE, ?) RETURNING order_id";
+
+
+
+    }
 }

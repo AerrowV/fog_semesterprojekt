@@ -85,6 +85,33 @@ import java.sql.*;
             }
         }
 
+        public static Material getMaterialSetAmount(int materialId, int amount, ConnectionPool connectionPool) throws DatabaseException {
+            String sql = "SELECT * FROM material WHERE material_id = ?";
+
+            try (Connection connection = connectionPool.getConnection();
+                 PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ps.setInt(1, materialId);
+                ResultSet rs = ps.executeQuery();
+
+                if (rs.next()) {
+                    return new Material(
+                            rs.getInt("material_id"),
+                            rs.getString("material_description"),
+                            rs.getInt("material_length"),
+                            rs.getInt(amount),
+                            rs.getString("material_unit"),
+                            rs.getString("material_function"),
+                            rs.getInt("material_price")
+                    );
+                } else {
+                    throw new DatabaseException("Material not found");
+                }
+            } catch (SQLException e) {
+                throw new DatabaseException("Failed to fetch material: " + e.getMessage());
+            }
+        }
+
         public static void updateMaterial(Material material, ConnectionPool connectionPool) throws DatabaseException {
             String sql = "UPDATE material SET material_description = ?, material_length = ?, material_amount = ?, material_unit = ?, material_function = ?, material_price = ? WHERE material_id = ?";
 
