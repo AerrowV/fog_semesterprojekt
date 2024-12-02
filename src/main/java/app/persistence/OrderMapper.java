@@ -122,32 +122,5 @@ public class OrderMapper {
         }
         return orders;
     }
-
-    public static List<Order> getOrderByUserId(int userId, ConnectionPool connectionPool) throws DatabaseException {
-        List<Order> orders = new ArrayList<>();
-        String sql = "SELECT * FROM orders WHERE user_id = ?";
-
-        try (Connection connection = connectionPool.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setInt(1, userId);
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next()) {
-                orders.add(new Order(
-                        rs.getInt("order_id"),
-                        rs.getTimestamp("order_date"),
-                        rs.getString("order_status")
-
-                ));
-            } if(orders.isEmpty()) {
-                throw new DatabaseException("Order not found.");
-            }
-
-        } catch (SQLException e) {
-            throw new DatabaseException("Error retrieving order: " + e.getMessage());
-        }
-        return orders;
-    }
 }
 
