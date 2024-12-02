@@ -15,7 +15,7 @@ public class CarportController {
             int length = Integer.parseInt(ctx.formParam("length"));
             int width = Integer.parseInt(ctx.formParam("width"));
 
-            CarportMapper.saveSpecs(length, width, hasRoof, connectionPool);
+            CarportMapper.carportSpecs(length, width, hasRoof, connectionPool);
 
 
         } catch (NumberFormatException | NullPointerException | DatabaseException e) {
@@ -24,8 +24,8 @@ public class CarportController {
 
     }
     //Understernbrædder	til	for og bag enden
-    public static void underFasciaBoardFrontandBack(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
-        int boardId;
+    public static Material underFasciaBoardFrontandBack(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+        int boardId = 0;
         int amount=0;
         Material material = null;
 
