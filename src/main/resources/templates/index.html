@@ -53,9 +53,9 @@
 <main class="button">
     <div class="button-content">
         <h1>Johannesfog.dk</h1>
-        <button class="button-button">
-            <a th:href="@{/chooseCarport}">link text</a>
-        </button>
+        <form th:action="@{/chooseCarport}" method="get">
+            <button class="button-button">Quick Selv-Byg Carport</button>
+        </form>
     </div>
     <div class="carport-image-container">
         <img th:src="@{/images/carport.png}" alt="Fog Carport" class="carport-image">
