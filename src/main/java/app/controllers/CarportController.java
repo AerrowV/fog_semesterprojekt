@@ -352,8 +352,6 @@ public class CarportController {
         stykliste.add(underFasciaBoardFrontandBack(length, width, connectionPool));
         stykliste.add(underFasciaBoardSides(length, width, connectionPool));
 
-        saveStykliste(connectionPool, stykliste, carportId);
-
         return stykliste;
     }
 
@@ -377,6 +375,8 @@ public class CarportController {
 
         return totalPrice;
     }
+
+
 }
 
 

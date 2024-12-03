@@ -53,8 +53,12 @@
 <main class="button">
     <div class="button-content">
         <h1>Johannesfog.dk</h1>
-        <form th:action="@{/chooseCarport}" method="get">
-            <button class="button-button">Quick Selv-Byg Carport</button>
+        <form th:if="${isLoggedIn}" th:action="@{/chooseCarport}" method="get">
+            <button type="submit" class="button-button">Quick Selv-Byg Carport</button>
+        </form>
+
+        <form th:unless="${isLoggedIn}" th:action="@{/login}" method="get">
+            <button type="submit" class="button-button">Quick Selv-Byg Carport</button>
         </form>
     </div>
     <div class="carport-image-container">

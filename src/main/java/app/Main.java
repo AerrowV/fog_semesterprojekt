@@ -9,6 +9,8 @@ import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import app.controllers.UserController;
 
+import static app.controllers.UserController.renderHomePage;
+
 public class Main {
 
     private static final String USER = "postgres";
@@ -26,7 +28,7 @@ public class Main {
             config.staticFiles.add("/templates");
         }).start(7070);
 
-        app.get("/", ctx -> ctx.render("index.html"));
+        app.get("/", ctx -> renderHomePage(ctx));
         app.get("/login", ctx -> ctx.render("login.html"));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
         app.get("/register", ctx -> ctx.render("register.html"));
