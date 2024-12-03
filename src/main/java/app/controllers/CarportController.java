@@ -376,7 +376,10 @@ public class CarportController {
         return totalPrice;
     }
 
+    public static double calculatePercentage(double totalPrice, double percentage, ConnectionPool connectionPool) throws DatabaseException {
+        return totalPrice - ((percentage / 100) * totalPrice);
 
+    }
 }
 
 
