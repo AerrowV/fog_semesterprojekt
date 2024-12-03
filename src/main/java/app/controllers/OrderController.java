@@ -14,10 +14,6 @@ public class OrderController {
 
     }
 
-    public void showOrder(){
-
-    }
-
     public static void showOrders(Context ctx, ConnectionPool connectionPool) {
 
         int userId = ctx.sessionAttribute("user_id");
@@ -25,10 +21,8 @@ public class OrderController {
         try {
             List<Order> orders = OrderMapper.getOrderByUserId(userId, connectionPool);
 
-
             ctx.attribute("orders", orders);
             ctx.render("orders.html");
-
 
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to load orders: " + e.getMessage());
@@ -51,7 +45,4 @@ public class OrderController {
             ctx.render("index.html");
         }
     }
-
-
-
 }
