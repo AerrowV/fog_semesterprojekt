@@ -11,16 +11,17 @@ public class PaymentController {
     public static void saveUserData(Context ctx, ConnectionPool connectionPool) {
 
         try {
-        String email = ctx.queryParam("email");
+        String email = ctx.formParam("email");
         String firstName = ctx.formParam("first-name");
         String lastName = ctx.formParam("last-name");
         String address = ctx.formParam("address");
-        int zipCode = Integer.parseInt(ctx.formParam("zip"));
+        String zip = ctx.formParam("zip");
 
         boolean emailExists = UserMapper.checkEmail(email, connectionPool);
+
         if(emailExists){
 
-            PaymentMapper.saveUserDataToDB(firstName, lastName, address, zipCode, connectionPool);
+            PaymentMapper.saveUserDataToDB(email, firstName, lastName, connectionPool);
 
             } else {
             ctx.status(400).result("Email not found. Please try again.");
