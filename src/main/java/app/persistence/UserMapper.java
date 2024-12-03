@@ -53,4 +53,21 @@ public class UserMapper {
             throw new DatabaseException(msg);
         }
     }
+
+    public static boolean checkEmail(String email, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT user_email FROM \"user\" WHERE user_email = ?";
+
+
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setString(1, email);
+                ResultSet rs = ps.executeQuery();
+
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            String msg = "Database error occurred while checking the email.";
+            throw new DatabaseException(msg);
+        }
+    }
 }

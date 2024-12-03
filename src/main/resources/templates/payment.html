@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <link rel="stylesheet" href="../public/css/paymentStyle.css" th:href="@{/css/paymentStyle.css}">
+</head>
+<body>
+<div class="payment-container">
+    <h1>Payment and Billing</h1>
+
+    <form class="form-group" th:action="@{/submit}" method="POST">
+
+        <label for="first-name">E-mail</label>
+        <input type="text" id="email" name="email" placeholder="Enter your E-mail" required>
+
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required>
+
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" name="last-name" placeholder="Enter your last name" required>
+
+        <label for="card-number">Card Number</label>
+        <input type="text" id="card-number" name="card-number" placeholder="Enter your card number" required>
+
+        <label for="address">Billing Address</label>
+        <input type="text" id="address" name="address" placeholder="Enter your billing address" required>
+
+        <label for="zip">ZIP Code</label>
+        <input type="text" id="zip" name="zip" placeholder="Enter ZIP code" required>
+
+        <input type="submit" class="checkout-button" value="Proceed">
+    </form>
+</div>
+</body>
+</html>
+

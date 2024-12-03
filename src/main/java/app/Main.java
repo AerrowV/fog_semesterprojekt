@@ -1,13 +1,10 @@
 package app;
 
 import app.config.ThymeleafConfig;
-import app.controllers.CarportController;
-import app.controllers.MaterialController;
-import app.controllers.OrderController;
+import app.controllers.*;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
-import app.controllers.UserController;
 
 import static app.controllers.UserController.renderHomePage;
 
@@ -31,6 +28,10 @@ public class Main {
         app.get("/", ctx -> renderHomePage(ctx));
         app.get("/login", ctx -> ctx.render("login.html"));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
+
+        app.get("/payment", ctx -> ctx.render("payment.html"));
+        app.post("/payment", ctx -> PaymentController.saveUserData(ctx, connectionPool));
+
         app.get("/register", ctx -> ctx.render("register.html"));
         app.post("/register", ctx -> UserController.createUser(ctx, connectionPool));
         app.post("/logout", ctx -> UserController.logout(ctx, connectionPool));
