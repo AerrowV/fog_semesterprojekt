@@ -93,7 +93,7 @@ public class OrderController {
             double basePrice = CarportController.calculatorForPrice(
                     carportSpec.getLength(),
                     carportSpec.getWidth(),
-                    ctx,
+                    carportSpec.isRoofType(),
                     connectionPool
             );
 
@@ -147,7 +147,7 @@ public class OrderController {
             double basePrice = CarportController.calculatorForPrice(
                     carportSpec.getLength(),
                     carportSpec.getWidth(),
-                    ctx,
+                    carportSpec.isRoofType(),
                     connectionPool
             );
             double finalPrice = CarportController.calculatePercentage(basePrice, overheadPercentage, connectionPool);

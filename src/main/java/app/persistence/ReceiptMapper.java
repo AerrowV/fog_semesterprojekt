@@ -1,5 +1,7 @@
 package app.persistence;
 
+import app.controllers.CarportController;
+import app.entities.Receipt;
 import app.exceptions.DatabaseException;
 
 import java.sql.Connection;
@@ -24,4 +26,21 @@ public class ReceiptMapper {
             throw new DatabaseException("Error retrieving receipt price: " + e.getMessage());
         }
     }
+
+//    public static void saveReceiptPrice(int carportId, int length, int width, boolean hasRoof, ConnectionPool connectionPool) throws DatabaseException {
+//
+//        double price = CarportController.calculatorForPrice(length, width, hasRoof, connectionPool);
+//        System.out.println("Hey");
+//        String sql = "INSERT INTO \"receipt\" (receipt_price, order_id) VALUES (?, ?)";
+//
+//
+//        try (Connection connection = connectionPool.getConnection();
+//             PreparedStatement ps = connection.prepareStatement(sql)) {
+//            ps.setDouble(1, price);
+//            ps.setInt(2, carportId);
+//            ps.executeUpdate();
+//        } catch (SQLException e) {
+//            throw new DatabaseException("Error saving receipt price");
+//        }
+//    }
 }

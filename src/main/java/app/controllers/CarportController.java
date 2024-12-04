@@ -3,13 +3,9 @@ package app.controllers;
 import app.entities.Material;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
-import app.persistence.CarportMapper;
-import app.persistence.ConnectionPool;
-import app.persistence.MaterialMapper;
-import app.persistence.OrderMapper;
+import app.persistence.*;
 import io.javalin.http.Context;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class CarportController {
@@ -19,15 +15,17 @@ public class CarportController {
 
             int length = Integer.parseInt(ctx.formParam("length"));
             int width = Integer.parseInt(ctx.formParam("width"));
+            boolean hasRoof = Boolean.parseBoolean(ctx.formParam("roof"));
 
             ctx.render("payment.html");
-
-            boolean hasRoof = Boolean.parseBoolean(ctx.formParam("roof"));
 
             int carportId = CarportMapper.saveCarportSpecs(length, width, hasRoof, connectionPool);
 
             ArrayList<Material> stykListe = carportStykListe(length, width, carportId, connectionPool);
             saveStykliste(connectionPool, stykListe, carportId);
+
+            //ReceiptMapper.saveReceiptPrice(carportId, length, width, hasRoof, connectionPool);
+
 
             Integer userId = ctx.sessionAttribute("user_id");
             if (userId == null) {
@@ -392,12 +390,12 @@ public class CarportController {
         for (Material material : stykliste) {
             CarportMapper.saveMaterialSpec(carportId, material.getMaterialId(), material.getAmount(), connectionPool);
         }
+
     }
 
-    public static double calculatorForPrice(int length, int width, Context ctx, ConnectionPool connectionPool) throws DatabaseException {
-        boolean hasRoof = Boolean.parseBoolean(ctx.formParam("roof"));
+    public static double calculatorForPrice(int length, int width, boolean hasRoof, ConnectionPool connectionPool) throws DatabaseException {
 
-        int carportId = CarportMapper.saveCarportSpecs(length, width, hasRoof, connectionPool);
+        int carportId = CarportMapper.getCarportId(length, width, hasRoof, connectionPool);
 
         ArrayList<Material> stykliste = carportStykListe(length, width, carportId, connectionPool);
 

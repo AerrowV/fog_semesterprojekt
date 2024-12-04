@@ -34,6 +34,29 @@ public class CarportMapper {
         return carportId;
     }
 
+    public static int getCarportId(int length, int width, boolean hasRoof, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT carport_id FROM carport_spec WHERE carport_length = ? AND carport_width = ? AND carport_roof = ?";
+        int carportId = 0;
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, length);
+            ps.setInt(2, width);
+            ps.setBoolean(3, hasRoof);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    carportId = rs.getInt("carport_id");
+                } else {
+                    throw new SQLException("No carport found with the given specifications.");
+                }
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Database error: " + e.getMessage());
+        }
+        return carportId;
+    }
+
     public static void saveMaterialSpec(int carportId, int material_id, int material_order_amount, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "insert into material_spec (carport_id, material_id, material_order_amount) values (?, ?, ?)";
 
