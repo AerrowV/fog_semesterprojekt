@@ -2,7 +2,6 @@ package app.controllers;
 
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
-import app.persistence.PaymentMapper;
 import app.persistence.UserMapper;
 import io.javalin.http.Context;
 
@@ -26,13 +25,15 @@ public class PaymentController {
                 return;
             }
 
+            boolean zipCodeExists = UserMapper.checkZipCode(zip, connectionPool);
+
             boolean emailExists = UserMapper.checkEmail(email, connectionPool);
 
-            if (emailExists) {
-                PaymentMapper.saveUserDataToDB(email, firstName, lastName, address, houseNumber, zip, connectionPool);
+            if (emailExists && zipCodeExists) {
+                UserMapper.saveUserDataToDB(email, firstName, lastName, address, houseNumber, zip, connectionPool);
                 ctx.status(200).result("Payment and billing data saved successfully.");
             } else {
-                ctx.status(400).result("Email not found. Please try again.");
+                ctx.status(400).result("Email or Zipcode not found. Please try again.");
             }
         } catch (DatabaseException e) {
             ctx.status(500).result(e.getMessage());

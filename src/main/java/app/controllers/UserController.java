@@ -56,23 +56,6 @@ public class UserController {
 
     }
 
-    public static boolean validateUser(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
-        String sql = "SELECT user_password FROM \"user\" WHERE user_email = ?";
-        try (Connection connection = connectionPool.getConnection()) {
-            try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setString(1, email);
-                try (ResultSet rs = ps.executeQuery()) {
-                    if (rs.next()) {
-                        String storedPassword = rs.getString("user_password");
-                        return password.equals(storedPassword);
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            throw new DatabaseException("Error validating user");
-        }
-        return false;
-    }
 
     public static void logout(Context ctx, ConnectionPool connectionPool) {
         ctx.sessionAttribute("currentUser", null);
