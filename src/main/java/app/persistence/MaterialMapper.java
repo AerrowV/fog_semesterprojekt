@@ -1,5 +1,6 @@
 package app.persistence;
 import app.entities.Material;
+import app.entities.MaterialSpec;
 import app.exceptions.DatabaseException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -150,6 +151,30 @@ import java.sql.*;
             } catch (SQLException e) {
                 throw new DatabaseException("Failed to delete material: " + e.getMessage());
             }
+        }
+
+        public static List<MaterialSpec> getMaterialSpecsByCarportId(int carportId, ConnectionPool connectionPool) throws DatabaseException {
+            String sql = "SELECT * FROM material_spec WHERE carport_id = ?";
+            List<MaterialSpec> materialSpecs = new ArrayList<>();
+
+            try (Connection connection = connectionPool.getConnection();
+                 PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ps.setInt(1, carportId);
+                ResultSet rs = ps.executeQuery();
+
+                while (rs.next()) {
+                    materialSpecs.add(new MaterialSpec(
+                            rs.getInt("material_spec_id"),
+                            rs.getInt("carport_id"),
+                            rs.getInt("material_id"),
+                            rs.getInt("material_order_amount")
+                    ));
+                }
+            } catch (SQLException e) {
+                throw new DatabaseException("Error retrieving material specs: " + e.getMessage());
+            }
+            return materialSpecs;
         }
     }
 

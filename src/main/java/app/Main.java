@@ -28,7 +28,6 @@ public class Main {
         app.get("/", ctx -> renderHomePage(ctx));
         app.get("/login", ctx -> ctx.render("login.html"));
         app.post("/login", ctx -> UserController.login(ctx, connectionPool));
-
         app.get("/register", ctx -> ctx.render("register.html"));
         app.post("/register", ctx -> UserController.createUser(ctx, connectionPool));
         app.post("/logout", ctx -> UserController.logout(ctx, connectionPool));
@@ -41,10 +40,14 @@ public class Main {
         app.post("/materials/delete", ctx -> MaterialController.deleteMaterial(ctx, connectionPool));
         app.get("/chooseCarport", ctx -> ctx.render("chooseCarport.html"));
         app.post("/chooseCarport", ctx -> CarportController.saveCustomerSpecifications(ctx, connectionPool));
+        app.get("/orders/details/{id}", ctx -> OrderController.showOrderDetails(ctx, connectionPool));
 
         app.get("/payment", ctx -> ctx.render("payment.html"));
         app.post("/payment", ctx -> PaymentController.saveUserData(ctx, connectionPool));
         app.get("/orders", ctx -> OrderController.showOrders(ctx, connectionPool));
         app.get("/admin/orders", ctx -> OrderController.showAllOrdersWithDetails(ctx, connectionPool));
+        app.post("/update-order-status", ctx -> OrderController.updateOrderStatus(ctx, connectionPool));
+        app.post("/update-order-price", ctx -> OrderController.updateOrderPrice(ctx, connectionPool));
+        app.post("/update-order-details", ctx -> OrderController.updateOrderDetails(ctx, connectionPool));
     }
 }
