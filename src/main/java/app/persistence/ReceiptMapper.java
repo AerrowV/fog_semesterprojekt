@@ -27,20 +27,21 @@ public class ReceiptMapper {
         }
     }
 
-//    public static void saveReceiptPrice(int carportId, int length, int width, boolean hasRoof, ConnectionPool connectionPool) throws DatabaseException {
-//
-//        double price = CarportController.calculatorForPrice(length, width, hasRoof, connectionPool);
-//        System.out.println("Hey");
-//        String sql = "INSERT INTO \"receipt\" (receipt_price, order_id) VALUES (?, ?)";
-//
-//
-//        try (Connection connection = connectionPool.getConnection();
-//             PreparedStatement ps = connection.prepareStatement(sql)) {
-//            ps.setDouble(1, price);
-//            ps.setInt(2, carportId);
-//            ps.executeUpdate();
-//        } catch (SQLException e) {
-//            throw new DatabaseException("Error saving receipt price");
-//        }
-//    }
+    public static void saveReceiptPrice(int orderId, double price, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE receipt SET receipt_price = ? WHERE order_id = ?";
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setDouble(1, price);
+            ps.setInt(2, orderId);
+            int rowsAffected = ps.executeUpdate();
+
+            if (rowsAffected == 0) {
+                throw new DatabaseException("Failed to update receipt price: No receipt found for order ID " + orderId);
+            }
+
+        } catch (SQLException e) {
+            throw new DatabaseException("Error updating receipt price: " + e.getMessage());
+        }
+    }
 }

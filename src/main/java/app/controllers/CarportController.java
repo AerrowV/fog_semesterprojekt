@@ -24,8 +24,6 @@ public class CarportController {
             ArrayList<Material> stykListe = carportStykListe(length, width, carportId, connectionPool);
             saveStykliste(connectionPool, stykListe, carportId);
 
-            //ReceiptMapper.saveReceiptPrice(carportId, length, width, hasRoof, connectionPool);
-
 
             Integer userId = ctx.sessionAttribute("user_id");
             if (userId == null) {
@@ -40,6 +38,8 @@ public class CarportController {
             if (orderId <= 0) {
                 throw new DatabaseException("Order creation returned invalid ID.");
             }
+            double price = CarportController.calculatorForPrice(length, width, hasRoof, connectionPool);
+            ReceiptMapper.saveReceiptPrice(orderId, price, connectionPool);
 
             ctx.attribute("message", "Carport specifications and order created successfully.");
             ctx.redirect("/orders");
@@ -55,8 +55,6 @@ public class CarportController {
             ctx.render("chooseCarport.html");
         }
     }
-
-
 
 
     //Understernbrædder	til	for og bag enden
