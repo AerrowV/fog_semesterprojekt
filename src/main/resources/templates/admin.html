@@ -11,7 +11,9 @@
     <a class="button" th:href="@{/materials}">Se alle materialer</a>
     <a class="button" th:href="@{/materials/create}">Tilføj ny materiale</a>
     <a class="button" th:href="@{/admin/orders}">Manage Orders</a>
-    <a class="button" th:href="@{/logout}">Logout</a>
+    <form th:action="@{/logout}" method="post" style="display: inline;">
+        <button type="submit" class="button">Logout</button>
+    </form>
 </div>
 </body>
 </html>
