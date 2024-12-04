@@ -21,8 +21,6 @@ public class CarportController {
 
             int carportId = CarportMapper.saveCarportSpecs(length, width, hasRoof, connectionPool);
 
-            ctx.render("payment.html");
-
             ArrayList<Material> stykListe = carportStykListe(length, width, carportId, connectionPool);
             saveStykliste(connectionPool, stykListe, carportId);
 
@@ -384,8 +382,6 @@ public class CarportController {
         return totalPrice - ((percentage / 100) * totalPrice);
 
     }
-
-
 }
 
 
