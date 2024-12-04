@@ -1,33 +1,64 @@
 package app.controllers;
 
 import app.entities.Material;
+import app.entities.Order;
 import app.exceptions.DatabaseException;
 import app.persistence.CarportMapper;
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
+import app.persistence.OrderMapper;
 import io.javalin.http.Context;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class CarportController {
 
     public static void saveCustomerSpecifications(Context ctx, ConnectionPool connectionPool) {
-        boolean hasRoof = false;
         try {
+
             int length = Integer.parseInt(ctx.formParam("length"));
             int width = Integer.parseInt(ctx.formParam("width"));
 
             ctx.render("payment.html");
+
+            boolean hasRoof = Boolean.parseBoolean(ctx.formParam("roof"));
 
             int carportId = CarportMapper.saveCarportSpecs(length, width, hasRoof, connectionPool);
 
             ArrayList<Material> stykListe = carportStykListe(length, width, carportId, connectionPool);
             saveStykliste(connectionPool, stykListe, carportId);
 
-        } catch (NumberFormatException | NullPointerException | DatabaseException e) {
-            System.err.println("Error parsing form parameters: " + e.getMessage());
+            Integer userId = ctx.sessionAttribute("user_id");
+            if (userId == null) {
+                ctx.attribute("message", "You must be logged in to create a carport specification.");
+                ctx.redirect("/login");
+                return;
+            }
+
+            Order newOrder = new Order(0, null, "In Review", userId, carportId);
+            int orderId = OrderMapper.createOrder(newOrder, connectionPool);
+
+            if (orderId <= 0) {
+                throw new DatabaseException("Order creation returned invalid ID.");
+            }
+
+            ctx.attribute("message", "Carport specifications and order created successfully.");
+            ctx.redirect("/orders");
+
+        } catch (NumberFormatException e) {
+            ctx.attribute("message", "Invalid input. Please check your values.");
+            ctx.render("chooseCarport.html");
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "Failed to save carport specifications: " + e.getMessage());
+            ctx.render("chooseCarport.html");
+        } catch (Exception e) {
+            ctx.attribute("message", "An unexpected error occurred.");
+            ctx.render("chooseCarport.html");
         }
     }
+
+
 
 
     //Understernbrædder	til	for og bag enden
