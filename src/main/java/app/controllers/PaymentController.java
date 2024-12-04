@@ -9,31 +9,37 @@ import io.javalin.http.Context;
 public class PaymentController {
 
     public static void saveUserData(Context ctx, ConnectionPool connectionPool) {
-
         try {
-        String email = ctx.formParam("email");
-        String firstName = ctx.formParam("first-name");
-        String lastName = ctx.formParam("last-name");
-        String address = ctx.formParam("address");
-        String zip = ctx.formParam("zip");
+            String email = ctx.formParam("email");
+            String firstName = ctx.formParam("first-name");
+            String lastName = ctx.formParam("last-name");
+            String address = ctx.formParam("street-name");
+            String houseNumber = ctx.formParam("house-number");
+            String zipString = ctx.formParam("zip");
 
-        boolean emailExists = UserMapper.checkEmail(email, connectionPool);
 
-        if(emailExists){
+            int zip;
+            try {
+                zip = Integer.parseInt(zipString);
+            } catch (NumberFormatException e) {
+                ctx.status(400).result("Invalid ZIP code format.");
+                return;
+            }
 
-            PaymentMapper.saveUserDataToDB(email, firstName, lastName, connectionPool);
+            boolean emailExists = UserMapper.checkEmail(email, connectionPool);
 
+            if (emailExists) {
+                PaymentMapper.saveUserDataToDB(email, firstName, lastName, address, houseNumber, zip, connectionPool);
+                ctx.status(200).result("Payment and billing data saved successfully.");
             } else {
-            ctx.status(400).result("Email not found. Please try again.");
+                ctx.status(400).result("Email not found. Please try again.");
             }
         } catch (DatabaseException e) {
-            ctx.attribute("message", e.getMessage());
-            ctx.render("payment.html");
+            ctx.status(500).result(e.getMessage());
         } catch (Exception e) {
             e.printStackTrace();
             ctx.status(500).result("An unexpected error occurred.");
         }
-
     }
-
 }
+

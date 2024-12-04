@@ -17,6 +17,8 @@ public class CarportController {
             int length = Integer.parseInt(ctx.formParam("length"));
             int width = Integer.parseInt(ctx.formParam("width"));
 
+            ctx.render("payment.html");
+
             int carportId = CarportMapper.saveCarportSpecs(length, width, hasRoof, connectionPool);
 
             ctx.render("payment.html");

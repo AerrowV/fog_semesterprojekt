@@ -11,9 +11,8 @@
     <h1>Payment and Billing</h1>
 
     <form class="form-group" th:action="@{/payment}" method="POST">
-
-        <label for="first-name">E-mail</label>
-        <input type="text" id="email" name="email" placeholder="Enter your E-mail" required>
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="Enter your E-mail" required>
 
         <label for="first-name">First Name</label>
         <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required>
@@ -24,14 +23,18 @@
         <label for="card-number">Card Number</label>
         <input type="text" id="card-number" name="card-number" placeholder="Enter your card number" required>
 
-        <label for="address">Billing Address</label>
-        <input type="text" id="address" name="address" placeholder="Enter your billing address" required>
+        <label for="street-name">Street Name</label>
+        <input type="text" id="street-name" name="street-name" placeholder="Enter your street name" required>
+
+        <label for="house-number">House Number</label>
+        <input type="text" id="house-number" name="house-number" placeholder="Enter your house number" required>
 
         <label for="zip">ZIP Code</label>
-        <input type="text" id="zip" name="zip" placeholder="Enter ZIP code" required>
+        <input type="number" id="zip" name="zip" placeholder="Enter ZIP code" required>
 
         <input type="submit" class="checkout-button" value="Proceed">
     </form>
+
 </div>
 </body>
 </html>
