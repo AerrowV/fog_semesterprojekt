@@ -6,6 +6,8 @@ import app.exceptions.DatabaseException;
 import app.persistence.*;
 import app.services.CarportSvg;
 import io.javalin.http.Context;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,17 +32,25 @@ public class OrderController {
 
             List<Order> orders = OrderMapper.getOrderByUserId(userId, connectionPool);
             Map<Integer, Double> orderPrices = new HashMap<>();
+            Map<Integer, Timestamp> paidDates = new HashMap<>();
 
             for (Order order : orders) {
-                if ("Approved".equalsIgnoreCase(order.getOrderStatus())) {
+                if ("Approved".equalsIgnoreCase(order.getOrderStatus()) || "Completed".equalsIgnoreCase(order.getOrderStatus())) {
                     double price = ReceiptMapper.getReceiptPriceByOrderId(order.getOrderId(), connectionPool);
                     orderPrices.put(order.getOrderId(), price);
+                }
+
+                if ("Completed".equalsIgnoreCase(order.getOrderStatus())) {
+                    Timestamp paidDate = ReceiptMapper.getReceiptPaidDate(order.getOrderId(), connectionPool);
+                    paidDates.put(order.getOrderId(), paidDate);
                 }
             }
 
             ctx.attribute("orders", orders);
             ctx.attribute("orderPrices", orderPrices);
+            ctx.attribute("paidDates", paidDates);
             ctx.render("order.html");
+
 
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to load orders: " + e.getMessage());

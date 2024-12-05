@@ -3,8 +3,11 @@ package app.controllers;
 import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.OrderMapper;
+import app.persistence.ReceiptMapper;
 import app.persistence.UserMapper;
 import io.javalin.http.Context;
+
+import java.sql.Timestamp;
 
 public class PaymentController {
 
@@ -41,6 +44,9 @@ public class PaymentController {
             if (emailExists && zipCodeExists) {
                 UserMapper.saveUserDataToDB(email, firstName, lastName, address, houseNumber, zip, connectionPool);
                 OrderMapper.updateOrderStatus(orderId, "Completed", connectionPool);
+
+                Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
+                ReceiptMapper.updatePaidDate(orderId, currentTimestamp, connectionPool);
 
                 String htmlResponse = """
                 <!DOCTYPE html>

@@ -4,10 +4,7 @@ import app.controllers.CarportController;
 import app.entities.Receipt;
 import app.exceptions.DatabaseException;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ReceiptMapper {
 
@@ -45,4 +42,37 @@ public class ReceiptMapper {
             throw new DatabaseException("Error updating receipt price: " + e.getMessage());
         }
     }
+
+    public static void updatePaidDate(int orderId, Timestamp paidDate, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "UPDATE receipt SET receipt_paid_date = ? WHERE order_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setTimestamp(1, paidDate);
+            ps.setInt(2, orderId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new DatabaseException("Failed to update paid date: " + e.getMessage());
+        }
+    }
+
+    public static Timestamp getReceiptPaidDate(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT receipt_paid_date FROM receipt WHERE order_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getTimestamp("receipt_paid_date");
+            } else {
+                return null;
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Failed to fetch receipt paid date: " + e.getMessage());
+        }
+    }
 }
+
