@@ -113,11 +113,22 @@ public class OrderController {
             Order order = OrderMapper.getOrderById(orderId, connectionPool);
             CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
 
-            double basePrice = CarportController.calculatorForPrice(carportSpec.getLength(), carportSpec.getWidth(), carportSpec.isRoofType(), connectionPool);
+            double basePrice = CarportController.calculatorForPrice(
+                    carportSpec.getLength(), carportSpec.getWidth(), carportSpec.isRoofType(), connectionPool);
             double finalPrice = CarportController.calculatePercentage(basePrice, overheadPercentage, connectionPool);
 
             OrderMapper.updateOrderStatus(orderId, newStatus, connectionPool);
             OrderMapper.updateOrderPrice(orderId, finalPrice, connectionPool);
+
+            if ("Approved".equalsIgnoreCase(newStatus)) {
+                Boolean isAdmin = ctx.sessionAttribute("is_admin");
+
+                if (isAdmin != null && !isAdmin) {
+                    ctx.sessionAttribute("current_order_id", orderId);
+                    ctx.redirect("/payment");
+                    return;
+                }
+            }
 
             ctx.attribute("message", "Order updated successfully!");
             ctx.redirect("/admin/orders");
@@ -127,6 +138,10 @@ public class OrderController {
             ctx.redirect("/admin/orders");
         }
     }
+
+
+
+
 
     public static void showOrderDetails(Context ctx, ConnectionPool connectionPool) {
         try {

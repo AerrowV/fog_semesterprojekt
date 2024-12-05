@@ -17,8 +17,6 @@ public class CarportController {
             int width = Integer.parseInt(ctx.formParam("width"));
             boolean hasRoof = Boolean.parseBoolean(ctx.formParam("roof"));
 
-            ctx.render("payment.html");
-
             int carportId = CarportMapper.saveCarportSpecs(length, width, hasRoof, connectionPool);
 
             ArrayList<Material> stykListe = carportStykListe(length, width, carportId, connectionPool);

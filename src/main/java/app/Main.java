@@ -49,5 +49,7 @@ public class Main {
         app.post("/update-order-status", ctx -> OrderController.updateOrderStatus(ctx, connectionPool));
         app.post("/update-order-price", ctx -> OrderController.updateOrderPrice(ctx, connectionPool));
         app.post("/update-order-details", ctx -> OrderController.updateOrderDetails(ctx, connectionPool));
+        app.post("/payment/complete", ctx -> PaymentController.saveUserData(ctx, connectionPool));
+
     }
 }
