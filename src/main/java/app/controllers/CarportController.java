@@ -387,7 +387,7 @@ public class CarportController {
     public static void saveStykliste(ConnectionPool connectionPool, ArrayList<Material> stykliste, int carportId) throws DatabaseException {
         for (Material material : stykliste) {
             CarportMapper.saveMaterialSpec(carportId, material.getMaterialId(), material.getAmount(), connectionPool);
-            MaterialMapper.updateMaterialAmount(material.getMaterialId(), -material.getAmount(), connectionPool);
+            MaterialMapper.updateMaterialAmount(material.getMaterialId(), material.getAmount(), connectionPool);
         }
 
     }

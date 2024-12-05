@@ -6,7 +6,6 @@ import app.exceptions.DatabaseException;
 import app.persistence.*;
 import app.services.CarportSvg;
 import io.javalin.http.Context;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
