@@ -176,5 +176,23 @@ import java.sql.*;
             }
             return materialSpecs;
         }
+
+        public static void updateMaterialAmount(int materialId, int amount, ConnectionPool connectionPool) throws DatabaseException {
+            String sql = "UPDATE material SET material_amount = material_amount + ? WHERE material_id = ? AND material_amount + ? >= 0";
+            try (Connection connection = connectionPool.getConnection();
+                 PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                ps.setInt(1, amount);
+                ps.setInt(2, materialId);
+                ps.setInt(3, amount);
+
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected != 1) {
+                    throw new DatabaseException("Failed to update material amount");
+                }
+            } catch (SQLException | DatabaseException e) {
+                throw new DatabaseException("Failed to update material amount: " + e.getMessage());
+            }
+        }
     }
 

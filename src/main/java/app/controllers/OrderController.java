@@ -15,10 +15,6 @@ import java.util.Map;
 public class OrderController {
     private CarportSvg carportSvg;
 
-    public OrderController(Context ctx) {
-
-    }
-
     public static void showOrders(Context ctx, ConnectionPool connectionPool) {
         try {
             Integer userId = ctx.sessionAttribute("user_id");
@@ -90,12 +86,7 @@ public class OrderController {
             Order order = OrderMapper.getOrderById(orderId, connectionPool);
             CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
 
-            double basePrice = CarportController.calculatorForPrice(
-                    carportSpec.getLength(),
-                    carportSpec.getWidth(),
-                    carportSpec.isRoofType(),
-                    connectionPool
-            );
+            double basePrice = CarportController.calculatorForPrice(carportSpec.getLength(), carportSpec.getWidth(), carportSpec.isRoofType(), connectionPool);
 
             double finalPrice = CarportController.calculatePercentage(basePrice, percentage, connectionPool);
 
@@ -144,12 +135,7 @@ public class OrderController {
             Order order = OrderMapper.getOrderById(orderId, connectionPool);
             CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
 
-            double basePrice = CarportController.calculatorForPrice(
-                    carportSpec.getLength(),
-                    carportSpec.getWidth(),
-                    carportSpec.isRoofType(),
-                    connectionPool
-            );
+            double basePrice = CarportController.calculatorForPrice(carportSpec.getLength(), carportSpec.getWidth(), carportSpec.isRoofType(), connectionPool);
             double finalPrice = CarportController.calculatePercentage(basePrice, overheadPercentage, connectionPool);
 
             OrderMapper.updateOrderStatus(orderId, newStatus, connectionPool);
