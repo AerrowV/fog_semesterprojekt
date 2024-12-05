@@ -14,6 +14,10 @@ import java.util.Map;
 public class OrderController {
     private CarportSvg carportSvg;
 
+    public OrderController(Context ctx) {
+
+    }
+
     public static void showOrders(Context ctx, ConnectionPool connectionPool) {
         try {
             Integer userId = ctx.sessionAttribute("user_id");
@@ -100,6 +104,30 @@ public class OrderController {
         }
     }
 
+    public static void updateOrderDetails(Context ctx, ConnectionPool connectionPool) {
+        try {
+            int orderId = Integer.parseInt(ctx.formParam("order_id"));
+            String newStatus = ctx.formParam("new_status");
+            double overheadPercentage = Double.parseDouble(ctx.formParam("percentage"));
+
+            Order order = OrderMapper.getOrderById(orderId, connectionPool);
+            CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
+
+            double basePrice = CarportController.calculatorForPrice(carportSpec.getLength(), carportSpec.getWidth(), carportSpec.isRoofType(), connectionPool);
+            double finalPrice = CarportController.calculatePercentage(basePrice, overheadPercentage, connectionPool);
+
+            OrderMapper.updateOrderStatus(orderId, newStatus, connectionPool);
+            OrderMapper.updateOrderPrice(orderId, finalPrice, connectionPool);
+
+            ctx.attribute("message", "Order updated successfully!");
+            ctx.redirect("/admin/orders");
+
+        } catch (DatabaseException | NumberFormatException e) {
+            ctx.attribute("message", "Failed to update order details: " + e.getMessage());
+            ctx.redirect("/admin/orders");
+        }
+    }
+
     public static void showOrderDetails(Context ctx, ConnectionPool connectionPool) {
         try {
             int orderId = Integer.parseInt(ctx.pathParam("id"));
@@ -122,30 +150,6 @@ public class OrderController {
         } catch (DatabaseException e) {
             ctx.attribute("message", "Error retrieving order details: " + e.getMessage());
             ctx.render("orderDetails.html");
-        }
-    }
-
-    public static void updateOrderDetails(Context ctx, ConnectionPool connectionPool) {
-        try {
-            int orderId = Integer.parseInt(ctx.formParam("order_id"));
-            String newStatus = ctx.formParam("new_status");
-            double overheadPercentage = Double.parseDouble(ctx.formParam("percentage"));
-
-            Order order = OrderMapper.getOrderById(orderId, connectionPool);
-            CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
-
-            double basePrice = CarportController.calculatorForPrice(carportSpec.getLength(), carportSpec.getWidth(), carportSpec.isRoofType(), connectionPool);
-            double finalPrice = CarportController.calculatePercentage(basePrice, overheadPercentage, connectionPool);
-
-            OrderMapper.updateOrderStatus(orderId, newStatus, connectionPool);
-            OrderMapper.updateOrderPrice(orderId, finalPrice, connectionPool);
-
-            ctx.attribute("message", "Order updated successfully!");
-            ctx.redirect("/admin/orders");
-
-        } catch (DatabaseException | NumberFormatException e) {
-            ctx.attribute("message", "Failed to update order details: " + e.getMessage());
-            ctx.redirect("/admin/orders");
         }
     }
 }
