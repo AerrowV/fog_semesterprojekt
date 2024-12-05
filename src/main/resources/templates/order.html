@@ -22,6 +22,7 @@
             <th>Order ID</th>
             <th>Date</th>
             <th>Status</th>
+            <th>Price</th>
             <th>Actions</th>
         </tr>
         </thead>
@@ -30,6 +31,11 @@
             <td th:text="${order.orderId}"></td>
             <td th:text="${order.orderDate}"></td>
             <td th:text="${order.orderStatus}"></td>
+            <td>
+        <span th:if="${orderPrices[order.orderId] != null}"
+              th:text="${orderPrices[order.orderId]}">DKK</span>
+                <span th:if="${orderPrices[order.orderId] == null}">N/A</span>
+            </td>
             <td>
                 <a th:href="@{/orders/details/{id}(id=${order.orderId})}">View Details</a>
                 <div th:if="${order.orderStatus == 'Approved'}">

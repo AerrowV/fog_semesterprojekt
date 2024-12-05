@@ -29,8 +29,17 @@ public class OrderController {
             }
 
             List<Order> orders = OrderMapper.getOrderByUserId(userId, connectionPool);
+            Map<Integer, Double> orderPrices = new HashMap<>();
+
+            for (Order order : orders) {
+                if ("Approved".equalsIgnoreCase(order.getOrderStatus())) {
+                    double price = ReceiptMapper.getReceiptPriceByOrderId(order.getOrderId(), connectionPool);
+                    orderPrices.put(order.getOrderId(), price);
+                }
+            }
 
             ctx.attribute("orders", orders);
+            ctx.attribute("orderPrices", orderPrices);
             ctx.render("order.html");
 
         } catch (DatabaseException e) {

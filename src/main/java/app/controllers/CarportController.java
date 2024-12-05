@@ -22,9 +22,6 @@ public class CarportController {
             ArrayList<Material> stykListe = carportStykListe(length, width, carportId, connectionPool);
             saveStykliste(connectionPool, stykListe, carportId);
 
-            //ReceiptMapper.saveReceiptPrice(carportId, length, width, hasRoof, connectionPool);
-
-
             Integer userId = ctx.sessionAttribute("user_id");
             if (userId == null) {
                 ctx.attribute("message", "You must be logged in to create a carport specification.");
