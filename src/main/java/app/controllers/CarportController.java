@@ -1,15 +1,48 @@
 package app.controllers;
 
+import app.entities.CarportSpec;
 import app.entities.Material;
 import app.exceptions.DatabaseException;
 import app.persistence.CarportMapper;
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
+import app.persistence.OrderMapper;
+import app.services.CarportSvg;
 import io.javalin.http.Context;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CarportController {
+
+//        public static void generateCarportSvg(Context ctx, ConnectionPool connectionPool) {
+//            try {
+//                List<Material> materials = Material.getMaterials(connectionPool);
+//
+//                CarportSvg carportSvg = new CarportSvg();
+//                carportSvg.addMaterials(materials);
+//
+//                ctx.attribute("carportSvg", carportSvg.toString());
+//                ctx.render("carport.html");
+//            } catch (DatabaseException e) {
+//                ctx.attribute("message", "Failed to generate carport: " + e.getMessage());
+//                ctx.render("error.html");
+//            }
+//        }
+//public static void showCarportDrawing(Context ctx, ConnectionPool connectionPool) {
+//    int orderId = Integer.parseInt(ctx.pathParam("orderId"));
+//    try {
+//        CarportSpec spec = OrderMapper.getCarportSpecByOrderId(orderId, connectionPool);
+//        CarportSvg svg = new CarportSvg(spec);
+//
+//        ctx.attribute("svg", svg.toString());
+//        ctx.render("carportDrawing.html");
+//    } catch (DatabaseException e) {
+//        ctx.attribute("message", "Failed to load carport drawing: " + e.getMessage());
+//        ctx.render("error.html");
+//    }
+//}
+
 
     public static void saveCustomerSpecifications(Context ctx, ConnectionPool connectionPool) {
         boolean hasRoof = false;

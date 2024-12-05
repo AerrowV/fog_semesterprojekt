@@ -5,6 +5,7 @@ import app.controllers.CarportController;
 import app.controllers.MaterialController;
 import app.controllers.OrderController;
 import app.persistence.ConnectionPool;
+import app.services.CarportSvg;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 import app.controllers.UserController;
@@ -26,23 +27,28 @@ public class Main {
             config.staticFiles.add("/templates");
         }).start(7070);
 
-        app.get("/", ctx -> ctx.render("index.html"));
-        app.get("/login", ctx -> ctx.render("login.html"));
-        app.post("/login", ctx -> UserController.login(ctx, connectionPool));
-        app.get("/register", ctx -> ctx.render("register.html"));
-        app.post("/register", ctx -> UserController.createUser(ctx, connectionPool));
-        app.post("/logout", ctx -> UserController.logout(ctx, connectionPool));
-        app.get("/admin", ctx -> ctx.render("admin.html"));
-        app.get("/materials", ctx -> MaterialController.showAllMaterials(ctx, connectionPool));
-        app.get("/materials/create", ctx -> ctx.render("create-material.html"));
-        app.post("/materials/create", ctx -> MaterialController.createMaterial(ctx, connectionPool));
-        app.get("/materials/update/", ctx -> MaterialController.showUpdateMaterialForm(ctx, connectionPool));
-        app.post("/materials/update", ctx -> MaterialController.updateMaterial(ctx, connectionPool));
-        app.post("/materials/delete", ctx -> MaterialController.deleteMaterial(ctx, connectionPool));
-        app.get("/chooseCarport", ctx -> ctx.render("chooseCarport.html"));
-        app.post("/chooseCarport", ctx -> CarportController.saveCustomerSpecifications(ctx, connectionPool));
+        app.get("/", ctx ->  ctx.render("index1.html"));
+        app.get("/showOrder", ctx -> OrderController.showOrder(ctx));
 
-        app.get("/orders", ctx -> OrderController.showOrders(ctx, connectionPool));
-        app.get("/admin/orders", ctx -> OrderController.showAllOrdersWithDetails(ctx, connectionPool));
+
+//        app.get("/login", ctx -> ctx.render("login.html"));
+//        app.post("/login", ctx -> UserController.login(ctx, connectionPool));
+//        app.get("/register", ctx -> ctx.render("register.html"));
+//        app.post("/register", ctx -> UserController.createUser(ctx, connectionPool));
+//        app.post("/logout", ctx -> UserController.logout(ctx, connectionPool));
+//        app.get("/admin", ctx -> ctx.render("admin.html"));
+//        app.get("/materials", ctx -> MaterialController.showAllMaterials(ctx, connectionPool));
+//        app.get("/materials/create", ctx -> ctx.render("create-material.html"));
+//        app.post("/materials/create", ctx -> MaterialController.createMaterial(ctx, connectionPool));
+//        app.get("/materials/update/", ctx -> MaterialController.showUpdateMaterialForm(ctx, connectionPool));
+//        app.post("/materials/update", ctx -> MaterialController.updateMaterial(ctx, connectionPool));
+//        app.post("/materials/delete", ctx -> MaterialController.deleteMaterial(ctx, connectionPool));
+//        app.get("/chooseCarport", ctx -> ctx.render("chooseCarport.html"));
+//        app.post("/chooseCarport", ctx -> CarportController.saveCustomerSpecifications(ctx, connectionPool));
+
+
+
+        //  app.get("/orders", ctx -> OrderController.showOrders(ctx, connectionPool));
+       // app.get("/admin/orders", ctx -> OrderController.showAllOrdersWithDetails(ctx, connectionPool));
     }
 }

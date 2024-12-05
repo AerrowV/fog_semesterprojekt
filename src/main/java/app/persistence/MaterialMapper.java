@@ -124,5 +124,33 @@ import java.sql.*;
                 throw new DatabaseException("Failed to delete material: " + e.getMessage());
             }
         }
+
+//        public class MaterialDAO {
+//            public static List<Material> getMaterials(ConnectionPool connectionPool) throws DatabaseException {
+//                String sql = "SELECT id, name, length, width, height FROM materiale";
+//                List<Material> materials = new ArrayList<>();
+//
+//                try (Connection connection = connectionPool.getConnection();
+//                     PreparedStatement ps = connection.prepareStatement(sql);
+//                     ResultSet rs = ps.executeQuery()) {
+//
+//                    while (rs.next()) {
+//                        materials.add(new Material(
+//                                rs.getInt("materiale_id"),
+//                                rs.getString("material_description"),
+//                                rs.getInt("materiale_length"),
+//                                rs.getInt("materiale_amount"),
+//                                rs.getString("materiale_unit"),
+//                                rs.getString("materiale_function"),
+//                                rs.getInt("materiale_price")
+//
+//                        ));
+//                    }
+//                } catch (SQLException e) {
+//                    throw new DatabaseException("Error retrieving materials: " + e.getMessage());
+//                }
+//                return materials;
+//            }
+//        }
     }
 

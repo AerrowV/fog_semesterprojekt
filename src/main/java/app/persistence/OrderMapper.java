@@ -1,5 +1,6 @@
 package app.persistence;
 
+import app.entities.CarportSpec;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
 
@@ -115,5 +116,26 @@ public class OrderMapper {
             throw new DatabaseException("Error retrieving order: " + e.getMessage());
         }
         return orders;
+    }
+    public static CarportSpec getCarportSpecByOrderId(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT * FROM CarportSpec WHERE order_id = ?";
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return new CarportSpec(
+                        rs.getDouble("carport_id"),
+                        rs.getDouble("carport_length"),
+                        rs.getDouble("carport_width"),
+                        rs.getBoolean("carport_roof")
+
+                        // add additional fields as needed
+                );
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving carport spec: " + e.getMessage());
+        }
+        return null;
     }
 }

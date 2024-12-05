@@ -2,40 +2,40 @@ package app.entities;
 
 public class CarportSpec {
 
-    private int carportId;
-    private int length;
-    private int width;
+    private double carportId;
+    private double length;
+    private double width;
     private boolean roofType;
 
 
-    public CarportSpec(int carportId, int length, int width, boolean roofType) {
+    public CarportSpec(double carportId, double length, double width, boolean roofType) {
         this.carportId = carportId;
         this.length = length;
         this.width = width;
         this.roofType = roofType;
     }
 
-    public int getCarportId() {
+    public double getCarportId() {
         return carportId;
     }
 
-    public void setCarportId(int carportId) {
+    public void setCarportId(double carportId) {
         this.carportId = carportId;
     }
 
-    public int getLength() {
+    public double getLength() {
         return length;
     }
 
-    public void setLength(int length) {
+    public void setLength(double length) {
         this.length = length;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(double width) {
         this.width = width;
     }
 

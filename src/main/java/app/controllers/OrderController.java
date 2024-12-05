@@ -6,6 +6,7 @@ import app.persistence.OrderMapper;
 import app.services.CarportSvg;
 import io.javalin.http.Context;
 import java.util.List;
+import java.util.Locale;
 
 public class OrderController {
     private CarportSvg carportSvg;
@@ -14,9 +15,25 @@ public class OrderController {
 
     }
 
-    public void showOrder(){
+    public static void showOrder(Context ctx){
+
+//        Locale.setDefault(new Locale("US"));
+//        Svg carportSvg = new Svg(0,0,"0 0 855 690", "100%", "auto");
+//        carportSvg.addRectangle(0,0,600,780, "stroke-width:1px; stroke:#000000; fill: #ffffff");
+//        ctx.attribute("carportSvg", carportSvg.toString());
+//        ctx.render("ShowOrder.html");
+
+
+            Locale.setDefault(new Locale("US"));
+            CarportSvg svg = new CarportSvg(600, 780);
+
+            ctx.attribute("svg", svg.toString());
+            ctx.render("showOrder.html");
+
 
     }
+
+
 
     public static void showOrders(Context ctx, ConnectionPool connectionPool) {
 
