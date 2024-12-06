@@ -326,23 +326,23 @@ public class CarportController {
         int amount = 0;
         int rafterId = 0;
         if (length >= 240 && length <= 300) {
-            amount = 5;
-        } else if (length >= 301 && length <= 360) {
             amount = 6;
-        } else if (length >= 361 && length <= 420) {
+        } else if (length >= 301 && length <= 360) {
             amount = 7;
-        } else if (length >= 421 && length <= 480) {
+        } else if (length >= 361 && length <= 420) {
             amount = 8;
-        } else if (length >= 481 && length <= 540) {
+        } else if (length >= 421 && length <= 480) {
             amount = 9;
-        } else if (length >= 541 && length <= 600) {
+        } else if (length >= 481 && length <= 540) {
             amount = 10;
-        } else if (length >= 601 && length <= 660) {
+        } else if (length >= 541 && length <= 600) {
             amount = 11;
+        } else if (length >= 601 && length <= 660) {
+            amount = 12;
         } else if (length >= 661 && length <= 720) {
-            amount = 13;
-        } else if (length >= 721 && length <= 780) {
             amount = 14;
+        } else if (length >= 721 && length <= 780) {
+            amount = 15;
         }
 
         if (width >= 240 && width <= 300) {
