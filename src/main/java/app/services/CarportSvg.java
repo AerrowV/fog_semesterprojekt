@@ -1,15 +1,11 @@
 package app.services;
 
-import app.entities.Material;
-
-import java.util.List;
-
 public class CarportSvg {
     private double width;
     private double length;
     private Svg carportSvg;
 
-    public CarportSvg(int width, int height) {
+    public CarportSvg(double width, double height) {
         this.width = width;
         this.length = length;
         carportSvg = new Svg(0, 0, "0 0 855 690", "75%");
@@ -30,6 +26,8 @@ public class CarportSvg {
         }
     }
 
+
+
 //    public void addMaterials(List<Material> materials) {
 //        for (Material material : materials) {
 //            carportSvg.addRectangle(
@@ -46,4 +44,6 @@ public class CarportSvg {
             return carportSvg.toString();
         }
     }
+
+
 

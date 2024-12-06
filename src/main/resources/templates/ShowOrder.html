@@ -14,10 +14,15 @@
 <p>This is where we show the order details and the drawing when the customer has accepted the offer</p>
 
 <p>We want to inject a SVG drawing below:</p>
+<
+<h1>Carport Order #<span th:text="${order.id}"></span></h1>
+<p>Width: <span th:text="${order.width}"></span> cm</p>
+<p>Length: <span th:text="${order.length}"></span> cm</p>
 
-<div class="carport-svg-topview">
+<div id="carport-drawing">
+    <!-- Insert the SVG -->
     <div th:utext="${svg}"></div>
 </div>
-
 </body>
 </html>
+

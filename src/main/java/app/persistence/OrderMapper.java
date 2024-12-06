@@ -1,7 +1,10 @@
 package app.persistence;
 
+import app.entities.CarportSpec;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
+import io.javalin.http.Context;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +13,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderMapper {
+
+
+
+        public static CarportSpec getCarportSpec(int orderId, ConnectionPool connectionPool) {
+            CarportSpec spec = null;
+
+            try (Connection connection = connectionPool.getConnection()) {
+                String query = "SELECT * FROM carportspecs WHERE order_id = ?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, orderId);
+
+                ResultSet rs = ps.executeQuery();
+                if (rs.next()) {
+                    spec = new CarportSpec(
+                            rs.getInt("carport_id"),
+                            rs.getInt("carport_length"),
+                            rs.getInt("carport_width"),
+                            rs.getBoolean("carport_roof")
+                    );
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            return spec;
+        }
+
+
+    public static void showOrders(Context ctx, ConnectionPool connectionPool) {
+
+        int userId = ctx.sessionAttribute("user_id");
+
+        try {
+            List<Order> orders = OrderMapper.getOrderByUserId(userId, connectionPool);
+
+
+            ctx.attribute("orders", orders);
+            ctx.render("orders.html");
+
+
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "Failed to load orders: " + e.getMessage());
+            ctx.render("orders.html");
+        }
+    }
 
     public static int createOrder(Order order, ConnectionPool connectionPool) throws DatabaseException {
         if (order.getUserId() <= 0) {

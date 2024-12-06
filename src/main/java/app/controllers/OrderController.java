@@ -7,7 +7,7 @@ import app.persistence.*;
 import app.services.CarportSvg;
 import io.javalin.http.Context;
 
-import java.sql.Timestamp;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,12 +19,51 @@ public class OrderController {
     public OrderController(Context ctx) {
 
     }
+    public static void showSVG(Context ctx, ConnectionPool connection) {
+        int orderId = Integer.parseInt(ctx.formParam("order_id"));
+
+        // Fetch carport specs from database
+        CarportSpec spec = OrderController.getCarportSpec(orderId, connection);
+
+
+        // Generate the SVG using CarportSvg
+        CarportSvg svg = new CarportSvg(spec.getWidth(), spec.getLength());
+
+        // Pass the SVG to Thymeleaf
+        ctx.attribute("svg", svg.toString());
+        ctx.attribute("order", spec);
+        ctx.render("showOrder.html"); // Thymeleaf template
+    }
+    public static CarportSpec getCarportSpec(int orderId, ConnectionPool connectionPool) {
+        CarportSpec spec = null;
+
+        try (Connection connection = connectionPool.getConnection()) {
+            String query = "SELECT * FROM carportspecs WHERE order_id = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, orderId);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                spec = new CarportSpec(
+                        rs.getInt("carport_id"),
+                        rs.getInt("carport_length"),
+                        rs.getInt("carport_width"),
+                        rs.getBoolean("carport_roof")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return spec;
+    }
 
     public static void showOrders(Context ctx, ConnectionPool connectionPool) {
         try {
             Integer userId = ctx.sessionAttribute("user_id");
 
             if (userId == null) {
+
                 ctx.attribute("message", "You need to log in to view your orders.");
                 ctx.redirect("/login");
                 return;
@@ -73,6 +112,8 @@ public class OrderController {
 
             ctx.attribute("ordersWithPrices", ordersWithPrices);
             ctx.render("adminOrderList.html");
+
+
 
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to load all orders: " + e.getMessage());
@@ -171,11 +212,10 @@ public class OrderController {
             CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
 
             List<MaterialSpec> materialSpecs = MaterialMapper.getMaterialSpecsByCarportId(order.getCarportId(), connectionPool);
-
+            showSVG(ctx, connectionPool);
             ctx.attribute("order", order);
             ctx.attribute("carportSpec", carportSpec);
             ctx.attribute("materialSpecs", materialSpecs);
-
             ctx.render("orderDetails.html");
 
         } catch (NumberFormatException e) {

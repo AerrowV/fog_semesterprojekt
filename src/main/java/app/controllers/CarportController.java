@@ -55,7 +55,7 @@ public class CarportController {
 
 
     //Understernbrædder	til	for og bag enden
-    public static Material underFasciaBoardFrontandBack(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static Material underFasciaBoardFrontandBack(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 0;
         Material material = null;
@@ -83,7 +83,7 @@ public class CarportController {
     }
 
     //Understernbrædder	til	siderne
-    public static Material underFasciaBoardSides(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static Material underFasciaBoardSides(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 0;
         Material material = null;
@@ -126,7 +126,7 @@ public class CarportController {
     }
 
     //Oversternbrædder til forenden
-    public static Material overFasciaBoardFront(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static Material overFasciaBoardFront(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 0;
         Material material = null;
@@ -160,7 +160,7 @@ public class CarportController {
     }
 
     //Oversternbrædder	til	siderne
-    public static Material overFasciaBoardSides(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static Material overFasciaBoardSides(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 0;
         Material material = null;
@@ -203,7 +203,7 @@ public class CarportController {
     }
 
     //vandbrædt på stern i forende
-    public static Material outerWaterBoardFrontend(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static Material outerWaterBoardFrontend(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         Material material = null;
 
@@ -231,7 +231,7 @@ public class CarportController {
 
 
     //vandbrædt på stern i sider
-    public static Material outerWaterBoardSides(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static Material outerWaterBoardSides(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 1;
         Material material = null;
@@ -270,7 +270,7 @@ public class CarportController {
 
 
     //Stolper til carport
-    public static Material carportPosts(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static Material carportPosts(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int postId = 45;
         Material post = MaterialMapper.getMaterialById(postId, connectionPool);
 
@@ -284,7 +284,7 @@ public class CarportController {
     }
 
     //Bræt
-    public static Material sternBoard(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static Material sternBoard(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 2;
         Material material = null;
@@ -322,7 +322,7 @@ public class CarportController {
     }
 
     //Spær
-    public static Material carportRafter(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static Material carportRafter(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int amount = 0;
         int rafterId = 0;
         if (length >= 240 && length <= 300) {
@@ -366,7 +366,7 @@ public class CarportController {
         return rafter;
     }
 
-    public static ArrayList<Material> carportStykListe(int length, int width, int carportId, ConnectionPool connectionPool) throws DatabaseException {
+    public static ArrayList<Material> carportStykListe(double length, double width, int carportId, ConnectionPool connectionPool) throws DatabaseException {
         ArrayList<Material> stykliste = new ArrayList<>();
         stykliste.add(outerWaterBoardFrontend(length, width, connectionPool));
         stykliste.add(outerWaterBoardSides(length, width, connectionPool));
@@ -389,7 +389,7 @@ public class CarportController {
 
     }
 
-    public static double calculatorForPrice(int length, int width, boolean hasRoof, ConnectionPool connectionPool) throws DatabaseException {
+    public static double calculatorForPrice(double length, double width, boolean hasRoof, ConnectionPool connectionPool) throws DatabaseException {
 
         int carportId = CarportMapper.getCarportId(length, width, hasRoof, connectionPool);
 
@@ -407,6 +407,7 @@ public class CarportController {
         return totalPrice - ((percentage / 100) * totalPrice);
 
     }
+
 }
 
 

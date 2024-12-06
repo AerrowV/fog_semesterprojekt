@@ -34,14 +34,14 @@ public class CarportMapper {
         return carportId;
     }
 
-    public static int getCarportId(int length, int width, boolean hasRoof, ConnectionPool connectionPool) throws DatabaseException {
+    public static int getCarportId(double length, double width, boolean hasRoof, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT carport_id FROM carport_spec WHERE carport_length = ? AND carport_width = ? AND carport_roof = ?";
         int carportId = 0;
 
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, length);
-            ps.setInt(2, width);
+            ps.setDouble(1, length);
+            ps.setDouble(2, width);
             ps.setBoolean(3, hasRoof);
 
             try (ResultSet rs = ps.executeQuery()) {

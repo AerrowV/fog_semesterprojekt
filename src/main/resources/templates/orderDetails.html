@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Order Details</title>
+    <link href="../public/css/stylesOrder.css" th:href="@{/css/stylesOrder.css}" rel="stylesheet"/>
 </head>
 <body>
 <h1>Order Details</h1>
@@ -21,6 +22,15 @@
 <p><strong>Width:</strong> <span th:text="${carportSpec.width}"></span> cm</p>
 <p><strong>Roof:</strong> <span th:text="${carportSpec.roofType ? 'Yes' : 'No'}"></span></p>
 
-<a href="/orders">Back to Orders</a>
+<p>We want to inject a SVG drawing below:</p>
+<
+<h1>Carport Order #<span th:text="${carportSpec.carportId}"></span></h1>
+<p>Width: <span th:text="${carportSpec.width}"></span> cm</p>
+<p>Length: <span th:text="${carportSpec.length}"></span> cm</p>
+
+<div id="carport-drawing">
+    <!-- Insert the SVG -->
+    <div th:utext="${svg}"></div>
+</div>
 </body>
 </html>

@@ -17,7 +17,7 @@ public class Svg
                 "    </defs>";
 
         private static final String SVG_RECT_TEMPLATE = "<rect x=\"%.2f\" y=\"%.2f\" height=\"%f\" width=\"%f\" style=\"%s\" />";
-
+        private static final String svgLine = "<line x1=\"%f\" y1=\"%f\" x2=\"%f\" y2=\"%f\" stroke=\"#000\" stroke-width=\"2\" stroke-dasharray=\"10\"/>\n";
         private StringBuilder svg = new StringBuilder();
 
         public Svg(int x, int y, String viewBox, String width)
@@ -33,8 +33,8 @@ public class Svg
         }
 
 
-        public void addLine(int x1, int y1, int x2, int y2, String style)
-        {
+        public void addLine(double x1, double y1, double x2, double y2) {
+                svg.append(String.format(svgLine, x1, y1, x2, y2));
         }
 
         public void addArrow(int x1, int y1, int x2, int y2, String style)

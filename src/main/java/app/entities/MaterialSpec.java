@@ -6,6 +6,7 @@ public class MaterialSpec {
     private int carportId;
     private int materialId;
     private int materialOrderAmount;
+    private int orderId;
 
     public MaterialSpec(int materialSpecId, int carportId, int materialId, int materialOrderAmount) {
         this.materialSpecId = materialSpecId;
@@ -14,9 +15,10 @@ public class MaterialSpec {
         this.materialOrderAmount = materialOrderAmount;
     }
 
-    public MaterialSpec(int materialSpecId, int materialOrderAmount) {
+    public MaterialSpec(int materialSpecId, int materialOrderAmount, int orderId) {
         this.materialSpecId = materialSpecId;
         this.materialOrderAmount = materialOrderAmount;
+        this.orderId = orderId;
     }
 
     public int getMaterialSpecId() {
