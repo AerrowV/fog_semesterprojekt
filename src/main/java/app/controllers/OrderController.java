@@ -72,7 +72,7 @@ public class OrderController {
             }
 
             ctx.attribute("ordersWithPrices", ordersWithPrices);
-            ctx.render("adminOrderList.html");
+            ctx.render("admin-order-list.html");
 
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to load all orders: " + e.getMessage());
@@ -95,7 +95,7 @@ public class OrderController {
             ctx.redirect("/admin/orders");
         } catch (DatabaseException | NumberFormatException e) {
             ctx.attribute("message", "Failed to update order status: " + e.getMessage());
-            ctx.render("adminOrderList.html");
+            ctx.render("admin-order-list.html");
         }
     }
 
@@ -176,14 +176,14 @@ public class OrderController {
             ctx.attribute("carportSpec", carportSpec);
             ctx.attribute("materialSpecs", materialSpecs);
 
-            ctx.render("orderDetails.html");
+            ctx.render("order-details.html");
 
         } catch (NumberFormatException e) {
             ctx.attribute("message", "Invalid order ID format.");
-            ctx.render("orderDetails.html");
+            ctx.render("order-details.html");
         } catch (DatabaseException e) {
             ctx.attribute("message", "Error retrieving order details: " + e.getMessage());
-            ctx.render("orderDetails.html");
+            ctx.render("order-details.html");
         }
     }
 }

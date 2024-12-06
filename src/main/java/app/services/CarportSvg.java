@@ -11,19 +11,15 @@ public class CarportSvg {
         this.height = height;
     }
 
-
     public String toString() {
         return "";
     }
 
     private void addBeams(){
-
     }
     private void addRafters(){
-
     }
 
     private void addPost(){
-
     }
 }

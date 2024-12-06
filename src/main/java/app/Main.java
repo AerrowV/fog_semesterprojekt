@@ -38,10 +38,9 @@ public class Main {
         app.get("/materials/update/", ctx -> MaterialController.showUpdateMaterialForm(ctx, connectionPool));
         app.post("/materials/update", ctx -> MaterialController.updateMaterial(ctx, connectionPool));
         app.post("/materials/delete", ctx -> MaterialController.deleteMaterial(ctx, connectionPool));
-        app.get("/chooseCarport", ctx -> ctx.render("chooseCarport.html"));
+        app.get("/chooseCarport", ctx -> ctx.render("choose-carport.html"));
         app.post("/chooseCarport", ctx -> CarportController.saveCustomerSpecifications(ctx, connectionPool));
         app.get("/orders/details/{id}", ctx -> OrderController.showOrderDetails(ctx, connectionPool));
-
         app.get("/payment", ctx -> ctx.render("payment.html"));
         app.post("/payment", ctx -> PaymentController.saveUserData(ctx, connectionPool));
         app.get("/orders", ctx -> OrderController.showOrders(ctx, connectionPool));
@@ -50,6 +49,10 @@ public class Main {
         app.post("/update-order-price", ctx -> OrderController.updateOrderPrice(ctx, connectionPool));
         app.post("/update-order-details", ctx -> OrderController.updateOrderDetails(ctx, connectionPool));
         app.post("/payment/complete", ctx -> PaymentController.saveUserData(ctx, connectionPool));
+        app.get("/contact", ctx -> ctx.render("contact.html"));
+        app.post("/contact", ctx -> MailController.sendUserMail(ctx));
+        app.get("/admin/emails", ctx -> ctx.render("admin-emails.html"));
+        app.post("/admin/emails", ctx -> MailController.sendAdminMail(ctx));
 
     }
 }
