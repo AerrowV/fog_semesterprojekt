@@ -1,5 +1,6 @@
 package app.controllers;
 import app.entities.CarportSpec;
+import app.entities.Material;
 import app.entities.MaterialSpec;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
@@ -8,10 +9,8 @@ import app.services.CarportSvg;
 import io.javalin.http.Context;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 
 public class OrderController {
     private CarportSvg carportSvg;
@@ -19,44 +18,17 @@ public class OrderController {
     public OrderController(Context ctx) {
 
     }
-    public static void showSVG(Context ctx, ConnectionPool connection) {
-        int orderId = Integer.parseInt(ctx.formParam("order_id"));
 
-        // Fetch carport specs from database
-        CarportSpec spec = OrderController.getCarportSpec(orderId, connection);
+    public static void showSVG(Context ctx, CarportSpec carportSpec, List<MaterialSpec> materialSpecs, List<Material> materials) {
+        Locale.setDefault(new Locale("US"));
+        CarportSvg carportSvg = new CarportSvg(carportSpec.getWidth(), carportSpec.getLength());
+        carportSvg.addMaterials(materialSpecs, materials);
 
-
-        // Generate the SVG using CarportSvg
-        CarportSvg svg = new CarportSvg(spec.getWidth(), spec.getLength());
-
-        // Pass the SVG to Thymeleaf
-        ctx.attribute("svg", svg.toString());
-        ctx.attribute("order", spec);
-        ctx.render("showOrder.html"); // Thymeleaf template
+        // Attach the generated SVG to the context
+        ctx.attribute("svg", carportSvg.toString());
     }
-    public static CarportSpec getCarportSpec(int orderId, ConnectionPool connectionPool) {
-        CarportSpec spec = null;
 
-        try (Connection connection = connectionPool.getConnection()) {
-            String query = "SELECT * FROM carportspecs WHERE order_id = ?";
-            PreparedStatement ps = connection.prepareStatement(query);
-            ps.setInt(1, orderId);
 
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                spec = new CarportSpec(
-                        rs.getInt("carport_id"),
-                        rs.getInt("carport_length"),
-                        rs.getInt("carport_width"),
-                        rs.getBoolean("carport_roof")
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return spec;
-    }
 
     public static void showOrders(Context ctx, ConnectionPool connectionPool) {
         try {
@@ -114,7 +86,6 @@ public class OrderController {
             ctx.render("adminOrderList.html");
 
 
-
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to load all orders: " + e.getMessage());
             ctx.redirect("/admin");
@@ -123,7 +94,6 @@ public class OrderController {
             ctx.redirect("/admin");
         }
     }
-
 
 
     public static void updateOrderStatus(Context ctx, ConnectionPool connectionPool) {
@@ -200,22 +170,25 @@ public class OrderController {
     }
 
 
-
-
-
     public static void showOrderDetails(Context ctx, ConnectionPool connectionPool) {
         try {
             int orderId = Integer.parseInt(ctx.pathParam("id"));
 
+            // Fetch the order, carport specs, and material specifications
             Order order = OrderMapper.getOrderById(orderId, connectionPool);
-
             CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
-
             List<MaterialSpec> materialSpecs = MaterialMapper.getMaterialSpecsByCarportId(order.getCarportId(), connectionPool);
-            showSVG(ctx, connectionPool);
+            List<Material> materials = MaterialMapper.getAllMaterials(connectionPool); // Fetch all materials
+
+            // Add attributes to the context for rendering the order details page
             ctx.attribute("order", order);
             ctx.attribute("carportSpec", carportSpec);
             ctx.attribute("materialSpecs", materialSpecs);
+
+            // Generate the SVG
+            showSVG(ctx, carportSpec, materialSpecs, materials);
+
+            // Render the order details page
             ctx.render("orderDetails.html");
 
         } catch (NumberFormatException e) {

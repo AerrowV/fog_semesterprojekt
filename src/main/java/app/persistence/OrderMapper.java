@@ -20,7 +20,7 @@ public class OrderMapper {
             CarportSpec spec = null;
 
             try (Connection connection = connectionPool.getConnection()) {
-                String query = "SELECT * FROM carportspecs WHERE order_id = ?";
+                String query = "SELECT * FROM carport_spec WHERE carport_id = ?";
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.setInt(1, orderId);
 
