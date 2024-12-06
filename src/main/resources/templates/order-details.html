@@ -11,16 +11,24 @@
     <p th:text="${message}"></p>
 </div>
 
-<h2>Order Information</h2>
-<p><strong>Order ID:</strong> <span th:text="${order.orderId}"></span></p>
-<p><strong>Date:</strong> <span th:text="${order.orderDate}"></span></p>
-<p><strong>Status:</strong> <span th:text="${order.orderStatus}"></span></p>
+<div th:if="${order == null}">
+    <p>Order details are not available.</p>
+</div>
+<div th:if="${order != null}">
+    <h2>Order Information</h2>
+    <p><strong>Order ID:</strong> <span th:text="${order.orderId}"></span></p>
+    <p><strong>Date:</strong> <span th:text="${order.orderDate}"></span></p>
+    <p><strong>Status:</strong> <span th:text="${order.orderStatus}"></span></p>
+</div>
 
 <h2>Carport Specifications</h2>
+<p><strong>Carport ID:</strong> <span th:text="${carportSpec.carportId}"></span></p>
 <p><strong>Length:</strong> <span th:text="${carportSpec.length}"></span> cm</p>
 <p><strong>Width:</strong> <span th:text="${carportSpec.width}"></span> cm</p>
-<p><strong>Roof:</strong> <span th:text="${carportSpec.roofType ? 'Yes' : 'No'}"></span></p>
+<p><strong>Roof Type:</strong> <span th:text="${carportSpec.roofType}"></span></p>
 
-<a href="/orders">Back to Orders</a>
+<div id="carport-drawing">
+    <div th:utext="${svg}"></div>
+</div>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package app.controllers;
+
 import app.entities.CarportSpec;
+import app.entities.Material;
 import app.entities.MaterialSpec;
 import app.entities.Order;
 import app.exceptions.DatabaseException;
@@ -8,10 +10,7 @@ import app.services.CarportSvg;
 import io.javalin.http.Context;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class OrderController {
     private CarportSvg carportSvg;
@@ -19,6 +18,16 @@ public class OrderController {
     public OrderController(Context ctx) {
 
     }
+
+    public static void showSVG(Context ctx, CarportSpec carportSpec, List<MaterialSpec> materialSpecs, List<Material> materials) {
+        Locale.setDefault(new Locale("US"));
+        CarportSvg carportSvg = new CarportSvg(carportSpec.getWidth(), carportSpec.getLength());
+        carportSvg.addMaterials(materialSpecs, materials);
+
+        // Attach the generated SVG to the context
+        ctx.attribute("svg", carportSvg.toString());
+    }
+
 
     public static void showOrders(Context ctx, ConnectionPool connectionPool) {
         try {
@@ -82,7 +91,6 @@ public class OrderController {
             ctx.redirect("/admin");
         }
     }
-
 
 
     public static void updateOrderStatus(Context ctx, ConnectionPool connectionPool) {
@@ -159,22 +167,20 @@ public class OrderController {
     }
 
 
-
-
-
     public static void showOrderDetails(Context ctx, ConnectionPool connectionPool) {
         try {
             int orderId = Integer.parseInt(ctx.pathParam("id"));
 
             Order order = OrderMapper.getOrderById(orderId, connectionPool);
-
             CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
-
             List<MaterialSpec> materialSpecs = MaterialMapper.getMaterialSpecsByCarportId(order.getCarportId(), connectionPool);
+            List<Material> materials = MaterialMapper.getAllMaterials(connectionPool); // Fetch all materials
 
             ctx.attribute("order", order);
             ctx.attribute("carportSpec", carportSpec);
             ctx.attribute("materialSpecs", materialSpecs);
+
+            showSVG(ctx, carportSpec, materialSpecs, materials);
 
             ctx.render("order-details.html");
 
