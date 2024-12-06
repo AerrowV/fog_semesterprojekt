@@ -5,6 +5,10 @@ import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import app.persistence.UserMapper;
 import io.javalin.http.Context;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserController {
 
@@ -12,9 +16,11 @@ public class UserController {
     public static void login(Context ctx, ConnectionPool connectionPool) {
         String email = ctx.formParam("email");
         String password = ctx.formParam("password");
+
         try {
             User user = UserMapper.login(email, password, connectionPool);
             ctx.sessionAttribute("currentUser", user);
+            ctx.sessionAttribute("isLoggedIn", true);
 
             if (user.getIsAdmin()) {
                 ctx.redirect("/admin");
@@ -50,10 +56,20 @@ public class UserController {
 
     }
 
+
     public static void logout(Context ctx, ConnectionPool connectionPool) {
         ctx.sessionAttribute("currentUser", null);
+        ctx.sessionAttribute("isLoggedIn", false);
         ctx.sessionAttribute("user_id", null);
 
         ctx.redirect("/");
     }
+
+    public static void renderHomePage(Context ctx) {
+        Boolean isLoggedIn = ctx.sessionAttribute("isLoggedIn");
+        if (isLoggedIn == null) isLoggedIn = false;
+        ctx.attribute("isLoggedIn", isLoggedIn);
+        ctx.render("index.html");
+    }
+
 }

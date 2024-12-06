@@ -8,12 +8,19 @@ public class Order {
     private Timestamp orderDate;
     private String orderStatus;
     private int userId;
-    int carportId;
+    private int carportId;
 
     public Order(int orderId, Timestamp orderDate, String orderStatus) {
         this.orderId = orderId;
         this.orderDate = orderDate;
         this.orderStatus = orderStatus;
+    }
+
+    public Order(int orderId, Timestamp orderDate, String orderStatus, int userId) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.orderStatus = orderStatus;
+        this.userId = userId;
     }
 
     public Order(int orderId, Timestamp orderDate, String orderStatus, int userId, int carportId) {
@@ -54,5 +61,13 @@ public class Order {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    public int getCarportId() {
+        return carportId;
+    }
+
+    public void setCarportId(int carportId) {
+        this.carportId = carportId;
     }
 }

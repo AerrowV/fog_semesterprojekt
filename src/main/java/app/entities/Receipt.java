@@ -1,19 +1,21 @@
 package app.entities;
 
+import java.sql.Timestamp;
+
 public class Receipt {
 
     private int receiptId;
-    private String paidDate;
+    private Timestamp paidDate;
     private int price;
     private int orderId;
 
-    public Receipt(int receiptId, String paidDate, int price) {
+    public Receipt(int receiptId, Timestamp paidDate, int price) {
         this.receiptId = receiptId;
         this.paidDate = paidDate;
         this.price = price;
     }
 
-    public Receipt(int receiptId, String paidDate, int price, int orderId) {
+    public Receipt(int receiptId, Timestamp paidDate, int price, int orderId) {
         this.receiptId = receiptId;
         this.paidDate = paidDate;
         this.price = price;
@@ -28,11 +30,11 @@ public class Receipt {
         this.receiptId = receiptId;
     }
 
-    public String getPaidDate() {
+    public Timestamp getPaidDate() {
         return paidDate;
     }
 
-    public void setPaidDate(String paidDate) {
+    public void setPaidDate(Timestamp paidDate) {
         this.paidDate = paidDate;
     }
 

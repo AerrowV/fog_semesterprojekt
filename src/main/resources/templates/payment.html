@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <link rel="stylesheet" href="../public/css/paymentStyle.css" th:href="@{/css/paymentStyle.css}">
+</head>
+<body>
+<div class="payment-container">
+    <h1>Payment and Billing</h1>
+
+    <form th:action="@{/payment/complete}" method="post">
+        <input type="hidden" name="orderId" th:value="${param.orderId}" />
+
+        <label for="email">E-mail</label>
+        <input type="email" id="email" name="email" placeholder="Enter your E-mail" required />
+
+        <label for="first-name">First Name</label>
+        <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required />
+
+        <label for="last-name">Last Name</label>
+        <input type="text" id="last-name" name="last-name" placeholder="Enter your last name" required />
+
+        <label for="street-name">Street Name</label>
+        <input type="text" id="street-name" name="street-name" placeholder="Enter your street name" required />
+
+        <label for="house-number">House Number</label>
+        <input type="text" id="house-number" name="house-number" placeholder="Enter your house number" required />
+
+        <label for="zip">ZIP Code</label>
+        <input type="number" id="zip" name="zip" placeholder="Enter ZIP code" required />
+
+        <button type="submit">Complete Payment</button>
+    </form>
+
+</div>
+</body>
+</html>
+

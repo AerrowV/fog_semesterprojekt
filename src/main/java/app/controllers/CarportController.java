@@ -1,65 +1,59 @@
 package app.controllers;
 
-import app.entities.CarportSpec;
 import app.entities.Material;
+import app.entities.Order;
 import app.exceptions.DatabaseException;
-import app.persistence.CarportMapper;
-import app.persistence.ConnectionPool;
-import app.persistence.MaterialMapper;
-import app.persistence.OrderMapper;
-import app.services.CarportSvg;
+import app.persistence.*;
 import io.javalin.http.Context;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class CarportController {
 
-//        public static void generateCarportSvg(Context ctx, ConnectionPool connectionPool) {
-//            try {
-//                List<Material> materials = Material.getMaterials(connectionPool);
-//
-//                CarportSvg carportSvg = new CarportSvg();
-//                carportSvg.addMaterials(materials);
-//
-//                ctx.attribute("carportSvg", carportSvg.toString());
-//                ctx.render("carport.html");
-//            } catch (DatabaseException e) {
-//                ctx.attribute("message", "Failed to generate carport: " + e.getMessage());
-//                ctx.render("error.html");
-//            }
-//        }
-//public static void showCarportDrawing(Context ctx, ConnectionPool connectionPool) {
-//    int orderId = Integer.parseInt(ctx.pathParam("orderId"));
-//    try {
-//        CarportSpec spec = OrderMapper.getCarportSpecByOrderId(orderId, connectionPool);
-//        CarportSvg svg = new CarportSvg(spec);
-//
-//        ctx.attribute("svg", svg.toString());
-//        ctx.render("carportDrawing.html");
-//    } catch (DatabaseException e) {
-//        ctx.attribute("message", "Failed to load carport drawing: " + e.getMessage());
-//        ctx.render("error.html");
-//    }
-//}
-
-
     public static void saveCustomerSpecifications(Context ctx, ConnectionPool connectionPool) {
-        boolean hasRoof = false;
         try {
+
             int length = Integer.parseInt(ctx.formParam("length"));
             int width = Integer.parseInt(ctx.formParam("width"));
+            boolean hasRoof = Boolean.parseBoolean(ctx.formParam("roof"));
 
-            CarportMapper.carportSpecs(length, width, hasRoof, connectionPool);
+            int carportId = CarportMapper.saveCarportSpecs(length, width, hasRoof, connectionPool);
 
-            carportStykliste(length, width, connectionPool);
+            ArrayList<Material> stykListe = carportStykListe(length, width, carportId, connectionPool);
+            saveStykliste(connectionPool, stykListe, carportId);
 
+            Integer userId = ctx.sessionAttribute("user_id");
+            if (userId == null) {
+                ctx.attribute("message", "You must be logged in to create a carport specification.");
+                ctx.redirect("/login");
+                return;
+            }
 
-        } catch (NumberFormatException | NullPointerException | DatabaseException e) {
-            System.err.println("Error parsing form parameters: " + e.getMessage());
+            Order newOrder = new Order(0, null, "In Review", userId, carportId);
+            int orderId = OrderMapper.createOrder(newOrder, connectionPool);
+
+            if (orderId <= 0) {
+                throw new DatabaseException("Order creation returned invalid ID.");
+            }
+            double price = CarportController.calculatorForPrice(length, width, hasRoof, connectionPool);
+            ReceiptMapper.saveReceiptPrice(orderId, price, connectionPool);
+
+            ctx.attribute("message", "Carport specifications and order created successfully.");
+            ctx.redirect("/orders");
+
+        } catch (NumberFormatException e) {
+            ctx.attribute("message", "Invalid input. Please check your values.");
+            ctx.render("chooseCarport.html");
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "Failed to save carport specifications: " + e.getMessage());
+            ctx.render("chooseCarport.html");
+        } catch (Exception e) {
+            ctx.attribute("message", "An unexpected error occurred.");
+            ctx.render("chooseCarport.html");
         }
-
     }
+
+
     //Understernbrædder	til	for og bag enden
     public static Material underFasciaBoardFrontandBack(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
@@ -80,11 +74,12 @@ public class CarportController {
             boardId = 6;
         }
 
-            material = MaterialMapper.getMaterialById(boardId, connectionPool);
-            material.setAmount(2);
-            material.setDescription("understernbrædder til for & bag ende");
+        material = MaterialMapper.getMaterialById(boardId, connectionPool);
+        material.setAmount(2);
+        material.setDescription("understernbrædder til for & bag ende");
+        material.setPrice(material.getAmount() * material.getPrice());
 
-            return material;
+        return material;
     }
 
     //Understernbrædder	til	siderne
@@ -122,11 +117,12 @@ public class CarportController {
             amount = 4;
         }
 
-            material = MaterialMapper.getMaterialById(boardId, connectionPool);
-            material.setAmount(amount);
-            material.setDescription("understernbrædder til siderne");
+        material = MaterialMapper.getMaterialById(boardId, connectionPool);
+        material.setAmount(amount);
+        material.setDescription("understernbrædder til siderne");
+        material.setPrice(material.getAmount() * material.getPrice());
 
-            return material;
+        return material;
     }
 
     //Oversternbrædder til forenden
@@ -158,9 +154,11 @@ public class CarportController {
         material = MaterialMapper.getMaterialById(boardId, connectionPool);
         material.setAmount(amount);
         material.setDescription("oversternbrædder til forenden");
+        material.setPrice(material.getAmount() * material.getPrice());
 
         return material;
     }
+
     //Oversternbrædder	til	siderne
     public static Material overFasciaBoardSides(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
@@ -199,9 +197,11 @@ public class CarportController {
         material = MaterialMapper.getMaterialById(boardId, connectionPool);
         material.setAmount(amount);
         material.setDescription("oversternbrædder til siderne");
+        material.setPrice(material.getAmount() * material.getPrice());
 
         return material;
     }
+
     //vandbrædt på stern i forende
     public static Material outerWaterBoardFrontend(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
@@ -221,17 +221,12 @@ public class CarportController {
             boardId = 53;
         }
 
-        if (boardId > 0) {
-            material = MaterialMapper.getMaterialById(boardId, connectionPool);
-            material.setAmount(width >= 541 && width <= 600 ? 2 : 1);
-            material.setDescription("vandbrædt på stern i forende");
-        }
+        material = MaterialMapper.getMaterialById(boardId, connectionPool);
+        material.setAmount(width >= 541 && width <= 600 ? 2 : 1);
+        material.setDescription("vandbrædt på stern i forende");
+        material.setPrice(material.getAmount() * material.getPrice());
 
-        if (material != null) {
-            return material;
-        } else {
-            throw new DatabaseException("Width value is out of valid range.");
-        }
+        return material;
     }
 
 
@@ -265,11 +260,12 @@ public class CarportController {
             amount = 2;
         }
 
-            material = MaterialMapper.getMaterialById(boardId, connectionPool);
-            material.setAmount(amount);
-            material.setDescription("vandbrædt på stern i sider");
+        material = MaterialMapper.getMaterialById(boardId, connectionPool);
+        material.setAmount(amount);
+        material.setDescription("vandbrædt på stern i sider");
+        material.setPrice(material.getAmount() * material.getPrice());
 
-            return material;
+        return material;
     }
 
 
@@ -286,6 +282,7 @@ public class CarportController {
 
         return post;
     }
+
     //Bræt
     public static Material sternBoard(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
@@ -319,9 +316,11 @@ public class CarportController {
         material = MaterialMapper.getMaterialById(boardId, connectionPool);
         material.setAmount(amount);
         material.setDescription("understernbrædder til siderne");
+        material.setPrice(material.getAmount() * material.getPrice());
 
         return material;
     }
+
     //Spær
     public static Material carportRafter(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
         int amount = 0;
@@ -362,23 +361,51 @@ public class CarportController {
 
         Material rafter = MaterialMapper.getMaterialById(rafterId, connectionPool);
         rafter.setAmount(amount);
+        rafter.setPrice(rafter.getAmount() * rafter.getPrice());
 
         return rafter;
     }
 
-    public static ArrayList<Material> carportStykliste(int length, int width, ConnectionPool connectionPool) throws DatabaseException {
+    public static ArrayList<Material> carportStykListe(int length, int width, int carportId, ConnectionPool connectionPool) throws DatabaseException {
         ArrayList<Material> stykliste = new ArrayList<>();
-        stykliste.add(outerWaterBoardFrontend(length,width,connectionPool));
-        stykliste.add(outerWaterBoardSides(length,width,connectionPool));
-        stykliste.add(carportRafter(length,width,connectionPool));
-        stykliste.add(sternBoard(length,width,connectionPool));
-        stykliste.add(carportPosts(length,width,connectionPool));
-        stykliste.add(overFasciaBoardFront(length,width,connectionPool));
-        stykliste.add(overFasciaBoardSides(length,width,connectionPool));
-        stykliste.add(underFasciaBoardFrontandBack(length,width,connectionPool));
-        stykliste.add(underFasciaBoardSides(length,width,connectionPool));
+        stykliste.add(outerWaterBoardFrontend(length, width, connectionPool));
+        stykliste.add(outerWaterBoardSides(length, width, connectionPool));
+        stykliste.add(carportRafter(length, width, connectionPool));
+        stykliste.add(sternBoard(length, width, connectionPool));
+        stykliste.add(carportPosts(length, width, connectionPool));
+        stykliste.add(overFasciaBoardFront(length, width, connectionPool));
+        stykliste.add(overFasciaBoardSides(length, width, connectionPool));
+        stykliste.add(underFasciaBoardFrontandBack(length, width, connectionPool));
+        stykliste.add(underFasciaBoardSides(length, width, connectionPool));
 
         return stykliste;
+    }
+
+    public static void saveStykliste(ConnectionPool connectionPool, ArrayList<Material> stykliste, int carportId) throws DatabaseException {
+        for (Material material : stykliste) {
+            CarportMapper.saveMaterialSpec(carportId, material.getMaterialId(), material.getAmount(), connectionPool);
+            MaterialMapper.updateMaterialAmount(material.getMaterialId(), material.getAmount(), connectionPool);
+        }
+
+    }
+
+    public static double calculatorForPrice(int length, int width, boolean hasRoof, ConnectionPool connectionPool) throws DatabaseException {
+
+        int carportId = CarportMapper.getCarportId(length, width, hasRoof, connectionPool);
+
+        ArrayList<Material> stykliste = carportStykListe(length, width, carportId, connectionPool);
+
+        double totalPrice = 0.0;
+        for (Material material : stykliste) {
+            totalPrice += material.getPrice();
+        }
+
+        return totalPrice;
+    }
+
+    public static double calculatePercentage(double totalPrice, double percentage, ConnectionPool connectionPool) throws DatabaseException {
+        return totalPrice - ((percentage / 100) * totalPrice);
+
     }
 }
 
