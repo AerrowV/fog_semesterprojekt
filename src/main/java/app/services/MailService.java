@@ -119,7 +119,7 @@ public class MailService {
                 """.formatted(userName, adminMessage, adminName, adminTitle);
     }
 
-    public static String generateReceiptEmailContent(int orderId, String svgContent, String materialListHtml) {
+    public static String generateReceiptEmailContent(int orderId, String materialListHtml) {
         return """
                     <!DOCTYPE html>
                     <html lang="en">
@@ -182,8 +182,6 @@ public class MailService {
                             <div class="content">
                                 <p>Dear Customer,</p>
                                 <p>Thank you for your purchase at Johannes Fog A/S! Below, you will find the details of your carport order.</p>
-                                <h2>Your Carport Design</h2>
-                                <div>%s</div>
                                 <h2>Material List</h2>
                                 <p>The following materials were used for your order:</p>
                                 %s
@@ -196,7 +194,7 @@ public class MailService {
                         </div>
                     </body>
                     </html>
-                """.formatted(orderId, svgContent, materialListHtml);
+                """.formatted(orderId, materialListHtml);
     }
 
     public static File generateSvgFile(String svgContent, String fileName) throws IOException {

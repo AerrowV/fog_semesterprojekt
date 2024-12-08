@@ -112,7 +112,6 @@ public class PaymentController {
 
             String emailContent = MailService.generateReceiptEmailContent(
                     order.getOrderId(),
-                    svgContent,
                     materialListHtml.toString()
             );
 
