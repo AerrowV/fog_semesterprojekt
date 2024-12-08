@@ -14,7 +14,7 @@ public class MailController {
 
             String adminEmail = System.getenv("MAILGUN_SENDER_EMAIL");
 
-            MailService.sendEmail(adminEmail, "Message from " + name,  ": " + subject, message + "\n\nFrom: " + email);
+            MailService.sendEmail(adminEmail, "Message from " + name, ": " + subject, message + "\n\nFrom: " + email);
 
             ctx.attribute("message", "Your message has been sent!");
             ctx.render("contact.html");

@@ -1,6 +1,5 @@
 package app.persistence;
 
-import app.controllers.CarportController;
 import app.entities.Receipt;
 import app.exceptions.DatabaseException;
 

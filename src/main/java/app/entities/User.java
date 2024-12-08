@@ -37,10 +37,6 @@ public class User {
         this.addressId = addressId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -89,9 +85,12 @@ public class User {
         this.addressId = addressId;
     }
 
-
     public int getUserId() {
         return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public void setAdmin(Boolean admin) {

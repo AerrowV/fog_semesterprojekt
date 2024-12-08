@@ -3,11 +3,9 @@ package app.controllers;
 import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
-import app.services.CarportSvg;
 import app.services.MailService;
 import io.javalin.http.Context;
 
-import java.io.File;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -53,20 +51,20 @@ public class PaymentController {
                 sendReceiptEmail(orderId, email, connectionPool);
 
                 String htmlResponse = """
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta http-equiv="refresh" content="5;url=/">
-                    <title>Payment Successful</title>
-                </head>
-                <body>
-                    <h1>Payment Successful</h1>
-                    <p>Your payment was successful. You will be redirected to the home page in 5 seconds.</p>
-                    <p>If not, click <a href="/">here</a>.</p>
-                </body>
-                </html>
-            """;
+                            <!DOCTYPE html>
+                            <html lang="en">
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta http-equiv="refresh" content="5;url=/">
+                                <title>Payment Successful</title>
+                            </head>
+                            <body>
+                                <h1>Payment Successful</h1>
+                                <p>Your payment was successful. You will be redirected to the home page in 5 seconds.</p>
+                                <p>If not, click <a href="/">here</a>.</p>
+                            </body>
+                            </html>
+                        """;
                 ctx.html(htmlResponse);
             } else {
                 ctx.status(400).result("Email or ZIP code not found. Please try again.");

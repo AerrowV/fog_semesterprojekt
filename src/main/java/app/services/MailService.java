@@ -19,7 +19,7 @@ public class MailService {
     private static final String SENDER_EMAIL = System.getenv("MAILGUN_SENDER_EMAIL");
     private static final String BASE_URL = "https://api.eu.mailgun.net/";
 
-    public static MailgunMessagesApi getMailgunMessagesApi(){
+    public static MailgunMessagesApi getMailgunMessagesApi() {
         return MailgunClient.config(BASE_URL, API_KEY).createApi(MailgunMessagesApi.class);
     }
 
@@ -36,7 +36,6 @@ public class MailService {
 
         MessageResponse response = getMailgunMessagesApi().sendMessage(DOMAIN, message);
     }
-
 
 
     public static String getAdminEmailTemplate(String userName, String adminMessage, String adminName, String adminTitle) {
@@ -124,50 +123,50 @@ public class MailService {
 
     public static String generateReceiptEmailContent(Order order, User user, Receipt receipt, String materialListHtml) {
         return """
-        <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <style>
-                body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 0; }
-                .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 20px; }
-                .header { background-color: #1b3e5b; color: #ffffff; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
-                .content { padding: 20px; }
-                ul { list-style: none; padding: 0; }
-                li { margin: 5px 0; font-size: 14px; }
-                .footer { text-align: center; font-size: 12px; color: #777777; margin-top: 20px; }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <div class="header">
-                    <h1>Receipt for Your Order</h1>
-                    <p>Order ID: %d</p>
-                </div>
-                <div class="content">
-                    <p>Dear %s %s,</p>
-                    <p>Thank you for your purchase at Johannes Fog A/S! Below, you will find the details of your order.</p>
-                    <h2>Customer Details</h2>
-                    <p><strong>Name:</strong> %s %s</p>
-                    <p><strong>Email:</strong> %s</p>
-                    <p><strong>Address:</strong> %s</p>
-                    <h2>Order Details</h2>
-                    <p><strong>Total Price:</strong> %.2f DKK</p>
-                    <p><strong>Paid Date:</strong> %s</p>
-                    <h2>Material List</h2>
-                    <p>The following materials were used for your order:</p>
-                    %s
-                </div>
-                <div class="footer">
-                    <p>&copy; 2024 Johannes Fog A/S. All rights reserved.</p>
-                    <p>Visit us at <a href="https://www.johannesfog.dk">www.johannesfog.dk</a> for more information.</p>
-                    <p>For assistance, contact our support team at <a href="mailto:support@fog.dk">support@fog.dk</a>.</p>
-                </div>
-            </div>
-        </body>
-        </html>
-    """.formatted(order.getOrderId(),
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <style>
+                            body { font-family: Arial, sans-serif; background-color: #f4f4f9; margin: 0; padding: 0; }
+                            .container { max-width: 600px; margin: 20px auto; background: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 20px; }
+                            .header { background-color: #1b3e5b; color: #ffffff; padding: 20px; text-align: center; border-radius: 8px 8px 0 0; }
+                            .content { padding: 20px; }
+                            ul { list-style: none; padding: 0; }
+                            li { margin: 5px 0; font-size: 14px; }
+                            .footer { text-align: center; font-size: 12px; color: #777777; margin-top: 20px; }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <div class="header">
+                                <h1>Receipt for Your Order</h1>
+                                <p>Order ID: %d</p>
+                            </div>
+                            <div class="content">
+                                <p>Dear %s %s,</p>
+                                <p>Thank you for your purchase at Johannes Fog A/S! Below, you will find the details of your order.</p>
+                                <h2>Customer Details</h2>
+                                <p><strong>Name:</strong> %s %s</p>
+                                <p><strong>Email:</strong> %s</p>
+                                <p><strong>Address:</strong> %s</p>
+                                <h2>Order Details</h2>
+                                <p><strong>Total Price:</strong> %.2f DKK</p>
+                                <p><strong>Paid Date:</strong> %s</p>
+                                <h2>Material List</h2>
+                                <p>The following materials were used for your order:</p>
+                                %s
+                            </div>
+                            <div class="footer">
+                                <p>&copy; 2024 Johannes Fog A/S. All rights reserved.</p>
+                                <p>Visit us at <a href="https://www.johannesfog.dk">www.johannesfog.dk</a> for more information.</p>
+                                <p>For assistance, contact our support team at <a href="mailto:support@fog.dk">support@fog.dk</a>.</p>
+                            </div>
+                        </div>
+                    </body>
+                    </html>
+                """.formatted(order.getOrderId(),
                 user.getFirstName(), user.getLastName(),
                 user.getFirstName(), user.getLastName(),
                 user.getEmail(),
