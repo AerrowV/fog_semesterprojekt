@@ -1,13 +1,18 @@
 package app.controllers;
 
+import app.entities.CarportSpec;
+import app.entities.Material;
+import app.entities.MaterialSpec;
+import app.entities.Order;
 import app.exceptions.DatabaseException;
-import app.persistence.ConnectionPool;
-import app.persistence.OrderMapper;
-import app.persistence.ReceiptMapper;
-import app.persistence.UserMapper;
+import app.persistence.*;
+import app.services.CarportSvg;
+import app.services.MailService;
 import io.javalin.http.Context;
 
+import java.io.File;
 import java.sql.Timestamp;
+import java.util.List;
 
 public class PaymentController {
 
@@ -48,6 +53,8 @@ public class PaymentController {
                 Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
                 ReceiptMapper.updatePaidDate(orderId, currentTimestamp, connectionPool);
 
+                sendReceiptEmail(orderId, email, connectionPool);
+
                 String htmlResponse = """
                 <!DOCTYPE html>
                 <html lang="en">
@@ -75,6 +82,52 @@ public class PaymentController {
         }
     }
 
+    private static void sendReceiptEmail(int orderId, String userEmail, ConnectionPool connectionPool) throws DatabaseException {
+        try {
+            Order order = OrderMapper.getOrderById(orderId, connectionPool);
+            CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
+            List<MaterialSpec> materialSpecs = MaterialMapper.getMaterialSpecsByCarportId(order.getCarportId(), connectionPool);
+            List<Material> materials = MaterialMapper.getAllMaterials(connectionPool);
 
+            String svgContent = OrderController.generateSVG(carportSpec, materialSpecs, materials);
+
+            StringBuilder materialListHtml = new StringBuilder("<ul>");
+            for (MaterialSpec spec : materialSpecs) {
+                Material material = materials.stream()
+                        .filter(m -> m.getMaterialId() == spec.getMaterialId())
+                        .findFirst()
+                        .orElse(null);
+
+                if (material != null) {
+                    materialListHtml.append(String.format(
+                            "<li>%s (Length: %d cm): %d %s</li>",
+                            material.getDescription(),
+                            material.getLength(),
+                            spec.getMaterialOrderAmount(),
+                            material.getUnit()
+                    ));
+                }
+            }
+            materialListHtml.append("</ul>");
+
+            String emailContent = MailService.generateReceiptEmailContent(
+                    order.getOrderId(),
+                    svgContent,
+                    materialListHtml.toString()
+            );
+
+
+            MailService.sendEmailWithAttachment(
+                    userEmail,
+                    "Johannes Fog A/S - Receipt for Order #" + order.getOrderId(),
+                    "Please find the details of your order below.",
+                    emailContent,
+                    svgContent
+            );
+
+        } catch (Exception e) {
+            throw new DatabaseException("Failed to send receipt email: " + e.getMessage());
+        }
+    }
 }
 

@@ -195,4 +195,11 @@ public class OrderController {
             ctx.render("order-details.html");
         }
     }
+
+    public static String generateSVG(CarportSpec carportSpec, List<MaterialSpec> materialSpecs, List<Material> materials) {
+        Locale.setDefault(new Locale("US"));
+        CarportSvg carportSvg = new CarportSvg(carportSpec.getWidth(), carportSpec.getLength());
+        carportSvg.addMaterials(materialSpecs, materials);
+        return carportSvg.toString();
+    }
 }

@@ -156,5 +156,4 @@ public class UserMapper {
             throw new DatabaseException("Error saving data: " + e.getMessage());
         }
     }
-
 }

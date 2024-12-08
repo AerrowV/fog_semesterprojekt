@@ -1,7 +1,7 @@
 package app.services;
 
 public class Svg {
-    private static final String SVG_TEMPLATE = "<svg version=\"1.1\" x=\"%d\" y=\"%d\" viewBox=\"%s\" width=\"%s\" preserveAspectRatio=\"xMinYMin\">";
+    private static final String SVG_TEMPLATE = "<svg xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" x=\"%d\" y=\"%d\" viewBox=\"%s\" width=\"%s\" preserveAspectRatio=\"xMinYMin\">";
     private static final String SVG_ARROW_DEFS = "<defs>" +
             "<marker id=\"beginArrow\" markerWidth=\"12\" markerHeight=\"12\" refX=\"0\" refY=\"6\" orient=\"auto\">" +
             "<path d=\"M0,6 L12,0 L12,12 L0,6\" style=\"fill: #000000;\" />" +
