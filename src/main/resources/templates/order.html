@@ -11,11 +11,11 @@
     <p th:text="${message}"></p>
 </div>
 
-<div th:if="${orders.isEmpty()}">
+<div th:if="${orders == null || orders.isEmpty()}">
     <p>No orders found.</p>
 </div>
 
-<div th:if="${!orders.isEmpty()}">
+<div th:if="${orders != null && !orders.isEmpty()}">
     <table>
         <thead>
         <tr>
@@ -51,11 +51,6 @@
                 </div>
             </td>
         </tr>
-        <tr th:each="orderWithPrice : ${ordersWithPrices}">
-
-
-        </tr>
-
         </tbody>
     </table>
 </div>

@@ -40,6 +40,10 @@ public class OrderController {
             }
 
             List<Order> orders = OrderMapper.getOrderByUserId(userId, connectionPool);
+            if (orders == null) {
+                orders = new ArrayList<>();
+            }
+
             Map<Integer, Double> orderPrices = new HashMap<>();
             Map<Integer, Timestamp> paidDates = new HashMap<>();
 
@@ -59,7 +63,6 @@ public class OrderController {
             ctx.attribute("orderPrices", orderPrices);
             ctx.attribute("paidDates", paidDates);
             ctx.render("order.html");
-
 
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to load orders: " + e.getMessage());
