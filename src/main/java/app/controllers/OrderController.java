@@ -24,7 +24,6 @@ public class OrderController {
         CarportSvg carportSvg = new CarportSvg(carportSpec.getWidth(), carportSpec.getLength());
         carportSvg.addMaterials(materialSpecs, materials);
 
-        // Attach the generated SVG to the context
         ctx.attribute("svg", carportSvg.toString());
     }
 

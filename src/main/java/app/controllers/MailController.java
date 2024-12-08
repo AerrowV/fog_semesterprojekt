@@ -1,10 +1,6 @@
 package app.controllers;
 
 import app.services.MailService;
-import com.mailgun.api.v3.MailgunMessagesApi;
-import com.mailgun.client.MailgunClient;
-import com.mailgun.model.message.Message;
-import com.mailgun.model.message.MessageResponse;
 import io.javalin.http.Context;
 
 public class MailController {

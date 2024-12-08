@@ -1,9 +1,6 @@
 package app.controllers;
 
-import app.entities.CarportSpec;
-import app.entities.Material;
-import app.entities.MaterialSpec;
-import app.entities.Order;
+import app.entities.*;
 import app.exceptions.DatabaseException;
 import app.persistence.*;
 import app.services.CarportSvg;
@@ -85,6 +82,8 @@ public class PaymentController {
     private static void sendReceiptEmail(int orderId, String userEmail, ConnectionPool connectionPool) throws DatabaseException {
         try {
             Order order = OrderMapper.getOrderById(orderId, connectionPool);
+            User user = UserMapper.getUserByIdWithAddress(order.getUserId(), connectionPool);
+            Receipt receipt = ReceiptMapper.getReceiptByOrderId(orderId, connectionPool);
             CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
             List<MaterialSpec> materialSpecs = MaterialMapper.getMaterialSpecsByCarportId(order.getCarportId(), connectionPool);
             List<Material> materials = MaterialMapper.getAllMaterials(connectionPool);
@@ -111,7 +110,9 @@ public class PaymentController {
             materialListHtml.append("</ul>");
 
             String emailContent = MailService.generateReceiptEmailContent(
-                    order.getOrderId(),
+                    order,
+                    user,
+                    receipt,
                     materialListHtml.toString()
             );
 

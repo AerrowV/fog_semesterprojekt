@@ -156,4 +156,57 @@ public class UserMapper {
             throw new DatabaseException("Error saving data: " + e.getMessage());
         }
     }
+
+    public static User getUserByIdWithAddress(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = """
+        SELECT 
+            u.user_id, 
+            u.user_email, 
+            u.first_name, 
+            u.last_name, 
+            a.street_name, 
+            a.house_number, 
+            z.zip_code, 
+            z.city 
+        FROM "user" u
+        JOIN address a ON u.address_id = a.address_id
+        JOIN zip_code z ON a.zip_code = z.zip_code
+        WHERE u.user_id = ?;
+        """;
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                User user = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("user_email"),
+                        null,
+                        null,
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getInt("user_id")
+                );
+
+                String fullAddress = String.format("%s %s, %d %s",
+                        rs.getString("street_name"),
+                        rs.getString("house_number"),
+                        rs.getInt("zip_code"),
+                        rs.getString("city")
+                );
+
+                user.setFullAddress(fullAddress);
+
+                return user;
+            } else {
+                throw new DatabaseException("User not found for ID: " + userId);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving user details: " + e.getMessage());
+        }
+    }
+
 }

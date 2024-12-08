@@ -74,5 +74,29 @@ public class ReceiptMapper {
             throw new DatabaseException("Failed to fetch receipt paid date: " + e.getMessage());
         }
     }
+
+    public static Receipt getReceiptByOrderId(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT * FROM receipt WHERE order_id = ?";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, orderId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new Receipt(
+                        rs.getInt("receipt_id"),
+                        rs.getTimestamp("receipt_paid_date"),
+                        rs.getInt("receipt_price"),
+                        rs.getInt("order_id")
+                );
+            } else {
+                throw new DatabaseException("Receipt not found for Order ID: " + orderId);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving receipt: " + e.getMessage());
+        }
+    }
 }
 
