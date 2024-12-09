@@ -24,7 +24,6 @@ public class CarportSvg {
         carportSvg.addRectangle(0, length - 35, 4.5, width, "stroke-width:1px; stroke:#000000; fill: #ffffff");
     }
 
-
     private void addRafters() {
         double maxRafterSpacing = 55;
         int numberOfRafters = (int) Math.ceil(width / maxRafterSpacing);
@@ -36,46 +35,34 @@ public class CarportSvg {
         }
     }
 
-    // Dynamically add materials based on MaterialSpec and Material
     public void addMaterials(List<MaterialSpec> materialSpecs, List<Material> materials) {
         double currentX = 10;
         double currentY = 10;
         double padding = 5;
 
         for (MaterialSpec spec : materialSpecs) {
-            // Find corresponding material for this MaterialSpec
-            Material material = materials.stream()
-                    .filter(m -> m.getMaterialId() == spec.getMaterialId())
-                    .findFirst()
-                    .orElse(null);
+
+            Material material = materials.stream().filter(m -> m.getMaterialId() == spec.getMaterialId()).findFirst().orElse(null);
 
             if (material != null) {
-                double materialWidth = material.getLength(); // Material width
-                double materialHeight = 20; // Example fixed height for materials (adjust as needed)
+                double materialWidth = material.getLength();
+                double materialHeight = 20;
 
-                // Add as rectangle or rafter, depending on material type
                 if (material.getFunction().equalsIgnoreCase("beam")) {
-                    // Add as a rectangle for beams
+
                     if (currentX + materialWidth > width - 10) {
-                        currentX = 10; // Reset X and move to next row
+                        currentX = 10;
                         currentY += materialHeight + padding;
                     }
-                    carportSvg.addRectangle(currentX, currentY, materialHeight, materialWidth,
-                            "stroke:#000000; fill:#aaaaaa;"); // Grey for beams
+                    carportSvg.addRectangle(currentX, currentY, materialHeight, materialWidth, "stroke:#000000; fill:#aaaaaa;"); // Grey for beams
                     currentX += materialWidth + padding; // Update position
                 } else if (material.getFunction().equalsIgnoreCase("rafter")) {
-                    // Add rafters as lines (example: horizontal across the carport)
-                    double rafterY = currentY; // Example: align rafter at the current Y position
-                    carportSvg.addLine(10, rafterY, width - 10, rafterY); // Horizontal line for rafter
-                    currentY += materialHeight + padding; // Update position for next material
-                } else {
-                    // Other material types can be handled similarly
-                    System.out.println("Unknown material function, skipping: " + material.getDescription());
+                    double rafterY = currentY;
+                    carportSvg.addLine(10, rafterY, width - 10, rafterY);
+                    currentY += materialHeight + padding;
                 }
             }
-
         }
-
     }
 
     @Override

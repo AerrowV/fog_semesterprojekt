@@ -1,13 +1,13 @@
 package app.controllers;
 
+import app.entities.*;
 import app.exceptions.DatabaseException;
-import app.persistence.ConnectionPool;
-import app.persistence.OrderMapper;
-import app.persistence.ReceiptMapper;
-import app.persistence.UserMapper;
+import app.persistence.*;
+import app.services.MailService;
 import io.javalin.http.Context;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class PaymentController {
 
@@ -48,21 +48,23 @@ public class PaymentController {
                 Timestamp currentTimestamp = new Timestamp(System.currentTimeMillis());
                 ReceiptMapper.updatePaidDate(orderId, currentTimestamp, connectionPool);
 
+                sendReceiptEmail(orderId, email, connectionPool);
+
                 String htmlResponse = """
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta http-equiv="refresh" content="5;url=/">
-                    <title>Payment Successful</title>
-                </head>
-                <body>
-                    <h1>Payment Successful</h1>
-                    <p>Your payment was successful. You will be redirected to the home page in 5 seconds.</p>
-                    <p>If not, click <a href="/">here</a>.</p>
-                </body>
-                </html>
-            """;
+                            <!DOCTYPE html>
+                            <html lang="en">
+                            <head>
+                                <meta charset="UTF-8">
+                                <meta http-equiv="refresh" content="5;url=/">
+                                <title>Payment Successful</title>
+                            </head>
+                            <body>
+                                <h1>Payment Successful</h1>
+                                <p>Your payment was successful. You will be redirected to the home page in 5 seconds.</p>
+                                <p>If not, click <a href="/">here</a>.</p>
+                            </body>
+                            </html>
+                        """;
                 ctx.html(htmlResponse);
             } else {
                 ctx.status(400).result("Email or ZIP code not found. Please try again.");
@@ -75,6 +77,55 @@ public class PaymentController {
         }
     }
 
+    private static void sendReceiptEmail(int orderId, String userEmail, ConnectionPool connectionPool) throws DatabaseException {
+        try {
+            Order order = OrderMapper.getOrderById(orderId, connectionPool);
+            User user = UserMapper.getUserByIdWithAddress(order.getUserId(), connectionPool);
+            Receipt receipt = ReceiptMapper.getReceiptByOrderId(orderId, connectionPool);
+            CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
+            List<MaterialSpec> materialSpecs = MaterialMapper.getMaterialSpecsByCarportId(order.getCarportId(), connectionPool);
+            List<Material> materials = MaterialMapper.getAllMaterials(connectionPool);
 
+            String svgContent = OrderController.generateSVG(carportSpec, materialSpecs, materials);
+
+            StringBuilder materialListHtml = new StringBuilder("<ul>");
+            for (MaterialSpec spec : materialSpecs) {
+                Material material = materials.stream()
+                        .filter(m -> m.getMaterialId() == spec.getMaterialId())
+                        .findFirst()
+                        .orElse(null);
+
+                if (material != null) {
+                    materialListHtml.append(String.format(
+                            "<li>%s (Length: %d cm): %d %s</li>",
+                            material.getDescription(),
+                            material.getLength(),
+                            spec.getMaterialOrderAmount(),
+                            material.getUnit()
+                    ));
+                }
+            }
+            materialListHtml.append("</ul>");
+
+            String emailContent = MailService.generateReceiptEmailContent(
+                    order,
+                    user,
+                    receipt,
+                    materialListHtml.toString()
+            );
+
+
+            MailService.sendEmailWithAttachment(
+                    userEmail,
+                    "Johannes Fog A/S - Receipt for Order #" + order.getOrderId(),
+                    "Please find the details of your order below.",
+                    emailContent,
+                    svgContent
+            );
+
+        } catch (Exception e) {
+            throw new DatabaseException("Failed to send receipt email: " + e.getMessage());
+        }
+    }
 }
 

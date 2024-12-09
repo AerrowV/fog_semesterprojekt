@@ -39,23 +39,29 @@ body {
     gap: 1rem;
 }
 
-.login-link, .my-orders-link, .logout-link {
+.login-link, .my-orders-link, .logout-link, .contact {
+    all: unset;
     text-decoration: none;
     color: #333;
     font-size: 0.9rem;
     font-weight: bold;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 0.5rem;
-    padding: 0.5rem 1rem;
+    padding: 0.1rem 1rem;
     background-color: #f8f9fa;
     border: 1px solid #ddd;
     border-radius: 5px;
     transition: all 0.3s ease-in-out;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    width: auto;
+    min-height: 40px;
+    text-align: center;
 }
 
-.login-link:hover, .my-orders-link:hover, .logout-link:hover {
+.login-link:hover, .my-orders-link:hover, .logout-link:hover, .contact:hover {
     background-color: #0056b3;
     color: white;
     border-color: #0056b3;

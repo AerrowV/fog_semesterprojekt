@@ -22,7 +22,7 @@ public class UserMapper {
                 if (rs.next()) {
                     boolean isAdmin = rs.getBoolean("is_admin");
                     int id = rs.getInt("user_id");
-                    return new User(id,email,password,isAdmin);
+                    return new User(id, email, password, isAdmin);
                 } else {
                     throw new DatabaseException("Error in login. Try again");
                 }
@@ -34,7 +34,7 @@ public class UserMapper {
 
     public static void createUser(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "insert into \"user\" (user_email, user_password) values (?, ?)";
-        
+
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -92,10 +92,10 @@ public class UserMapper {
         String updateUserSql = "UPDATE \"user\" SET first_name = ?, last_name = ?, address_id = ? WHERE user_email = ?";
         String findZipCodeSql = "SELECT zip_code FROM zip_code WHERE zip_code = ?";
         String insertAddressSql = """
-                INSERT INTO address (street_name, house_number, zip_code) 
-                VALUES (?, ?, ?) 
-                RETURNING address_id
-            """;
+                    INSERT INTO address (street_name, house_number, zip_code) 
+                    VALUES (?, ?, ?) 
+                    RETURNING address_id
+                """;
 
         try (Connection connection = connectionPool.getConnection()) {
             connection.setAutoCommit(false);
@@ -154,6 +154,58 @@ public class UserMapper {
         } catch (SQLException e) {
             e.printStackTrace();
             throw new DatabaseException("Error saving data: " + e.getMessage());
+        }
+    }
+
+    public static User getUserByIdWithAddress(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = """
+                SELECT 
+                    u.user_id, 
+                    u.user_email, 
+                    u.first_name, 
+                    u.last_name, 
+                    a.street_name, 
+                    a.house_number, 
+                    z.zip_code, 
+                    z.city 
+                FROM "user" u
+                JOIN address a ON u.address_id = a.address_id
+                JOIN zip_code z ON a.zip_code = z.zip_code
+                WHERE u.user_id = ?;
+                """;
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                User user = new User(
+                        rs.getInt("user_id"),
+                        rs.getString("user_email"),
+                        null,
+                        null,
+                        rs.getString("first_name"),
+                        rs.getString("last_name"),
+                        rs.getInt("user_id")
+                );
+
+                String fullAddress = String.format("%s %s, %d %s",
+                        rs.getString("street_name"),
+                        rs.getString("house_number"),
+                        rs.getInt("zip_code"),
+                        rs.getString("city")
+                );
+
+                user.setFullAddress(fullAddress);
+
+                return user;
+            } else {
+                throw new DatabaseException("User not found for ID: " + userId);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Error retrieving user details: " + e.getMessage());
         }
     }
 

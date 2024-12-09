@@ -50,23 +50,6 @@ public class ConnectionPool {
     }
 
     /***
-     * Getting a live connection from a Hikari Connection Pool
-     * @return a database connection to be used in sql requests
-     * @throws SQLException
-     */
-    public synchronized Connection getConnection() throws SQLException {
-        return ds.getConnection();
-    }
-
-    /***
-     * Closing a Hikari Connection Pool after use.
-     */
-    public synchronized void close() {
-        Logger.getLogger("web").log(Level.INFO, "Shutting down connection pool");
-        ds.close();
-    }
-
-    /***
      * Configuring a Hikari DataSource ConnectionPool. Default pool size is 3.
      * @param user for Postgresql database user
      * @param password for Postgresql database user
@@ -88,5 +71,22 @@ public class ConnectionPool {
         config.addDataSourceProperty("prepStmtCacheSize", "250");
         config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
         return new HikariDataSource(config);
+    }
+
+    /***
+     * Getting a live connection from a Hikari Connection Pool
+     * @return a database connection to be used in sql requests
+     * @throws SQLException
+     */
+    public synchronized Connection getConnection() throws SQLException {
+        return ds.getConnection();
+    }
+
+    /***
+     * Closing a Hikari Connection Pool after use.
+     */
+    public synchronized void close() {
+        Logger.getLogger("web").log(Level.INFO, "Shutting down connection pool");
+        ds.close();
     }
 }

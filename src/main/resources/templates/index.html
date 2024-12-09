@@ -25,6 +25,9 @@
                     <img th:src="@{/images/orders-icon.png}" alt="Orders Icon" class="icon">
                     Mine Ordre
                 </a>
+                <form th:action="@{/contact}" method="get">
+                    <button type="submit" class="contact">Contact Us</button>
+                </form>
                 <form th:action="@{/logout}" method="post" style="display: inline;">
                     <button type="submit" class="logout-link">
                         <img th:src="@{/images/logout-icon.png}" alt="Logout Icon" class="icon">

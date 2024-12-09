@@ -1,4 +1,5 @@
 package app.controllers;
+
 import app.entities.CarportSpec;
 import app.entities.Material;
 import app.entities.MaterialSpec;
@@ -8,9 +9,8 @@ import app.persistence.*;
 import app.services.CarportSvg;
 import io.javalin.http.Context;
 
-import java.sql.*;
+import java.sql.Timestamp;
 import java.util.*;
-
 
 public class OrderController {
     private CarportSvg carportSvg;
@@ -24,10 +24,8 @@ public class OrderController {
         CarportSvg carportSvg = new CarportSvg(carportSpec.getWidth(), carportSpec.getLength());
         carportSvg.addMaterials(materialSpecs, materials);
 
-        // Attach the generated SVG to the context
         ctx.attribute("svg", carportSvg.toString());
     }
-
 
 
     public static void showOrders(Context ctx, ConnectionPool connectionPool) {
@@ -35,13 +33,16 @@ public class OrderController {
             Integer userId = ctx.sessionAttribute("user_id");
 
             if (userId == null) {
-
                 ctx.attribute("message", "You need to log in to view your orders.");
                 ctx.redirect("/login");
                 return;
             }
 
             List<Order> orders = OrderMapper.getOrderByUserId(userId, connectionPool);
+            if (orders == null) {
+                orders = new ArrayList<>();
+            }
+
             Map<Integer, Double> orderPrices = new HashMap<>();
             Map<Integer, Timestamp> paidDates = new HashMap<>();
 
@@ -61,7 +62,6 @@ public class OrderController {
             ctx.attribute("orderPrices", orderPrices);
             ctx.attribute("paidDates", paidDates);
             ctx.render("order.html");
-
 
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to load orders: " + e.getMessage());
@@ -83,8 +83,7 @@ public class OrderController {
             }
 
             ctx.attribute("ordersWithPrices", ordersWithPrices);
-            ctx.render("adminOrderList.html");
-
+            ctx.render("admin-order-list.html");
 
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to load all orders: " + e.getMessage());
@@ -106,7 +105,7 @@ public class OrderController {
             ctx.redirect("/admin/orders");
         } catch (DatabaseException | NumberFormatException e) {
             ctx.attribute("message", "Failed to update order status: " + e.getMessage());
-            ctx.render("adminOrderList.html");
+            ctx.render("admin-order-list.html");
         }
     }
 
@@ -174,29 +173,32 @@ public class OrderController {
         try {
             int orderId = Integer.parseInt(ctx.pathParam("id"));
 
-            // Fetch the order, carport specs, and material specifications
             Order order = OrderMapper.getOrderById(orderId, connectionPool);
             CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
             List<MaterialSpec> materialSpecs = MaterialMapper.getMaterialSpecsByCarportId(order.getCarportId(), connectionPool);
             List<Material> materials = MaterialMapper.getAllMaterials(connectionPool); // Fetch all materials
 
-            // Add attributes to the context for rendering the order details page
             ctx.attribute("order", order);
             ctx.attribute("carportSpec", carportSpec);
             ctx.attribute("materialSpecs", materialSpecs);
 
-            // Generate the SVG
             showSVG(ctx, carportSpec, materialSpecs, materials);
 
-            // Render the order details page
-            ctx.render("orderDetails.html");
+            ctx.render("order-details.html");
 
         } catch (NumberFormatException e) {
             ctx.attribute("message", "Invalid order ID format.");
-            ctx.render("orderDetails.html");
+            ctx.render("order-details.html");
         } catch (DatabaseException e) {
             ctx.attribute("message", "Error retrieving order details: " + e.getMessage());
-            ctx.render("orderDetails.html");
+            ctx.render("order-details.html");
         }
+    }
+
+    public static String generateSVG(CarportSpec carportSpec, List<MaterialSpec> materialSpecs, List<Material> materials) {
+        Locale.setDefault(new Locale("US"));
+        CarportSvg carportSvg = new CarportSvg(carportSpec.getWidth(), carportSpec.getLength());
+        carportSvg.addMaterials(materialSpecs, materials);
+        return carportSvg.toString();
     }
 }

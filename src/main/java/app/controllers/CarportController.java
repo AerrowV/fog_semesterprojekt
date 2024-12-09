@@ -43,13 +43,13 @@ public class CarportController {
 
         } catch (NumberFormatException e) {
             ctx.attribute("message", "Invalid input. Please check your values.");
-            ctx.render("chooseCarport.html");
+            ctx.render("choose-carport.html");
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to save carport specifications: " + e.getMessage());
-            ctx.render("chooseCarport.html");
+            ctx.render("choose-carport.html");
         } catch (Exception e) {
             ctx.attribute("message", "An unexpected error occurred.");
-            ctx.render("chooseCarport.html");
+            ctx.render("choose-carport.html");
         }
     }
 
@@ -400,7 +400,7 @@ public class CarportController {
             totalPrice += material.getPrice();
         }
 
-        return totalPrice;
+        return totalPrice * 1.4;
     }
 
     public static double calculatePercentage(double totalPrice, double percentage, ConnectionPool connectionPool) throws DatabaseException {
