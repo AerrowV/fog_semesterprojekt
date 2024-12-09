@@ -176,7 +176,6 @@ public class MailService {
                 materialListHtml);
     }
 
-
     public static File generateSvgFile(String svgContent, String fileName) throws IOException {
 
         File file = new File(fileName);
