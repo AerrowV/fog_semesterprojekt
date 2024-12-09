@@ -11,6 +11,7 @@ import com.mailgun.model.message.MessageResponse;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 public class MailService {
 
@@ -18,6 +19,8 @@ public class MailService {
     private static final String DOMAIN = System.getenv("MAILGUN_DOMAIN");
     private static final String SENDER_EMAIL = System.getenv("MAILGUN_SENDER_EMAIL");
     private static final String BASE_URL = "https://api.eu.mailgun.net/";
+
+
 
     public static MailgunMessagesApi getMailgunMessagesApi() {
         return MailgunClient.config(BASE_URL, API_KEY).createApi(MailgunMessagesApi.class);
@@ -122,6 +125,8 @@ public class MailService {
     }
 
     public static String generateReceiptEmailContent(Order order, User user, Receipt receipt, String materialListHtml) {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String formattedPaidDate = dateFormatter.format((receipt.getPaidDate().toString()));
         return """
                     <!DOCTYPE html>
                     <html lang="en">
@@ -172,11 +177,13 @@ public class MailService {
                 user.getEmail(),
                 user.getFullAddress(),
                 receipt.getPrice() * 1.0,
-                receipt.getPaidDate().toString(),
+                formattedPaidDate,
                 materialListHtml);
     }
 
     public static String generateWarehouseEmailContent(Order order, User user, Receipt receipt, String materialListHtml) {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String formattedPaidDate = dateFormatter.format((receipt.getPaidDate().toString()));
         return """
         <!DOCTYPE html>
         <html lang="en">
@@ -223,7 +230,7 @@ public class MailService {
                 user.getEmail(),
                 user.getFullAddress(),
                 receipt.getPrice() * 1.0,
-                receipt.getPaidDate().toString(),
+                formattedPaidDate,
                 materialListHtml);
     }
 
