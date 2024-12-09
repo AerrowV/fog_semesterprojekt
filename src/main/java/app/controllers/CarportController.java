@@ -400,7 +400,7 @@ public class CarportController {
             totalPrice += material.getPrice();
         }
 
-        return totalPrice;
+        return totalPrice * 1.4;
     }
 
     public static double calculatePercentage(double totalPrice, double percentage, ConnectionPool connectionPool) throws DatabaseException {
