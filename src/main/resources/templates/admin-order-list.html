@@ -23,7 +23,7 @@
   <tbody>
   <tr th:each="orderWithPrice : ${ordersWithPrices}">
     <td th:text="${orderWithPrice.order.orderId}"></td>
-    <td th:text="${orderWithPrice.order.orderDate}"></td>
+    <td th:text="${#dates.format(orderWithPrice.order.orderDate, 'yyyy-MM-dd')}"></td>
     <td>
       <form method="post" th:action="@{/update-order-details}">
         <input type="hidden" name="order_id" th:value="${orderWithPrice.order.orderId}" />
