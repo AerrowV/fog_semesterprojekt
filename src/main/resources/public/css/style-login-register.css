@@ -87,8 +87,10 @@ input {
 }
 
 .create-account {
-    margin-top: 1rem;
+    color: #333;
+    margin-top: 1.5rem;
     font-size: 14px;
+    text-underline: none;
 }
 
 .create-account1 {

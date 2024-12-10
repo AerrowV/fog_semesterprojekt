@@ -2,49 +2,61 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Materials</title>
-    <link href="../public/css/materialStyleSheet.css" th:href="@{/css/materialStyleSheet}" rel="stylesheet">
-
+    <link href="../public/css/materialStyleSheet.css" th:href="@{/css/materialStyleSheet.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Materials List</h1>
-<table class="material-table">
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Description</th>
-        <th>Length</th>
-        <th>Amount</th>
-        <th>Unit</th>
-        <th>Function</th>
-        <th>Price</th>
-        <th>Actions</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="material : ${materials}">
-        <td th:text="${material.materialId}"></td>
-        <td th:text="${material.description}"></td>
-        <td th:text="${material.length}"></td>
-        <td th:text="${material.amount}"></td>
-        <td th:text="${material.unit}"></td>
-        <td th:text="${material.function}"></td>
-        <td th:text="${material.price}"></td>
-        <td>
-            <form th:action="@{/materials/update}" method="post" class="inline-form">
-                <input type="hidden" name="id" th:value="${material.materialId}">
-                <a th:href="@{/materials/update(id=${material.materialId})}">Update</a>
-                <p class="errormessage" th:text="${#ctx.message}"></p>
-            </form>
-            <form th:action="@{/materials/delete}" method="post" class="inline-form">
-                <input type="hidden" name="id" th:value="${material.materialId}">
-                <button type="submit">Delete</button>
-                <p class="errormessage" th:text="${#ctx.message}"></p>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
-<a th:href="@{/admin}">Back to Admin Dashboard</a>
+<header class="top-bar">
+    <div class="header-container">
+        <div class="logo-container">
+            <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+            <span>Bolig & design</span>
+        </div>
+        <nav class="menu-container">
+            <a th:href="@{/admin}" class="nav-link">Dashboard</a>
+        </nav>
+    </div>
+</header>
+
+<main class="content-container">
+    <h1>Materials List</h1>
+    <table class="material-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Description</th>
+            <th>Length</th>
+            <th>Amount</th>
+            <th>Unit</th>
+            <th>Function</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="material : ${materials}">
+            <td th:text="${material.materialId}"></td>
+            <td th:text="${material.description}"></td>
+            <td th:text="${material.length}"></td>
+            <td th:text="${material.amount}"></td>
+            <td th:text="${material.unit}"></td>
+            <td th:text="${material.function}"></td>
+            <td th:text="${material.price} + ' DKK'"></td>
+            <td>
+                <a th:href="@{/materials/update(id=${material.materialId})}" class="primary-button">Update</a>
+                <form th:action="@{/materials/delete}" method="post" class="inline-form">
+                    <input type="hidden" name="id" th:value="${material.materialId}">
+                    <button type="submit" class="primary-button delete-button">Delete</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer>
+    <p>© 2024 Your Company. All rights reserved.</p>
+</footer>
 </body>
 </html>

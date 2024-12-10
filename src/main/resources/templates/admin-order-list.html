@@ -15,7 +15,6 @@
     </div>
     <nav class="menu-container">
       <a th:href="@{/admin}" class="nav-link">Dashboard</a>
-      <a th:href="@{/logout}" class="nav-link">Logout</a>
     </nav>
   </div>
 </header>
@@ -33,6 +32,7 @@
         <th>Date</th>
         <th>Status</th>
         <th>Price</th>
+        <th>Details</th>
       </tr>
       </thead>
       <tbody>
@@ -48,16 +48,20 @@
               <option value="Rejected" th:selected="${orderWithPrice.order.orderStatus == 'Rejected'}">Rejected</option>
               <option value="Completed" th:selected="${orderWithPrice.order.orderStatus == 'Completed'}">Completed</option>
             </select>
-            <input type="number" step="0.01" name="percentage" class="form-input" placeholder="Labor/Overhead %" required>
+            <input type="number" step="0.01" name="percentage" class="form-input" placeholder="Price %" required />
             <button type="submit" class="primary-button">Update</button>
           </form>
         </td>
-        <td th:text="${orderWithPrice.price}">0 Dkk</td>
+        <td th:text="${orderWithPrice.price} + ' DKK'"></td>
+        <td>
+          <a th:href="@{/admin/orders/details/{id}(id=${orderWithPrice.order.orderId})}" class="primary-button">
+            View Details
+          </a>
+        </td>
       </tr>
       </tbody>
     </table>
   </div>
-  <a href="/admin" class="secondary-button">Back to Dashboard</a>
 </main>
 
 <footer>

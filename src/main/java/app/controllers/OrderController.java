@@ -176,7 +176,7 @@ public class OrderController {
             Order order = OrderMapper.getOrderById(orderId, connectionPool);
             CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
             List<MaterialSpec> materialSpecs = MaterialMapper.getMaterialSpecsByCarportId(order.getCarportId(), connectionPool);
-            List<Material> materials = MaterialMapper.getAllMaterials(connectionPool); // Fetch all materials
+            List<Material> materials = MaterialMapper.getAllMaterials(connectionPool);
 
             ctx.attribute("order", order);
             ctx.attribute("carportSpec", carportSpec);
@@ -226,6 +226,31 @@ public class OrderController {
         } catch (DatabaseException e) {
             ctx.attribute("message", "Failed to reject the order: " + e.getMessage());
             ctx.redirect("/orders");
+        }
+    }
+
+    public static void showAdminOrderDetails(Context ctx, ConnectionPool connectionPool) {
+        try {
+            int orderId = Integer.parseInt(ctx.pathParam("id"));
+
+
+            Order order = OrderMapper.getOrderById(orderId, connectionPool);
+            CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
+            List<MaterialSpec> materialSpecs = MaterialMapper.getMaterialSpecsByCarportId(order.getCarportId(), connectionPool);
+            List<Material> materials = MaterialMapper.getAllMaterials(connectionPool);
+
+            ctx.attribute("order", order);
+            ctx.attribute("carportSpec", carportSpec);
+            ctx.attribute("materialSpecs", materialSpecs);
+            ctx.attribute("materials", materials);
+
+            ctx.render("admin-order-details.html");
+        } catch (NumberFormatException e) {
+            ctx.attribute("message", "Invalid order ID format.");
+            ctx.render("admin-order-list.html");
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "Error retrieving order details: " + e.getMessage());
+            ctx.render("admin-order-list.html");
         }
     }
 }

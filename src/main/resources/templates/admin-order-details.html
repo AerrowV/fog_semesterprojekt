@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Details</title>
+  <link href="../public/css/admin-Order-List.css" th:href="@{/css/admin-Order-List.css}" rel="stylesheet">
+</head>
+<body>
+<header class="top-bar">
+  <div class="header-container">
+    <div class="logo-container">
+      <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+      <span>Bolig & design</span>
+    </div>
+    <nav class="menu-container">
+      <a th:href="@{/admin}" class="nav-link">Dashboard</a>
+    </nav>
+  </div>
+</header>
+
+<main class="content-container">
+  <h1>Order Details</h1>
+
+  <h2>Carport Specification</h2>
+  <table>
+    <tr>
+      <th>Length</th>
+      <th>Width</th>
+    </tr>
+    <tr>
+      <td th:text="${carportSpec.length}"></td>
+      <td th:text="${carportSpec.width}"></td>
+    </tr>
+  </table>
+
+  <h2>Material Specification</h2>
+  <table>
+    <thead>
+    <tr>
+      <th>Material ID</th>
+      <th>Description</th>
+      <th>Length</th>
+      <th>Quantity</th>
+      <th>Unit</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="spec : ${materialSpecs}">
+      <td th:text="${spec.materialId}"></td>
+      <td th:text="${materials[spec.materialId] != null ? materials[spec.materialId].description : 'N/A'}"></td>
+      <td th:text="${materials[spec.materialId] != null ? materials[spec.materialId].length : 'N/A'}"></td>
+      <td th:text="${spec.materialOrderAmount}"></td>
+      <td th:text="${materials[spec.materialId] != null ? materials[spec.materialId].unit : 'N/A'}"></td>
+    </tr>
+    </tbody>
+  </table>
+</main>
+
+<footer>
+  <p>2024 Johannesfog.dk. Alle rettigheder forbeholdes.</p>
+</footer>
+</body>
+</html>

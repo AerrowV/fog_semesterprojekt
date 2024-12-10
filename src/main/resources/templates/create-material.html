@@ -3,31 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Material</title>
+    <link rel="stylesheet" href="../public/css/createMaterial.css" th:href="@{/css/createMaterial.css}">
 </head>
 <body>
-<h1>Create New Material</h1>
-<form th:action="@{/materials/create}" method="post">
-    <label for="description">Description:</label>
-    <input type="text" id="description" name="description" required><br>
+<header class="top-bar">
+    <div class="header-container">
+        <div class="logo-container">
+            <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+            <span>Bolig & design</span>
+        </div>
+        <nav class="menu-container">
+            <a th:href="@{/admin}" class="nav-link">Dashboard</a>
+            <a th:href="@{/materials}" class="nav-link">Materials</a>
+        </nav>
+    </div>
+</header>
 
-    <label for="length">Length:</label>
-    <input type="number" id="length" name="length"><br>
+<main class="content-container">
+    <h1>Create New Material</h1>
+    <form th:action="@{/materials/create}" method="post" class="form-container">
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required>
 
-    <label for="amount">Amount:</label>
-    <input type="number" id="amount" name="amount" required><br>
+        <label for="length">Length:</label>
+        <input type="number" id="length" name="length">
 
-    <label for="unit">Unit:</label>
-    <input type="text" id="unit" name="unit" required><br>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" name="amount" required>
 
-    <label for="function">Function:</label>
-    <input type="text" id="function" name="function" required><br>
+        <label for="unit">Unit:</label>
+        <input type="text" id="unit" name="unit" required>
 
-    <label for="price">Price:</label>
-    <input type="number" id="price" name="price" required><br>
+        <label for="function">Function:</label>
+        <input type="text" id="function" name="function" required>
 
-    <button type="submit">Create Material</button>
-    <p class="errormessage" th:text="${#ctx.message}"></p>
-</form>
-<a th:href="@{/materials}">Back to Material List</a>
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required>
+
+        <button type="submit" class="button-primary">Create Material</button>
+        <p class="errormessage" th:text="${#ctx.message}"></p>
+    </form>
+</main>
+
+<footer>
+    <p>© 2024 Your Company. All rights reserved.</p>
+</footer>
 </body>
 </html>
