@@ -3,32 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Order Details</title>
+    <link href="../public/css/stylesOrderDetails.css" th:href="@{/css/stylesOrderDetails.css}" rel="stylesheet">
 </head>
-<body>
-<h1>Order Details</h1>
 
-<div th:if="${message}" class="alert">
+
+<body>
+<header>
+    <h1>Order Details</h1>
+</header>
+
+<div class="alert" th:if="${message}">
     <p th:text="${message}"></p>
 </div>
 
-<div th:if="${order == null}">
+<section class="order-section" th:if="${order == null}">
     <p>Order details are not available.</p>
-</div>
-<div th:if="${order != null}">
+</section>
+
+<section class="order-section" th:if="${order != null}">
     <h2>Order Information</h2>
     <p><strong>Order ID:</strong> <span th:text="${order.orderId}"></span></p>
     <p><strong>Date:</strong> <span th:text="${order.orderDate}"></span></p>
     <p><strong>Status:</strong> <span th:text="${order.orderStatus}"></span></p>
-</div>
+</section>
 
-<h2>Carport Specifications</h2>
-<p><strong>Carport ID:</strong> <span th:text="${carportSpec.carportId}"></span></p>
-<p><strong>Length:</strong> <span th:text="${carportSpec.length}"></span> cm</p>
-<p><strong>Width:</strong> <span th:text="${carportSpec.width}"></span> cm</p>
-<p><strong>Roof Type:</strong> <span th:text="${carportSpec.roofType}"></span></p>
+<section class="carport-section">
+    <h2>Carport Specifications</h2>
+    <p><strong>Carport ID:</strong> <span th:text="${carportSpec.carportId}"></span></p>
+    <p><strong>Length:</strong> <span th:text="${carportSpec.length}"></span> cm</p>
+    <p><strong>Width:</strong> <span th:text="${carportSpec.width}"></span> cm</p>
+</section>
 
-<div id="carport-drawing" th:if="${order.orderstatus == 'Completed'}">
+<div id="carport-drawing" class="svg-container" >
     <div th:utext="${svg}"></div>
 </div>
+
 </body>
 </html>

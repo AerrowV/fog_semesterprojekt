@@ -25,7 +25,7 @@ h1 {
 }
 
 .material-table th {
-    background-color: #4CAF50;
+    background-color: #002855;
     color: white;
     text-transform: uppercase;
 }
@@ -60,7 +60,7 @@ a {
     display: block;
     width: fit-content;
     margin: 20px auto;
-    color: #4CAF50;
+    color: #089ae3;
     text-decoration: none;
     font-weight: bold;
 }

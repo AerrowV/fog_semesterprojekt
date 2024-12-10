@@ -3,21 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Email Reply</title>
+    <link href="../public/css/admin-Emails.css" th:href="@{/css/admin-Emails.css}" rel="stylesheet">
+
 </head>
 <body>
-<h1>Admin Email Management</h1>
-<form th:action="@{/admin/emails}" method="post">
-    <label for="email">Customer Email:</label>
-    <input type="email" id="email" name="email" required />
-    <br />
-    <label for="subject">Subject:</label>
-    <input type="text" id="subject" name="subject" required />
-    <br />
-    <label for="message">Message:</label>
-    <textarea id="message" name="message" required></textarea>
-    <br />
-    <button type="submit">Send Email</button>
-</form>
-<a href="/admin" class="button">Back to Dashboard</a>
+<header class="top-bar">
+    <div class="header-container">
+        <div class="logo-container">
+            <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+            <span>Bolig & design</span>
+        </div>
+        <nav class="menu-container">
+            <a th:href="@{/admin}" class="nav-link">Dashboard</a>
+            <a th:href="@{/logout}" class="nav-link">Logout</a>
+        </nav>
+    </div>
+</header>
+
+<main class="content-container">
+    <div class="form-container">
+        <h1>Admin Email Management</h1>
+        <form th:action="@{/admin/emails}" method="post">
+            <div class="form-group">
+                <label for="email">Customer Email:</label>
+                <input type="email" id="email" name="email" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="subject">Subject:</label>
+                <input type="text" id="subject" name="subject" class="form-input" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" class="form-input textarea" required></textarea>
+            </div>
+            <button type="submit" class="primary-button">Send Email</button>
+        </form>
+        <a href="/admin" class="secondary-button">Back to Dashboard</a>
+    </div>
+</main>
+
+<footer>
+    <p>2024 Johannesfog.dk. Alle rettigheder forbeholdes.</p>
+</footer>
 </body>
 </html>

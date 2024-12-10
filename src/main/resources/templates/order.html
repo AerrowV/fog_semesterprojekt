@@ -1,63 +1,80 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Orders</title>
+    <link href="../public/css/order.css" th:href="@{/css/order.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Your Orders</h1>
+<header class="top-bar">
+    <div class="header-container">
+        <div class="logo-container">
+            <img src="logo.png" alt="Company Logo" class="logo">
+            <span>Order Management</span>
+        </div>
+        <nav class="menu-container">
+            <a href="/" class="nav-link">Home</a>
+            <a href="/profile" class="nav-link">Profile</a>
+        </nav>
+    </div>
+</header>
 
-<div th:if="${message}" class="alert">
-    <p th:text="${message}"></p>
-</div>
+<main class="content-container">
+    <h1>Your Orders</h1>
 
-<div th:if="${orders == null || orders.isEmpty()}">
-    <p>No orders found.</p>
-</div>
+    <div th:if="${message}" class="alert">
+        <p th:text="${message}"></p>
+    </div>
 
-<div th:if="${orders != null && !orders.isEmpty()}">
-    <table>
-        <thead>
-        <tr>
-            <th>Order ID</th>
-            <th>Date</th>
-            <th>Status</th>
-            <th>Price</th>
-            <th>Paid Date</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="order : ${orders}">
-            <td th:text="${order.orderId}"></td>
-            <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd')}"></td>
-            <td th:text="${order.orderStatus}"></td>
-            <td>
-                <span th:if="${orderPrices[order.orderId] != null}"
-                      th:text="${orderPrices[order.orderId]}">DKK</span>
-                <span th:if="${orderPrices[order.orderId] == null}">N/A</span>
-            </td>
-            <td>
-                <span th:if="${paidDates[order.orderId] != null}"
-                      th:text="${#dates.format(paidDates[order.orderId], 'yyyy-MM-dd')}"></span>
-                <span th:if="${paidDates[order.orderId] == null}">N/A</span>
-            </td>
-            <td>
-                <a th:href="@{/orders/details/{id}(id=${order.orderId})}">View Details</a>
-                <div th:if="${order.orderStatus == 'Approved'}">
-                    <a th:href="@{/payment(orderId=${order.orderId})}">
-                        <button>Proceed to Payment</button>
-                    </a>
-                    <form th:action="@{/orders/reject}" method="post" style="display:inline;">
-                        <input type="hidden" name="order_id" th:value="${order.orderId}" />
-                        <button type="submit">Reject Offer</button>
-                    </form>
-                </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-</div>
-<a href="/">Tilbage til forsiden</a>
+    <div th:if="${orders == null || orders.isEmpty()}" class="empty-orders">
+        <p>No orders found.</p>
+    </div>
+
+    <div th:if="${orders != null && !orders.isEmpty()}" class="orders-table-container">
+        <table class="orders-table">
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Price</th>
+                <th>Paid Date</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td th:text="${order.orderId}"></td>
+                <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd')}"></td>
+                <td th:text="${order.orderStatus}"></td>
+                <td>
+                    <span th:if="${orderPrices[order.orderId] != null}" th:text="${orderPrices[order.orderId]}">DKK</span>
+                    <span th:if="${orderPrices[order.orderId] == null}">N/A</span>
+                </td>
+                <td>
+                    <span th:if="${paidDates[order.orderId] != null}" th:text="${#dates.format(paidDates[order.orderId], 'yyyy-MM-dd')}"></span>
+                    <span th:if="${paidDates[order.orderId] == null}">N/A</span>
+                </td>
+                <td>
+                    <a th:href="@{/orders/details/{id}(id=${order.orderId})}" class="button-primary">View Details</a>
+                    <div th:if="${order.orderStatus == 'Approved'}" class="action-buttons">
+                        <a th:href="@{/payment(orderId=${order.orderId})}" class="button-primary">Proceed to Payment</a>
+                        <form th:action="@{/orders/reject}" method="post" class="inline-form">
+                            <input type="hidden" name="order_id" th:value="${order.orderId}">
+                            <button type="submit" class="button-secondary">Reject Offer</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <a href="/" class="button-secondary">Back to Home</a>
+</main>
+
+<footer>
+    <p>© 2024 Your Company. All rights reserved.</p>
+</footer>
 </body>
 </html>

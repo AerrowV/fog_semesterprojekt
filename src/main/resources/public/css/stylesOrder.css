@@ -1,12 +1,12 @@
 h1{
-    color: #369;
+    color: #002855;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 3rem;
 }
 
 
-.carport-svg-topview{
-    max-width: 600px;
-    max-height: 600px;
+.svg-container{
+    max-width: 1000px;
+    max-height: 1000px;
 }
 

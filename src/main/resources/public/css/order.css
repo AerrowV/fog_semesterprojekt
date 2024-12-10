@@ -1,0 +1,132 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+/* Header */
+.top-bar {
+    background-color: #002855;
+    color: white;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    height: 50px;
+    margin-right: 1rem;
+}
+
+.menu-container .nav-link {
+    color: white;
+    text-decoration: none;
+    margin-left: 1rem;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.menu-container .nav-link:hover {
+    background-color: #0056b3;
+}
+
+/* Main Content */
+.content-container {
+    padding: 2rem;
+    max-width: 1000px;
+    margin: 2rem auto;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    color: #002855;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.alert {
+    background-color: #f9f9b1;
+    color: #333;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-left: 5px solid #f7e732;
+    border-radius: 5px;
+}
+
+/* Table */
+.orders-table-container {
+    overflow-x: auto;
+}
+
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2rem;
+}
+
+.orders-table thead {
+    background-color: #002855;
+    color: white;
+}
+
+.orders-table th,
+.orders-table td {
+    padding: 1rem;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+.orders-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.orders-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Buttons */
+.button-primary {
+    background-color: #0056b3;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.button-primary:hover {
+    background-color: #003d82;
+}
+
+.button-secondary {
+    background-color: #ddd;
+    color: #333;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.button-secondary:hover {
+    background-color: #bbb;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #f8f9fa;
+    color: #555;
+    border-top: 1px solid #ddd;
+}

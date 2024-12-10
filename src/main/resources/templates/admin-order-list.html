@@ -2,48 +2,66 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Admin Order Management</title>
+  <link href="../public/css/admin-Order-List.css" th:href="@{/css/admin-Order-List.css}" rel="stylesheet">
 </head>
 <body>
-<h1>Admin Order Management</h1>
+<header class="top-bar">
+  <div class="header-container">
+    <div class="logo-container">
+      <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+      <span>Bolig & design</span>
+    </div>
+    <nav class="menu-container">
+      <a th:href="@{/admin}" class="nav-link">Dashboard</a>
+      <a th:href="@{/logout}" class="nav-link">Logout</a>
+    </nav>
+  </div>
+</header>
 
-<div th:if="${message}" class="alert">
-  <p th:text="${message}"></p>
-</div>
+<main class="content-container">
+  <div class="alert" th:if="${message}">
+    <p th:text="${message}"></p>
+  </div>
+  <div class="table-container">
+    <h1>Admin Order Management</h1>
+    <table class="order-table">
+      <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Price</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="orderWithPrice : ${ordersWithPrices}">
+        <td th:text="${orderWithPrice.order.orderId}"></td>
+        <td th:text="${#dates.format(orderWithPrice.order.orderDate, 'yyyy-MM-dd')}"></td>
+        <td>
+          <form method="post" th:action="@{/update-order-details}" class="inline-form">
+            <input type="hidden" name="order_id" th:value="${orderWithPrice.order.orderId}" />
+            <select name="new_status" class="status-select" required>
+              <option value="In Review" th:selected="${orderWithPrice.order.orderStatus == 'In Review'}">In Review</option>
+              <option value="Approved" th:selected="${orderWithPrice.order.orderStatus == 'Approved'}">Approved</option>
+              <option value="Rejected" th:selected="${orderWithPrice.order.orderStatus == 'Rejected'}">Rejected</option>
+              <option value="Completed" th:selected="${orderWithPrice.order.orderStatus == 'Completed'}">Completed</option>
+            </select>
+            <input type="number" step="0.01" name="percentage" class="form-input" placeholder="Labor/Overhead %" required>
+            <button type="submit" class="primary-button">Update</button>
+          </form>
+        </td>
+        <td th:text="${orderWithPrice.price}">0 Dkk</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <a href="/admin" class="secondary-button">Back to Dashboard</a>
+</main>
 
-<table>
-  <thead>
-  <tr>
-    <th>Order ID</th>
-    <th>Date</th>
-    <th>Status</th>
-    <th>Price</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="orderWithPrice : ${ordersWithPrices}">
-    <td th:text="${orderWithPrice.order.orderId}"></td>
-    <td th:text="${#dates.format(orderWithPrice.order.orderDate, 'yyyy-MM-dd')}"></td>
-    <td>
-      <form method="post" th:action="@{/update-order-details}">
-        <input type="hidden" name="order_id" th:value="${orderWithPrice.order.orderId}" />
-        <label for="status">Status:</label>
-        <select name="new_status" id="status">
-          <option value="In Review" th:selected="${orderWithPrice.order.orderStatus == 'In Review'}">In Review</option>
-          <option value="Approved" th:selected="${orderWithPrice.order.orderStatus == 'Approved'}">Approved</option>
-          <option value="Rejected" th:selected="${orderWithPrice.order.orderStatus == 'Rejected'}">Rejected</option>
-          <option value="Completed" th:selected="${orderWithPrice.order.orderStatus == 'Completed'}">Completed</option>
-        </select>
-        <label for="percentage">Labor/Overhead Percentage:</label>
-        <input type="number" step="0.01" name="percentage" id="percentage" required />
-        <button type="submit">Update</button>
-      </form>
-    </td>
-    <td th:text="${orderWithPrice.price}">0 Dkk</td>
-  </tr>
-  </tbody>
-</table>
-
-<a href="/admin" class="button">Back to Dashboard</a>
+<footer>
+  <p>2024 Johannesfog.dk. Alle rettigheder forbeholdes.</p>
+</footer>
 </body>
 </html>

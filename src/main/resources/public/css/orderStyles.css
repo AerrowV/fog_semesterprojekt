@@ -1,0 +1,136 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #1a1c62;
+    color: white;
+    padding: 1.5rem;
+    text-align: center;
+    border-bottom: 3px solid #0056b3;
+}
+
+h1 {
+    margin: 0;
+}
+
+/* Alert Message */
+.alert {
+    background-color: #ffdd57;
+    color: #333;
+    padding: 1rem;
+    margin: 1rem auto;
+    max-width: 800px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Orders Section */
+.orders-section {
+    margin: 2rem auto;
+    padding: 1.5rem;
+    max-width: 900px;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.no-orders {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+/* Table Styles */
+.orders-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    font-size: 1rem;
+    text-align: left;
+}
+
+.orders-table th,
+.orders-table td {
+    border: 1px solid #ddd;
+    padding: 0.8rem;
+}
+
+.orders-table th {
+    background-color: #1a1c62;
+    color: white;
+}
+
+.orders-table tr:nth-child(even) {
+    background-color: #f4f4f9;
+}
+
+.orders-table tr:hover {
+    background-color: #e6e6f9;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+}
+
+.details-button,
+.payment-button {
+    all: unset;
+    color: white;
+    background-color: #0056b3;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    text-align: center;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.details-button:hover {
+    background-color: #003d82;
+}
+
+.payment-button {
+    background-color: #1a8917;
+}
+
+.payment-button:hover {
+    background-color: #16630d;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background: #1a1c62;
+    color: white;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+
+.back-home {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    background-color: #0056b3;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.back-home:hover {
+    background-color: #003d82;
+}
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}

@@ -7,6 +7,7 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
+    background-color: #002855;
 }
 
 .top-bar {
@@ -62,9 +63,9 @@ body {
 }
 
 .login-link:hover, .my-orders-link:hover, .logout-link:hover, .contact:hover {
-    background-color: #0056b3;
+    background-color: #002855;
     color: white;
-    border-color: #0056b3;
+    border-color: #002855;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
 }
 
@@ -92,7 +93,7 @@ body {
 }
 
 .button {
-    background-color: #1a1c62;
+    background-color: #002855;
     color: white;
     text-align: center;
     padding: 3rem 1rem;

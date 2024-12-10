@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Johannesfog.dk</title>
-    <link rel="stylesheet" th:href="@{/css/styleSheet.css}">
+    <link href="../public/css/styleSheet.css" th:href="@{/css/styleSheet.css}" rel="stylesheet">
+
 </head>
 <body>
 <header class="top-bar">
@@ -31,7 +32,7 @@
                 <form th:action="@{/logout}" method="post" style="display: inline;">
                     <button type="submit" class="logout-link">
                         <img th:src="@{/images/logout-icon.png}" alt="Logout Icon" class="icon">
-                        Log Ud
+                        Log ud
                     </button>
                 </form>
             </div>

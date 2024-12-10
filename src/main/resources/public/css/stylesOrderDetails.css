@@ -1,0 +1,89 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #004488;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+h1, h2 {
+    margin: 0.5rem 0;
+}
+
+section {
+    margin: 2rem auto;
+    padding: 1.5rem;
+    max-width: 600px;
+    background: white;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Specific Sections */
+.order-section p, .carport-section p {
+    margin: 0.5rem 0;
+}
+
+.alert {
+    background-color: #ffdd57;
+    color: #ffffff;
+    padding: 1rem;
+    margin: 1rem auto;
+    max-width: 600px;
+    text-align: center;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.svg-container {
+    margin: 2rem auto;
+    max-width: 600px;
+    padding: 1rem;
+    background: #ffffff;
+    border-radius: 5px;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background:  #002855;
+    color: white;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+h1{
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 3rem;
+}
+
+
+.svg-container{
+    max-width: 600px;
+    max-height: 600px;
+}
+
+.carport-image-container {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.carport-image {
+    width: 80%;
+    max-width: 800px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
