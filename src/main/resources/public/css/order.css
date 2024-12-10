@@ -116,8 +116,8 @@ h1 {
 }
 
 .button-secondary {
-    background-color: #ddd;
-    color: #333;
+    background-color: #0056b3;
+    color: white;
     padding: 0.5rem 1rem;
     text-decoration: none;
     border: none;
@@ -127,7 +127,7 @@ h1 {
 }
 
 .button-secondary:hover {
-    background-color: #bbb;
+    background-color: #003d82;
 }
 
 footer {

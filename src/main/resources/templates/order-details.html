@@ -8,8 +8,17 @@
 
 
 <body>
-<header>
-    <h1>Order Details</h1>
+<header class="top-bar">
+    <div class="header-container">
+        <div class="logo-container">
+            <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+            <span>Bolig & design</span>
+        </div>
+        <nav class="menu-container">
+            <a th:href="@{/}" class="nav-link">Home</a>
+            <a th:href="@{/orders}" class="nav-link">Orders</a>
+        </nav>
+    </div>
 </header>
 
 <div class="alert" th:if="${message}">
@@ -23,7 +32,7 @@
 <section class="order-section" th:if="${order != null}">
     <h2>Order Information</h2>
     <p><strong>Order ID:</strong> <span th:text="${order.orderId}"></span></p>
-    <p><strong>Date:</strong> <span th:text="${order.orderDate}"></span></p>
+    <p><Strong>Order Date:</Strong> <span th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd')}"></span>
     <p><strong>Status:</strong> <span th:text="${order.orderStatus}"></span></p>
 </section>
 
@@ -34,9 +43,8 @@
     <p><strong>Width:</strong> <span th:text="${carportSpec.width}"></span> cm</p>
 </section>
 
-<div id="carport-drawing" class="svg-container" >
+<div id="carport-drawing" th:if="${order.orderstatus == 'Completed'}">
     <div th:utext="${svg}"></div>
 </div>
-
 </body>
 </html>
