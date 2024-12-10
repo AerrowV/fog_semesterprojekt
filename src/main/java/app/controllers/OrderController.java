@@ -201,4 +201,31 @@ public class OrderController {
         carportSvg.addMaterials(materialSpecs, materials);
         return carportSvg.toString();
     }
+
+    public static void rejectOrder(Context ctx, ConnectionPool connectionPool) {
+        try {
+            int orderId = Integer.parseInt(ctx.formParam("order_id"));
+
+            Order order = OrderMapper.getOrderById(orderId, connectionPool);
+            if (!"Approved".equalsIgnoreCase(order.getOrderStatus())) {
+                ctx.attribute("message", "Order is not in an 'Approved' state and cannot be rejected.");
+                ctx.redirect("/orders");
+                return;
+            }
+
+            OrderMapper.updateOrderStatus(orderId, "Rejected", connectionPool);
+
+            ctx.redirect("/contact?orderId=" + orderId
+                    + "&subject=Rejection%20of%20Order%20" + orderId
+                    + "&message=Please%20explain%20why%20you%20are%20rejecting%20Order%20" + orderId + ".");
+
+
+        } catch (NumberFormatException e) {
+            ctx.attribute("message", "Invalid order ID.");
+            ctx.redirect("/orders");
+        } catch (DatabaseException e) {
+            ctx.attribute("message", "Failed to reject the order: " + e.getMessage());
+            ctx.redirect("/orders");
+        }
+    }
 }

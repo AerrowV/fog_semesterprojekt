@@ -24,7 +24,6 @@ public class ReceiptMapper {
     }
 
     public static void saveReceiptPrice(int orderId, double price, ConnectionPool connectionPool) throws DatabaseException {
-        price = price * 1.4;
         String sql = "UPDATE receipt SET receipt_price = ? WHERE order_id = ?";
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {

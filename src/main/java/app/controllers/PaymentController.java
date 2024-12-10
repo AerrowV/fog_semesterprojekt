@@ -49,6 +49,7 @@ public class PaymentController {
                 ReceiptMapper.updatePaidDate(orderId, currentTimestamp, connectionPool);
 
                 sendReceiptEmail(orderId, email, connectionPool);
+                sendWarehouseEmail(orderId, connectionPool);
 
                 String htmlResponse = """
                             <!DOCTYPE html>
@@ -125,6 +126,52 @@ public class PaymentController {
 
         } catch (Exception e) {
             throw new DatabaseException("Failed to send receipt email: " + e.getMessage());
+        }
+    }
+    private static void sendWarehouseEmail(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        try {
+            Order order = OrderMapper.getOrderById(orderId, connectionPool);
+            User user = UserMapper.getUserByIdWithAddress(order.getUserId(), connectionPool);
+            Receipt receipt = ReceiptMapper.getReceiptByOrderId(orderId, connectionPool);
+            CarportSpec carportSpec = CarportMapper.getCarportSpecsById(order.getCarportId(), connectionPool);
+            List<MaterialSpec> materialSpecs = MaterialMapper.getMaterialSpecsByCarportId(order.getCarportId(), connectionPool);
+            List<Material> materials = MaterialMapper.getAllMaterials(connectionPool);
+
+            StringBuilder materialListHtml = new StringBuilder("<ul>");
+            for (MaterialSpec spec : materialSpecs) {
+                Material material = materials.stream()
+                        .filter(m -> m.getMaterialId() == spec.getMaterialId())
+                        .findFirst()
+                        .orElse(null);
+
+                if (material != null) {
+                    materialListHtml.append(String.format(
+                            "<li>%s (Length: %d cm): %d %s</li>",
+                            material.getDescription(),
+                            material.getLength(),
+                            spec.getMaterialOrderAmount(),
+                            material.getUnit()
+                    ));
+                }
+            }
+            materialListHtml.append("</ul>");
+
+            String warehouseEmailContent = MailService.generateWarehouseEmailContent(
+                    order,
+                    user,
+                    receipt,
+                    materialListHtml.toString()
+            );
+
+            MailService.sendEmail(
+                    "foglager@gmail.com",
+                    "New Order Notification - Order #" + order.getOrderId(),
+                    "Please find the details of the new order below.",
+                    warehouseEmailContent
+            );
+
+        } catch (Exception e) {
+            throw new DatabaseException("Failed to send warehouse email: " + e.getMessage());
         }
     }
 }

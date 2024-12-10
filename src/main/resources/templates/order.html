@@ -30,7 +30,7 @@
         <tbody>
         <tr th:each="order : ${orders}">
             <td th:text="${order.orderId}"></td>
-            <td th:text="${order.orderDate}"></td>
+            <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd')}"></td>
             <td th:text="${order.orderStatus}"></td>
             <td>
                 <span th:if="${orderPrices[order.orderId] != null}"
@@ -39,7 +39,7 @@
             </td>
             <td>
                 <span th:if="${paidDates[order.orderId] != null}"
-                      th:text="${paidDates[order.orderId]}"></span>
+                      th:text="${#dates.format(paidDates[order.orderId], 'yyyy-MM-dd')}"></span>
                 <span th:if="${paidDates[order.orderId] == null}">N/A</span>
             </td>
             <td>
@@ -48,6 +48,10 @@
                     <a th:href="@{/payment(orderId=${order.orderId})}">
                         <button>Proceed to Payment</button>
                     </a>
+                    <form th:action="@{/orders/reject}" method="post" style="display:inline;">
+                        <input type="hidden" name="order_id" th:value="${order.orderId}" />
+                        <button type="submit">Reject Offer</button>
+                    </form>
                 </div>
             </td>
         </tr>
