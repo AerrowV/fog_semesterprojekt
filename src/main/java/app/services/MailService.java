@@ -126,7 +126,7 @@ public class MailService {
 
     public static String generateReceiptEmailContent(Order order, User user, Receipt receipt, String materialListHtml) {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        String formattedPaidDate = dateFormatter.format((receipt.getPaidDate().toString()));
+        String formattedPaidDate = dateFormatter.format((receipt.getPaidDate()));
         return """
                     <!DOCTYPE html>
                     <html lang="en">
@@ -183,7 +183,7 @@ public class MailService {
 
     public static String generateWarehouseEmailContent(Order order, User user, Receipt receipt, String materialListHtml) {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        String formattedPaidDate = dateFormatter.format((receipt.getPaidDate().toString()));
+        String formattedPaidDate = dateFormatter.format((receipt.getPaidDate()));
         return """
         <!DOCTYPE html>
         <html lang="en">

@@ -215,9 +215,7 @@ public class OrderController {
 
             OrderMapper.updateOrderStatus(orderId, "Rejected", connectionPool);
 
-            ctx.redirect("/contact?orderId=" + orderId
-                    + "&subject=Rejection%20of%20Order%20" + orderId
-                    + "&message=Please%20explain%20why%20you%20are%20rejecting%20Order%20" + orderId + ".");
+            ctx.redirect("/contact");
 
 
         } catch (NumberFormatException e) {

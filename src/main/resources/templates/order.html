@@ -56,12 +56,12 @@
                     <span th:if="${paidDates[order.orderId] == null}">N/A</span>
                 </td>
                 <td>
-                    <a th:href="@{/orders/details/{id}(id=${order.orderId})}" class="button-primary">View Details</a>
-                    <div th:if="${order.orderStatus == 'Approved'}" class="action-buttons">
-                        <a th:href="@{/payment(orderId=${order.orderId})}" class="button-primary">Proceed to Payment</a>
-                        <form th:action="@{/orders/reject}" method="post" class="inline-form">
+                    <div class="action-buttons">
+                        <a th:href="@{/orders/details/{id}(id=${order.orderId})}" class="button-primary">View Details</a>
+                        <a th:href="@{/payment(orderId=${order.orderId})}" th:if="${order.orderStatus == 'Approved'}" class="button-secondary">Proceed to Payment</a>
+                        <form th:if="${order.orderStatus == 'Approved'}" th:action="@{/orders/reject}" method="post" class="block-form">
                             <input type="hidden" name="order_id" th:value="${order.orderId}">
-                            <button type="submit" class="button-secondary">Reject Offer</button>
+                            <button type="submit" class="button-third">Reject Offer</button>
                         </form>
                     </div>
                 </td>
