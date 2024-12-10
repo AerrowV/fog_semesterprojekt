@@ -48,6 +48,10 @@
                     <a th:href="@{/payment(orderId=${order.orderId})}">
                         <button>Proceed to Payment</button>
                     </a>
+                    <form th:action="@{/orders/reject}" method="post" style="display:inline;">
+                        <input type="hidden" name="order_id" th:value="${order.orderId}" />
+                        <button type="submit">Reject Offer</button>
+                    </form>
                 </div>
             </td>
         </tr>

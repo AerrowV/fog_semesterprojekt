@@ -53,5 +53,6 @@ public class Main {
         app.post("/contact", ctx -> MailController.sendUserMail(ctx));
         app.get("/admin/emails", ctx -> ctx.render("admin-emails.html"));
         app.post("/admin/emails", ctx -> MailController.sendAdminMail(ctx));
+        app.post("/orders/reject", ctx -> OrderController.rejectOrder(ctx, connectionPool));
     }
 }
