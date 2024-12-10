@@ -43,8 +43,8 @@
     <p><strong>Width:</strong> <span th:text="${carportSpec.width}"></span> cm</p>
 </section>
 
-<div id="carport-drawing" th:if="${order.orderstatus == 'Completed'}">
-    <div th:utext="${svg}"></div>
+<div th:if="${order.orderstatus == 'Completed'}">
+    <div th:utext="${svg}" class="carport-drawing-container"></div>
 </div>
 </body>
 </html>
