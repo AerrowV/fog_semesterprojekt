@@ -24,7 +24,6 @@ public class ReceiptMapperIntegrationTest {
     public void setUp() throws SQLException {
         connectionPool = ConnectionPool.getInstance("postgres", "postgres", "jdbc:postgresql://localhost:5432/%s?currentSchema=public", "testdb");
 
-        // Ensure required order exists
         try (Connection connection = connectionPool.getConnection()) {
             String createOrderSql = """
                 INSERT INTO "order" (order_id, order_date, order_status, user_id, carport_id)

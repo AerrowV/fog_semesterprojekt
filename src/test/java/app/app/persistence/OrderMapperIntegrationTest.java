@@ -25,7 +25,6 @@ public class OrderMapperIntegrationTest {
     public void setUp() throws SQLException {
         connectionPool = ConnectionPool.getInstance("postgres", "postgres", "jdbc:postgresql://localhost:5432/%s?currentSchema=public", "testdb");
 
-        // Ensure the required tables exist
         try (Connection connection = connectionPool.getConnection()) {
             String createTablesSql = """
                         CREATE TABLE IF NOT EXISTS "order" (

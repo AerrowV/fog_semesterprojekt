@@ -52,7 +52,7 @@ public class UserMapperIntegrationTest {
 
     @BeforeEach
     void cleanUp() throws SQLException {
-        // Clean test data
+
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement stmt = connection.prepareStatement("TRUNCATE \"user\" RESTART IDENTITY CASCADE")) {
                 stmt.executeUpdate();
@@ -105,7 +105,6 @@ public class UserMapperIntegrationTest {
             userStmt.executeUpdate();
         }
 
-        // Retrieve user by ID
         User user = UserMapper.getUserByIdWithAddress(1, connectionPool);
         assertNotNull(user);
         assertEquals("test@example.com", user.getEmail());
@@ -116,7 +115,7 @@ public class UserMapperIntegrationTest {
 
     @AfterAll
     void teardown() throws SQLException {
-        // Drop test tables
+
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement stmt = connection.prepareStatement("""
                     DROP TABLE IF EXISTS "user" CASCADE;
