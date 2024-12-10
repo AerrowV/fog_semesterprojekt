@@ -65,11 +65,9 @@ public class UserMapperIntegrationTest {
         String email = "testuser@example.com";
         String password = "password123";
 
-        // Test createUser
         UserMapper.createUser(email, password, connectionPool);
         assertTrue(UserMapper.checkEmail(email, connectionPool));
 
-        // Test login
         User user = UserMapper.login(email, password, connectionPool);
         assertNotNull(user);
         assertEquals(email, user.getEmail());
@@ -84,13 +82,12 @@ public class UserMapperIntegrationTest {
 
     @Test
     void testGetUserByIdWithAddress() throws DatabaseException, SQLException {
-        // Insert ZIP code
+
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement zipStmt = connection.prepareStatement("INSERT INTO zip_code (zip_code, city) VALUES (12345, 'Test City')")) {
             zipStmt.executeUpdate();
         }
 
-        // Insert address and user
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement addrStmt = connection.prepareStatement("INSERT INTO address (street_name, house_number, zip_code) VALUES ('Main St', '42A', 12345) RETURNING address_id");
              PreparedStatement userStmt = connection.prepareStatement("INSERT INTO \"user\" (user_email, user_password, first_name, last_name, address_id) VALUES ('test@example.com', 'password', 'John', 'Doe', ?)");) {
