@@ -12,16 +12,6 @@ public class CarportController {
 
     public static void saveCustomerSpecifications(Context ctx, ConnectionPool connectionPool) {
         try {
-
-            int length = Integer.parseInt(ctx.formParam("length"));
-            int width = Integer.parseInt(ctx.formParam("width"));
-            boolean hasRoof = Boolean.parseBoolean(ctx.formParam("roof"));
-
-            int carportId = CarportMapper.saveCarportSpecs(length, width, hasRoof, connectionPool);
-
-            ArrayList<Material> stykListe = carportStykListe(length, width, carportId, connectionPool);
-            saveStykliste(connectionPool, stykListe, carportId);
-
             Integer userId = ctx.sessionAttribute("user_id");
             if (userId == null) {
                 ctx.attribute("message", "You must be logged in to create a carport specification.");
@@ -29,18 +19,25 @@ public class CarportController {
                 return;
             }
 
+            int length = Integer.parseInt(ctx.formParam("length"));
+            int width = Integer.parseInt(ctx.formParam("width"));
+            boolean hasRoof = Boolean.parseBoolean(ctx.formParam("roof"));
+
+            int carportId = CarportMapper.saveCarportSpecs(length, width, hasRoof, connectionPool);
+            ArrayList<Material> stykListe = carportStykListe(length, width, carportId, connectionPool);
+            saveStykliste(connectionPool, stykListe, carportId);
+
             Order newOrder = new Order(0, null, "In Review", userId, carportId);
             int orderId = OrderMapper.createOrder(newOrder, connectionPool);
 
             if (orderId <= 0) {
                 throw new DatabaseException("Order creation returned invalid ID.");
             }
-            double price = CarportController.calculatorForPrice(length, width, hasRoof, connectionPool);
+            double price = calculatorForPrice(length, width, hasRoof, connectionPool);
             ReceiptMapper.saveReceiptPrice(orderId, price, connectionPool);
 
             ctx.attribute("message", "Carport specifications and order created successfully.");
             ctx.redirect("/orders");
-
         } catch (NumberFormatException e) {
             ctx.attribute("message", "Invalid input. Please check your values.");
             ctx.render("choose-carport.html");
@@ -52,6 +49,7 @@ public class CarportController {
             ctx.render("choose-carport.html");
         }
     }
+
 
 
     //Understernbrædder	til	for og bag enden
