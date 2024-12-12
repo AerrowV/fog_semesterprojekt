@@ -23,32 +23,33 @@ public class UserMapperIntegrationTest {
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement stmt = connection.prepareStatement("""
-                    CREATE TABLE IF NOT EXISTS "user" (
-                        user_id SERIAL PRIMARY KEY,
-                        user_email VARCHAR(255) UNIQUE NOT NULL,
-                        user_password VARCHAR(255) NOT NULL,
-                        is_admin BOOLEAN DEFAULT FALSE,
-                        first_name VARCHAR(255),
-                        last_name VARCHAR(255),
-                        address_id INTEGER
-                    );
-                    
-                    CREATE TABLE IF NOT EXISTS address (
-                        address_id SERIAL PRIMARY KEY,
-                        street_name VARCHAR(255),
-                        house_number VARCHAR(255),
-                        zip_code INTEGER
-                    );
+                            CREATE TABLE IF NOT EXISTS "user" (
+                                user_id SERIAL PRIMARY KEY,
+                                user_email VARCHAR(255) UNIQUE NOT NULL,
+                                user_password VARCHAR(255) NOT NULL,
+                                is_admin BOOLEAN DEFAULT FALSE,
+                                first_name VARCHAR(255),
+                                last_name VARCHAR(255),
+                                address_id INTEGER
+                            );
 
-                    CREATE TABLE IF NOT EXISTS zip_code (
-                        zip_code INTEGER PRIMARY KEY,
-                        city VARCHAR(255)
-                    );
-            """)) {
+                            CREATE TABLE IF NOT EXISTS address (
+                                address_id SERIAL PRIMARY KEY,
+                                street_name VARCHAR(255),
+                                house_number VARCHAR(255),
+                                zip_code INTEGER
+                            );
+
+                            CREATE TABLE IF NOT EXISTS zip_code (
+                                zip_code INTEGER PRIMARY KEY,
+                                city VARCHAR(255)
+                            );
+                    """)) {
                 stmt.executeUpdate();
             }
         }
     }
+
 
     @BeforeEach
     void cleanUp() throws SQLException {
@@ -115,10 +116,10 @@ public class UserMapperIntegrationTest {
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement stmt = connection.prepareStatement("""
-                    DROP TABLE IF EXISTS "user" CASCADE;
-                    DROP TABLE IF EXISTS address CASCADE;
-                    DROP TABLE IF EXISTS zip_code CASCADE;
-            """)) {
+                            DROP TABLE IF EXISTS "user" CASCADE;
+                            DROP TABLE IF EXISTS address CASCADE;
+                            DROP TABLE IF EXISTS zip_code CASCADE;
+                    """)) {
                 stmt.executeUpdate();
             }
         }

@@ -1,7 +1,9 @@
-package app.persistence;
+package app.app.persistence;
 
 import app.entities.Receipt;
 import app.exceptions.DatabaseException;
+import app.persistence.ConnectionPool;
+import app.persistence.ReceiptMapper;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;

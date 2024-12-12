@@ -1,7 +1,9 @@
-package app.persistence;
+package app.app.persistence;
 
 import app.entities.Order;
 import app.exceptions.DatabaseException;
+import app.persistence.ConnectionPool;
+import app.persistence.OrderMapper;
 import org.junit.jupiter.api.*;
 
 import java.sql.Connection;
@@ -27,27 +29,42 @@ public class OrderMapperIntegrationTest {
 
         try (Connection connection = connectionPool.getConnection()) {
             String createTablesSql = """
-                        CREATE TABLE IF NOT EXISTS "order" (
-                            order_id SERIAL PRIMARY KEY,
-                            user_id INT NOT NULL,
-                            order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Default to current timestamp
-                            order_status VARCHAR(50) NOT NULL,
-                            carport_id INT NOT NULL
-                        );
+            CREATE TABLE IF NOT EXISTS "user" (
+                user_id SERIAL PRIMARY KEY,
+                user_email VARCHAR(255) NOT NULL UNIQUE,
+                user_password VARCHAR(255) NOT NULL,
+                is_admin BOOLEAN DEFAULT FALSE
+            );
 
-                        CREATE TABLE IF NOT EXISTS receipt (
-                            receipt_id SERIAL PRIMARY KEY,
-                            order_id INT UNIQUE NOT NULL REFERENCES "order"(order_id),
-                            receipt_price DOUBLE PRECISION DEFAULT 0,
-                            receipt_paid_date TIMESTAMP
-                        );
-                    """;
+            CREATE TABLE IF NOT EXISTS carport_spec (
+                carport_id SERIAL PRIMARY KEY,
+                carport_length INT NOT NULL,
+                carport_width INT NOT NULL,
+                carport_roof BOOLEAN NOT NULL
+            );
+
+            CREATE TABLE IF NOT EXISTS "order" (
+                order_id SERIAL PRIMARY KEY,
+                user_id INT NOT NULL REFERENCES "user"(user_id),
+                order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                order_status VARCHAR(50) NOT NULL,
+                carport_id INT NOT NULL REFERENCES carport_spec(carport_id)
+            );
+
+            CREATE TABLE IF NOT EXISTS receipt (
+                receipt_id SERIAL PRIMARY KEY,
+                order_id INT UNIQUE NOT NULL REFERENCES "order"(order_id),
+                receipt_price DOUBLE PRECISION DEFAULT 0,
+                receipt_paid_date TIMESTAMP
+            );
+        """;
 
             try (PreparedStatement ps = connection.prepareStatement(createTablesSql)) {
                 ps.execute();
             }
         }
     }
+
 
     @BeforeEach
     public void insertTestData() throws SQLException {

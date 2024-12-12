@@ -61,9 +61,25 @@ public class MaterialMapperIntegrationTest {
     @BeforeEach
     public void insertTestData() throws SQLException {
         try (Connection connection = connectionPool.getConnection()) {
-            String insertMaterialSql = "INSERT INTO material (material_id, material_description, material_length, material_amount, material_unit, material_function, material_price) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?) ";
 
+            String insertCarportSpecSql = """
+            INSERT INTO carport_spec (carport_id, carport_length, carport_width, carport_roof)
+            VALUES (?, ?, ?, ?)
+            ON CONFLICT DO NOTHING
+        """;
+            try (PreparedStatement ps = connection.prepareStatement(insertCarportSpecSql)) {
+                ps.setInt(1, testCarportId);
+                ps.setInt(2, 600);
+                ps.setInt(3, 400);
+                ps.setBoolean(4, true);
+                ps.executeUpdate();
+            }
+
+            String insertMaterialSql = """
+            INSERT INTO material (material_id, material_description, material_length, material_amount, material_unit, material_function, material_price)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            ON CONFLICT DO NOTHING
+        """;
             try (PreparedStatement ps = connection.prepareStatement(insertMaterialSql)) {
                 ps.setInt(1, testMaterialId);
                 ps.setString(2, testDescription);
@@ -76,9 +92,9 @@ public class MaterialMapperIntegrationTest {
             }
 
             String insertMaterialSpecSql = """
-                INSERT INTO material_spec (carport_id, material_id, material_order_amount)
-                VALUES (?, ?, ?)
-            """;
+            INSERT INTO material_spec (carport_id, material_id, material_order_amount)
+            VALUES (?, ?, ?)
+        """;
             try (PreparedStatement ps = connection.prepareStatement(insertMaterialSpecSql)) {
                 ps.setInt(1, testCarportId);
                 ps.setInt(2, testMaterialId);
@@ -87,6 +103,7 @@ public class MaterialMapperIntegrationTest {
             }
         }
     }
+
 
     @AfterEach
     public void tearDown() throws SQLException {

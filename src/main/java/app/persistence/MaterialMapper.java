@@ -92,30 +92,28 @@ public class MaterialMapper {
 
     public static Material getMaterialById(int materialId, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT * FROM material WHERE material_id = ?";
-
         try (Connection connection = connectionPool.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-
             ps.setInt(1, materialId);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return new Material(
-                        rs.getInt("material_id"),
-                        rs.getString("material_description"),
-                        rs.getInt("material_length"),
-                        rs.getInt("material_amount"),
-                        rs.getString("material_unit"),
-                        rs.getString("material_function"),
-                        rs.getInt("material_price")
-                );
-            } else {
-                throw new DatabaseException("Material not found");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    return new Material(
+                            rs.getInt("material_id"),
+                            rs.getString("material_description"),
+                            rs.getInt("material_length"),
+                            rs.getInt("material_amount"),
+                            rs.getString("material_unit"),
+                            rs.getString("material_function"),
+                            rs.getInt("material_price")
+                    );
+                }
             }
         } catch (SQLException e) {
-            throw new DatabaseException("Failed to fetch material: " + e.getMessage());
+            throw new DatabaseException("Error fetching material by ID: " + materialId);
         }
+        return null;
     }
+
 
     public static Material getMaterialSetAmount(int materialId, int amount, ConnectionPool connectionPool) throws DatabaseException {
         String sql = "SELECT * FROM material WHERE material_id = ?";
