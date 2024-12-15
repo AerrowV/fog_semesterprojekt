@@ -1,4 +1,3 @@
-/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -20,7 +19,6 @@ h1 {
     margin: 0;
 }
 
-/* Alert Message */
 .alert {
     background-color: #ffdd57;
     color: #333;
@@ -32,7 +30,6 @@ h1 {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Orders Section */
 .orders-section {
     margin: 2rem auto;
     padding: 1.5rem;
@@ -48,7 +45,6 @@ h1 {
     font-size: 1.1rem;
 }
 
-/* Table Styles */
 .orders-table {
     width: 100%;
     border-collapse: collapse;
@@ -106,7 +102,6 @@ h1 {
     background-color: #16630d;
 }
 
-/* Footer */
 footer {
     text-align: center;
     padding: 1rem;
