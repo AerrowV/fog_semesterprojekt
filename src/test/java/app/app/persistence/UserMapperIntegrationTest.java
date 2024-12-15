@@ -32,14 +32,14 @@ public class UserMapperIntegrationTest {
                                 last_name VARCHAR(255),
                                 address_id INTEGER
                             );
-
+                    
                             CREATE TABLE IF NOT EXISTS address (
                                 address_id SERIAL PRIMARY KEY,
                                 street_name VARCHAR(255),
                                 house_number VARCHAR(255),
                                 zip_code INTEGER
                             );
-
+                    
                             CREATE TABLE IF NOT EXISTS zip_code (
                                 zip_code INTEGER PRIMARY KEY,
                                 city VARCHAR(255)

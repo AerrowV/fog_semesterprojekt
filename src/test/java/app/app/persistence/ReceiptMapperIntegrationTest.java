@@ -28,10 +28,10 @@ public class ReceiptMapperIntegrationTest {
 
         try (Connection connection = connectionPool.getConnection()) {
             String createOrderSql = """
-                INSERT INTO "order" (order_id, order_date, order_status, user_id, carport_id)
-                VALUES (?, NOW(), 'Pending', NULL, NULL)
-                ON CONFLICT (order_id) DO NOTHING;
-            """;
+                        INSERT INTO "order" (order_id, order_date, order_status, user_id, carport_id)
+                        VALUES (?, NOW(), 'Pending', NULL, NULL)
+                        ON CONFLICT (order_id) DO NOTHING;
+                    """;
             try (PreparedStatement ps = connection.prepareStatement(createOrderSql)) {
                 ps.setInt(1, testOrderId);
                 ps.executeUpdate();
@@ -43,10 +43,10 @@ public class ReceiptMapperIntegrationTest {
     public void insertTestData() throws SQLException {
         try (Connection connection = connectionPool.getConnection()) {
             String insertSql = """
-                INSERT INTO receipt (receipt_id, receipt_price, receipt_paid_date, order_id)
-                VALUES (?, ?, NULL, ?)
-                ON CONFLICT (receipt_id) DO NOTHING;
-            """;
+                        INSERT INTO receipt (receipt_id, receipt_price, receipt_paid_date, order_id)
+                        VALUES (?, ?, NULL, ?)
+                        ON CONFLICT (receipt_id) DO NOTHING;
+                    """;
             try (PreparedStatement ps = connection.prepareStatement(insertSql)) {
                 ps.setInt(1, testReceiptId);
                 ps.setInt(2, testPrice);

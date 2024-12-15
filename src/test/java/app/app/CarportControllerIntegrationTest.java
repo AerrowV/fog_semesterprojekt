@@ -1,16 +1,17 @@
 package app.app;
 
+import app.controllers.CarportController;
+import app.entities.Material;
+import app.persistence.CarportMapper;
+import app.persistence.MaterialMapper;
+import app.persistence.OrderMapper;
+import app.persistence.ReceiptMapper;
 import io.javalin.http.Context;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.MockedStatic;
-import app.persistence.MaterialMapper;
-import app.persistence.CarportMapper;
-import app.persistence.OrderMapper;
-import app.persistence.ReceiptMapper;
-import app.entities.Material;
-import app.controllers.CarportController;
+
 import static org.mockito.Mockito.*;
 
 class CarportControllerIntegrationTest {
@@ -49,7 +50,7 @@ class CarportControllerIntegrationTest {
                 .thenAnswer(invocation -> null); // Simulate successful execution of the void method
 
         materialMapperMock.when(() -> MaterialMapper.getMaterialById(anyInt(), any()))
-                .thenReturn(new Material(1, "Test Material", 1, 1000, "test description","test unit",1000));
+                .thenReturn(new Material(1, "Test Material", 1, 1000, "test description", "test unit", 1000));
 
         CarportController.saveCustomerSpecifications(mockContext, connectionPool);
 
@@ -59,8 +60,6 @@ class CarportControllerIntegrationTest {
 
         receiptMapperMock.verify(() -> ReceiptMapper.saveReceiptPrice(anyInt(), anyDouble(), any()), times(1));
     }
-
-
 
 
     @Test

@@ -3,10 +3,13 @@ package app.app.persistence;
 import app.entities.CarportSpec;
 import app.entities.MaterialSpec;
 import app.exceptions.DatabaseException;
+import app.persistence.CarportMapper;
 import app.persistence.ConnectionPool;
 import app.persistence.MaterialMapper;
-import org.junit.jupiter.api.*;
-import app.persistence.CarportMapper;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,30 +28,30 @@ class CarportMapperIntegrationTest {
 
         try (Connection connection = connectionPool.getConnection()) {
             String createTablesSql = """
-                CREATE TABLE IF NOT EXISTS carport_spec (
-                    carport_id SERIAL PRIMARY KEY,
-                    carport_length INT NOT NULL,
-                    carport_width INT NOT NULL,
-                    carport_roof BOOLEAN NOT NULL
-                );
-
-                CREATE TABLE IF NOT EXISTS material (
-                    material_id SERIAL PRIMARY KEY,
-                    material_description VARCHAR(255) NOT NULL,
-                    material_length INT,
-                    material_amount INT NOT NULL,
-                    material_unit VARCHAR(50) NOT NULL,
-                    material_function VARCHAR(255) NOT NULL,
-                    material_price INT
-                );
-
-                CREATE TABLE IF NOT EXISTS material_spec (
-                    material_spec_id SERIAL PRIMARY KEY,
-                    carport_id INT NOT NULL REFERENCES carport_spec(carport_id),
-                    material_id INT NOT NULL REFERENCES material(material_id),
-                    material_order_amount INT NOT NULL
-                );
-            """;
+                        CREATE TABLE IF NOT EXISTS carport_spec (
+                            carport_id SERIAL PRIMARY KEY,
+                            carport_length INT NOT NULL,
+                            carport_width INT NOT NULL,
+                            carport_roof BOOLEAN NOT NULL
+                        );
+                    
+                        CREATE TABLE IF NOT EXISTS material (
+                            material_id SERIAL PRIMARY KEY,
+                            material_description VARCHAR(255) NOT NULL,
+                            material_length INT,
+                            material_amount INT NOT NULL,
+                            material_unit VARCHAR(50) NOT NULL,
+                            material_function VARCHAR(255) NOT NULL,
+                            material_price INT
+                        );
+                    
+                        CREATE TABLE IF NOT EXISTS material_spec (
+                            material_spec_id SERIAL PRIMARY KEY,
+                            carport_id INT NOT NULL REFERENCES carport_spec(carport_id),
+                            material_id INT NOT NULL REFERENCES material(material_id),
+                            material_order_amount INT NOT NULL
+                        );
+                    """;
             try (PreparedStatement ps = connection.prepareStatement(createTablesSql)) {
                 ps.execute();
             }
@@ -59,18 +62,18 @@ class CarportMapperIntegrationTest {
     void insertTestData() throws Exception {
         try (Connection connection = connectionPool.getConnection()) {
             String insertCarportSpecSql = """
-                INSERT INTO carport_spec (carport_length, carport_width, carport_roof)
-                VALUES (600, 300, true) RETURNING carport_id;
-            """;
+                        INSERT INTO carport_spec (carport_length, carport_width, carport_roof)
+                        VALUES (600, 300, true) RETURNING carport_id;
+                    """;
             String insertMaterialSql = """
-                INSERT INTO material (material_description, material_length, material_amount, material_unit, material_function, material_price)
-                VALUES ('Test Material', 100, 50, 'pcs', 'Test Function', 200);
-            """;
+                        INSERT INTO material (material_description, material_length, material_amount, material_unit, material_function, material_price)
+                        VALUES ('Test Material', 100, 50, 'pcs', 'Test Function', 200);
+                    """;
             String insertMaterialSpecSql = """
-                INSERT INTO material_spec (carport_id, material_id, material_order_amount)
-                SELECT carport_id, material_id, 10 FROM carport_spec, material
-                WHERE carport_spec.carport_length = 600 AND material.material_description = 'Test Material';
-            """;
+                        INSERT INTO material_spec (carport_id, material_id, material_order_amount)
+                        SELECT carport_id, material_id, 10 FROM carport_spec, material
+                        WHERE carport_spec.carport_length = 600 AND material.material_description = 'Test Material';
+                    """;
             try (PreparedStatement ps1 = connection.prepareStatement(insertCarportSpecSql)) {
                 ps1.execute();
             }

@@ -17,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MaterialMapperIntegrationTest {
 
-    private ConnectionPool connectionPool;
     private final int testMaterialId = 999;
     private final String testDescription = "Test Material";
     private final int testLength = 100;
@@ -27,6 +26,7 @@ public class MaterialMapperIntegrationTest {
     private final double testPrice = 200.0;
     private final int testCarportId = 1;
     private final int testOrderAmount = 10;
+    private ConnectionPool connectionPool;
 
     @BeforeAll
     public void setUp() throws SQLException {
@@ -34,24 +34,24 @@ public class MaterialMapperIntegrationTest {
 
         try (Connection connection = connectionPool.getConnection()) {
             String createTablesSql = """
-                CREATE TABLE IF NOT EXISTS material (
-                    material_id SERIAL PRIMARY KEY,
-                    material_description VARCHAR(255) UNIQUE NOT NULL,
-                    material_length INT NOT NULL,
-                    material_amount INT NOT NULL,
-                    material_unit VARCHAR(50) NOT NULL,
-                    material_function VARCHAR(255) NOT NULL,
-                    material_price DOUBLE PRECISION NOT NULL
-                );
-
-                CREATE TABLE IF NOT EXISTS material_spec (
-                    material_spec_id SERIAL PRIMARY KEY,
-                    carport_id INT NOT NULL,
-                    material_id INT NOT NULL REFERENCES material(material_id),
-                    material_order_amount INT NOT NULL,
-                    UNIQUE (carport_id, material_id)
-                );
-            """;
+                        CREATE TABLE IF NOT EXISTS material (
+                            material_id SERIAL PRIMARY KEY,
+                            material_description VARCHAR(255) UNIQUE NOT NULL,
+                            material_length INT NOT NULL,
+                            material_amount INT NOT NULL,
+                            material_unit VARCHAR(50) NOT NULL,
+                            material_function VARCHAR(255) NOT NULL,
+                            material_price DOUBLE PRECISION NOT NULL
+                        );
+                    
+                        CREATE TABLE IF NOT EXISTS material_spec (
+                            material_spec_id SERIAL PRIMARY KEY,
+                            carport_id INT NOT NULL,
+                            material_id INT NOT NULL REFERENCES material(material_id),
+                            material_order_amount INT NOT NULL,
+                            UNIQUE (carport_id, material_id)
+                        );
+                    """;
             try (PreparedStatement ps = connection.prepareStatement(createTablesSql)) {
                 ps.execute();
             }
@@ -63,10 +63,10 @@ public class MaterialMapperIntegrationTest {
         try (Connection connection = connectionPool.getConnection()) {
 
             String insertCarportSpecSql = """
-            INSERT INTO carport_spec (carport_id, carport_length, carport_width, carport_roof)
-            VALUES (?, ?, ?, ?)
-            ON CONFLICT DO NOTHING
-        """;
+                        INSERT INTO carport_spec (carport_id, carport_length, carport_width, carport_roof)
+                        VALUES (?, ?, ?, ?)
+                        ON CONFLICT DO NOTHING
+                    """;
             try (PreparedStatement ps = connection.prepareStatement(insertCarportSpecSql)) {
                 ps.setInt(1, testCarportId);
                 ps.setInt(2, 600);
@@ -76,10 +76,10 @@ public class MaterialMapperIntegrationTest {
             }
 
             String insertMaterialSql = """
-            INSERT INTO material (material_id, material_description, material_length, material_amount, material_unit, material_function, material_price)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-            ON CONFLICT DO NOTHING
-        """;
+                        INSERT INTO material (material_id, material_description, material_length, material_amount, material_unit, material_function, material_price)
+                        VALUES (?, ?, ?, ?, ?, ?, ?)
+                        ON CONFLICT DO NOTHING
+                    """;
             try (PreparedStatement ps = connection.prepareStatement(insertMaterialSql)) {
                 ps.setInt(1, testMaterialId);
                 ps.setString(2, testDescription);
@@ -92,9 +92,9 @@ public class MaterialMapperIntegrationTest {
             }
 
             String insertMaterialSpecSql = """
-            INSERT INTO material_spec (carport_id, material_id, material_order_amount)
-            VALUES (?, ?, ?)
-        """;
+                        INSERT INTO material_spec (carport_id, material_id, material_order_amount)
+                        VALUES (?, ?, ?)
+                    """;
             try (PreparedStatement ps = connection.prepareStatement(insertMaterialSpecSql)) {
                 ps.setInt(1, testCarportId);
                 ps.setInt(2, testMaterialId);
@@ -109,9 +109,9 @@ public class MaterialMapperIntegrationTest {
     public void tearDown() throws SQLException {
         try (Connection connection = connectionPool.getConnection()) {
             String deleteSql = """
-                DELETE FROM material_spec WHERE material_id = ?;
-                DELETE FROM material WHERE material_id = ?;
-            """;
+                        DELETE FROM material_spec WHERE material_id = ?;
+                        DELETE FROM material WHERE material_id = ?;
+                    """;
             try (PreparedStatement ps = connection.prepareStatement(deleteSql)) {
                 ps.setInt(1, testMaterialId);
                 ps.setInt(2, testMaterialId);
