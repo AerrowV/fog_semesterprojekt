@@ -1,71 +1,81 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Order Management</title>
-  <link href="../public/css/admin-Order-List.css" th:href="@{/css/admin-Order-List.css}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Admin Order Management</title>
+    <link href="../public/css/admin-Order-List.css" rel="stylesheet" th:href="@{/css/admin-Order-List.css}">
 </head>
 <body>
 <header class="top-bar">
-  <div class="header-container">
-    <div class="logo-container">
-      <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
-      <span>Bolig & design</span>
+    <div class="header-container">
+        <div class="logo-container">
+            <img alt="Fog Logo" class="logo" th:src="@{/images/img.png}">
+            <span>Bolig & design</span>
+        </div>
+        <nav class="menu-container">
+            <a class="nav-link" th:href="@{/admin}">Dashboard</a>
+        </nav>
     </div>
-    <nav class="menu-container">
-      <a th:href="@{/admin}" class="nav-link">Dashboard</a>
-    </nav>
-  </div>
 </header>
 
 <main class="content-container">
-  <div class="alert" th:if="${message}">
-    <p th:text="${message}"></p>
-  </div>
-  <div class="table-container">
-    <h1>Admin Order Management</h1>
-    <table class="order-table">
-      <thead>
-      <tr>
-        <th>Order ID</th>
-        <th>Date</th>
-        <th>Status</th>
-        <th>Price</th>
-        <th>Details</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each="orderWithPrice : ${ordersWithPrices}">
-        <td th:text="${orderWithPrice.order.orderId}"></td>
-        <td th:text="${#dates.format(orderWithPrice.order.orderDate, 'yyyy-MM-dd')}"></td>
-        <td>
-          <form method="post" th:action="@{/update-order-details}" class="inline-form">
-            <input type="hidden" name="order_id" th:value="${orderWithPrice.order.orderId}" />
-            <select name="new_status" class="status-select" required>
-              <option value="In Review" th:selected="${orderWithPrice.order.orderStatus == 'In Review'}">In Review</option>
-              <option value="Approved" th:selected="${orderWithPrice.order.orderStatus == 'Approved'}">Approved</option>
-              <option value="Rejected" th:selected="${orderWithPrice.order.orderStatus == 'Rejected'}">Rejected</option>
-              <option value="Completed" th:selected="${orderWithPrice.order.orderStatus == 'Completed'}">Completed</option>
-            </select>
-            <input type="number" step="0.01" name="percentage" class="form-input" placeholder="Price %" required />
-            <button type="submit" class="primary-button">Update</button>
-          </form>
-        </td>
-        <td th:text="${orderWithPrice.price} + ' DKK'"></td>
-        <td>
-          <a th:href="@{/admin/orders/details/{id}(id=${orderWithPrice.order.orderId})}" class="primary-button">
-            View Details
-          </a>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="alert" th:if="${message}">
+        <p th:text="${message}"></p>
+    </div>
+    <div class="table-container">
+        <h1>Admin Order Management</h1>
+        <table class="order-table">
+            <thead>
+            <tr>
+                <th>Order ID</th>
+                <th>Date</th>
+                <th>Status</th>
+                <th>Price</th>
+                <th>Details</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="orderWithPrice : ${ordersWithPrices}">
+                <td th:text="${orderWithPrice.order.orderId}"></td>
+                <td th:text="${#dates.format(orderWithPrice.order.orderDate, 'yyyy-MM-dd')}"></td>
+                <td>
+                    <form class="inline-form" method="post" th:action="@{/update-order-details}">
+                        <input name="order_id" th:value="${orderWithPrice.order.orderId}" type="hidden"/>
+                        <select class="status-select" name="new_status" required>
+                            <option th:selected="${orderWithPrice.order.orderStatus == 'In Review'}" value="In Review">
+                                In Review
+                            </option>
+                            <option th:selected="${orderWithPrice.order.orderStatus == 'Approved'}" value="Approved">
+                                Approved
+                            </option>
+                            <option th:selected="${orderWithPrice.order.orderStatus == 'Rejected'}" value="Rejected">
+                                Rejected
+                            </option>
+                            <option th:selected="${orderWithPrice.order.orderStatus == 'Completed'}" value="Completed">
+                                Completed
+                            </option>
+                        </select>
+                        <input class="form-input" name="percentage" placeholder="Price %" required step="0.01"
+                               type="number"/>
+                        <button class="primary-button" type="submit">Update</button>
+                    </form>
+                </td>
+                <td th:text="${orderWithPrice.price} + ' DKK'"></td>
+                <td>
+                    <a class="primary-button"
+                       th:href="@{/admin/orders/details/{id}(id=${orderWithPrice.order.orderId})}">
+                        View Details
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </main>
 
 <footer>
-  <p>© 2024 Johannesfog.dk. Alle rettigheder forbeholdes.</p>
+    <p>© 2024 Johannesfog.dk. Alle rettigheder forbeholdes.</p>
 </footer>
 </body>
 </html>

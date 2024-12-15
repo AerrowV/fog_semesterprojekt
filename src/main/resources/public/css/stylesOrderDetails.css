@@ -100,7 +100,7 @@ svg {
 footer {
     text-align: center;
     padding: 1rem;
-    background:  #002855;
+    background: #002855;
     color: white;
     position: fixed;
     bottom: 0;
@@ -120,6 +120,7 @@ h1 {
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
+
 .carport-drawing-container {
     display: flex;
     justify-content: center;

@@ -128,6 +128,7 @@ public class PaymentController {
             throw new DatabaseException("Failed to send receipt email: " + e.getMessage());
         }
     }
+
     private static void sendWarehouseEmail(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         try {
             Order order = OrderMapper.getOrderById(orderId, connectionPool);

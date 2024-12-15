@@ -8,6 +8,7 @@ body {
     height: 100vh;
     background-color: #dddddd;
 }
+
 h2 {
     text-align: left;
 }
@@ -18,6 +19,7 @@ h2 {
     padding: 20px;
     text-align: left;
 }
+
 .dropdown {
     margin: 10px 0;
 }

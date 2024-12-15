@@ -2,36 +2,36 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Johannesfog.dk</title>
-    <link href="../public/css/styleSheet.css" th:href="@{/css/styleSheet.css}" rel="stylesheet">
+    <link href="../public/css/styleSheet.css" rel="stylesheet" th:href="@{/css/styleSheet.css}">
 
 </head>
 <body>
 <header class="top-bar">
     <div class="header-container">
         <div class="logo-container">
-            <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+            <img alt="Fog Logo" class="logo" th:src="@{/images/img.png}">
             <span>Bolig & design</span>
         </div>
         <div class="menu-container">
-            <div th:if="${session.currentUser == null}" class="login-container">
-                <a th:href="@{/login}" class="login-link">
-                    <img th:src="@{/images/user-icon.png}" alt="User Icon" class="icon">
+            <div class="login-container" th:if="${session.currentUser == null}">
+                <a class="login-link" th:href="@{/login}">
+                    <img alt="User Icon" class="icon" th:src="@{/images/user-icon.png}">
                     Fog Konto
                 </a>
             </div>
-            <div th:if="${session.currentUser != null}" class="user-container">
-                <a th:href="@{/orders}" class="my-orders-link">
-                    <img th:src="@{/images/orders-icon.png}" alt="Orders Icon" class="icon">
+            <div class="user-container" th:if="${session.currentUser != null}">
+                <a class="my-orders-link" th:href="@{/orders}">
+                    <img alt="Orders Icon" class="icon" th:src="@{/images/orders-icon.png}">
                     Mine Ordre
                 </a>
-                <form th:action="@{/contact}" method="get">
-                    <button type="submit" class="contact">Contact Us</button>
+                <form method="get" th:action="@{/contact}">
+                    <button class="contact" type="submit">Contact Us</button>
                 </form>
-                <form th:action="@{/logout}" method="post" style="display: inline;">
-                    <button type="submit" class="logout-link">
-                        <img th:src="@{/images/logout-icon.png}" alt="Logout Icon" class="icon">
+                <form method="post" style="display: inline;" th:action="@{/logout}">
+                    <button class="logout-link" type="submit">
+                        <img alt="Logout Icon" class="icon" th:src="@{/images/logout-icon.png}">
                         Log ud
                     </button>
                 </form>
@@ -57,16 +57,16 @@
 <main class="button">
     <div class="button-content">
         <h1>Johannesfog.dk</h1>
-        <form th:if="${isLoggedIn}" th:action="@{/chooseCarport}" method="get">
-            <button type="submit" class="button-button">Quick Selv-Byg Carport</button>
+        <form method="get" th:action="@{/chooseCarport}" th:if="${isLoggedIn}">
+            <button class="button-button" type="submit">Quick Selv-Byg Carport</button>
         </form>
 
-        <form th:unless="${isLoggedIn}" th:action="@{/login}" method="get">
-            <button type="submit" class="button-button">Quick Selv-Byg Carport</button>
+        <form method="get" th:action="@{/login}" th:unless="${isLoggedIn}">
+            <button class="button-button" type="submit">Quick Selv-Byg Carport</button>
         </form>
     </div>
     <div class="carport-image-container">
-        <img th:src="@{/images/carport.png}" alt="Fog Carport" class="carport-image">
+        <img alt="Fog Carport" class="carport-image" th:src="@{/images/carport.png}">
     </div>
 </main>
 

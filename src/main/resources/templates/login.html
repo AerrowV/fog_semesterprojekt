@@ -2,24 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Login Page</title>
-    <link href="../public/css/style-login-register.css" th:href="@{/css/style-login-register.css}" rel="stylesheet">
+    <link href="../public/css/style-login-register.css" rel="stylesheet" th:href="@{/css/style-login-register.css}">
 </head>
 <body>
 <div class="login-container">
     <div class="login-box">
-        <img src="../public/images/img.png" alt="Fog Logo" class="logo"
+        <img alt="Fog Logo" class="logo" src="../public/images/img.png"
              th:src="@{/images/img.png}">
         <h1>Login</h1>
         <p>Log på med din mailadresse</p>
-        <form th:action="@{/login}" method="post">
+        <form method="post" th:action="@{/login}">
             <label for="email">Mailadresse</label>
-            <input type="email" id="email" name="email" placeholder="Mailadresse" required>
+            <input id="email" name="email" placeholder="Mailadresse" required type="email">
             <label for="password">Adgangskode</label>
-            <input type="password" id="password" name="password" placeholder="Adgangskode" required>
-            <button type="submit" class="login-button">Log på</button>
-            <a th:href="@{/register}" class="create-account1">Create Account</a>
+            <input id="password" name="password" placeholder="Adgangskode" required type="password">
+            <button class="login-button" type="submit">Log på</button>
+            <a class="create-account1" th:href="@{/register}">Create Account</a>
             <p class="errormessage" th:text="${#ctx.message}"></p>
         </form>
     </div>

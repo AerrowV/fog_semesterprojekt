@@ -2,48 +2,48 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Update Material</title>
-    <link href="../public/css/updateMaterial.css" th:href="@{/css/updateMaterial.css}" rel="stylesheet">
+    <link href="../public/css/updateMaterial.css" rel="stylesheet" th:href="@{/css/updateMaterial.css}">
 </head>
 <body>
 <header class="top-bar">
     <div class="header-container">
         <div class="logo-container">
-            <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+            <img alt="Fog Logo" class="logo" th:src="@{/images/img.png}">
             <span>Bolig & design</span>
         </div>
         <nav class="menu-container">
-            <a th:href="@{/admin}" class="nav-link">Dashboard</a>
-            <a th:href="@{/materials}" class="nav-link">Materials</a>
+            <a class="nav-link" th:href="@{/admin}">Dashboard</a>
+            <a class="nav-link" th:href="@{/materials}">Materials</a>
         </nav>
     </div>
 </header>
 
 <main class="content-container">
     <h1>Update Material</h1>
-    <form th:action="@{/materials/update}" method="post" class="form-container">
-        <input type="hidden" name="id" th:value="${material.materialId}" />
+    <form class="form-container" method="post" th:action="@{/materials/update}">
+        <input name="id" th:value="${material.materialId}" type="hidden"/>
 
         <label for="description">Description:</label>
-        <input type="text" id="description" name="description" th:value="${material.description}" required>
+        <input id="description" name="description" required th:value="${material.description}" type="text">
 
         <label for="length">Length:</label>
-        <input type="number" id="length" name="length" th:value="${material.length}">
+        <input id="length" name="length" th:value="${material.length}" type="number">
 
         <label for="amount">Amount:</label>
-        <input type="number" id="amount" name="amount" th:value="${material.amount}" required>
+        <input id="amount" name="amount" required th:value="${material.amount}" type="number">
 
         <label for="unit">Unit:</label>
-        <input type="text" id="unit" name="unit" th:value="${material.unit}" required>
+        <input id="unit" name="unit" required th:value="${material.unit}" type="text">
 
         <label for="function">Function:</label>
-        <input type="text" id="function" name="function" th:value="${material.function}" required>
+        <input id="function" name="function" required th:value="${material.function}" type="text">
 
         <label for="price">Price:</label>
-        <input type="number" id="price" name="price" th:value="${material.price}" required>
+        <input id="price" name="price" required th:value="${material.price}" type="number">
 
-        <button type="submit" class="button-primary">Update Material</button>
+        <button class="button-primary" type="submit">Update Material</button>
         <p class="errormessage" th:text="${#ctx.message}"></p>
     </form>
 </main>

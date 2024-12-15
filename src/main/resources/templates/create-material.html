@@ -3,44 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <title>Create Material</title>
-    <link rel="stylesheet" href="../public/css/createMaterial.css" th:href="@{/css/createMaterial.css}">
+    <link href="../public/css/createMaterial.css" rel="stylesheet" th:href="@{/css/createMaterial.css}">
 </head>
 <body>
 <header class="top-bar">
     <div class="header-container">
         <div class="logo-container">
-            <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+            <img alt="Fog Logo" class="logo" th:src="@{/images/img.png}">
             <span>Bolig & design</span>
         </div>
         <nav class="menu-container">
-            <a th:href="@{/admin}" class="nav-link">Dashboard</a>
-            <a th:href="@{/materials}" class="nav-link">Materials</a>
+            <a class="nav-link" th:href="@{/admin}">Dashboard</a>
+            <a class="nav-link" th:href="@{/materials}">Materials</a>
         </nav>
     </div>
 </header>
 
 <main class="content-container">
     <h1>Create New Material</h1>
-    <form th:action="@{/materials/create}" method="post" class="form-container">
+    <form class="form-container" method="post" th:action="@{/materials/create}">
         <label for="description">Description:</label>
-        <input type="text" id="description" name="description" required>
+        <input id="description" name="description" required type="text">
 
         <label for="length">Length:</label>
-        <input type="number" id="length" name="length">
+        <input id="length" name="length" type="number">
 
         <label for="amount">Amount:</label>
-        <input type="number" id="amount" name="amount" required>
+        <input id="amount" name="amount" required type="number">
 
         <label for="unit">Unit:</label>
-        <input type="text" id="unit" name="unit" required>
+        <input id="unit" name="unit" required type="text">
 
         <label for="function">Function:</label>
-        <input type="text" id="function" name="function" required>
+        <input id="function" name="function" required type="text">
 
         <label for="price">Price:</label>
-        <input type="number" id="price" name="price" required>
+        <input id="price" name="price" required type="number">
 
-        <button type="submit" class="button-primary">Create Material</button>
+        <button class="button-primary" type="submit">Create Material</button>
         <p class="errormessage" th:text="${#ctx.message}"></p>
     </form>
 </main>

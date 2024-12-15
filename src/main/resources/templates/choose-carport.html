@@ -1,67 +1,67 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <link href="../public/css/chooseCarportStyle.css" th:href="@{/css/chooseCarportStyle.css}" rel="stylesheet">
+    <meta charset="UTF-8">
+    <link href="../public/css/chooseCarportStyle.css" rel="stylesheet" th:href="@{/css/chooseCarportStyle.css}">
 
 
-  <title>Fog</title>
+    <title>Fog</title>
 </head>
 <body>
 
-<form th:action="@{/chooseCarport}" method="post">
-<div class="box">
-  <h2>Carport med fladt tag</h2>
-  <p>Udfyld nedenstående omhyggeligt og tryk "Bestil tilbud".
-    Så vender vi hurtigst muligt tilbage med et tilbud til dig.</p>
-  <div class="dropdown">
-    <label for="menu1">Carport bredde</label>
-    <select id="menu1" name="width" required>
-      <option value="" disabled selected></option>
-      <option value="240">240 cm</option>
-      <option value="270">270 cm</option>
-      <option value="300">300 cm</option>
-      <option value="330">330 cm</option>
-      <option value="360">360 cm</option>
-      <option value="390">390 cm</option>
-      <option value="420">420 cm</option>
-      <option value="450">450 cm</option>
-      <option value="480">480 cm</option>
-      <option value="510">510 cm</option>
-      <option value="540">540 cm</option>
-      <option value="570">570 cm</option>
-      <option value="600">600 cm</option>
-    </select>
-  </div>
-  <div class="dropdown">
-    <label for="menu2">Carport længde</label>
-    <select id="menu2" name="length" required>
-      <option value="" disabled selected></option>
-      <option value="240">240 cm</option>
-      <option value="270">270 cm</option>
-      <option value="300">300 cm</option>
-      <option value="330">330 cm</option>
-      <option value="360">360 cm</option>
-      <option value="390">390 cm</option>
-      <option value="420">420 cm</option>
-      <option value="450">450 cm</option>
-      <option value="480">480 cm</option>
-      <option value="510">510 cm</option>
-      <option value="540">540 cm</option>
-      <option value="570">570 cm</option>
-      <option value="600">600 cm</option>
-      <option value="630">630 cm</option>
-      <option value="660">660 cm</option>
-      <option value="690">690 cm</option>
-      <option value="720">720 cm</option>
-      <option value="750">750 cm</option>
-      <option value="780">780 cm</option>
-    </select>
-  </div>
-  <div>
-    <input type="submit" class="checkout-button" value="Gå til kasse">
-  </div>
-</div>
+<form method="post" th:action="@{/chooseCarport}">
+    <div class="box">
+        <h2>Carport med fladt tag</h2>
+        <p>Udfyld nedenstående omhyggeligt og tryk "Bestil tilbud".
+            Så vender vi hurtigst muligt tilbage med et tilbud til dig.</p>
+        <div class="dropdown">
+            <label for="menu1">Carport bredde</label>
+            <select id="menu1" name="width" required>
+                <option disabled selected value=""></option>
+                <option value="240">240 cm</option>
+                <option value="270">270 cm</option>
+                <option value="300">300 cm</option>
+                <option value="330">330 cm</option>
+                <option value="360">360 cm</option>
+                <option value="390">390 cm</option>
+                <option value="420">420 cm</option>
+                <option value="450">450 cm</option>
+                <option value="480">480 cm</option>
+                <option value="510">510 cm</option>
+                <option value="540">540 cm</option>
+                <option value="570">570 cm</option>
+                <option value="600">600 cm</option>
+            </select>
+        </div>
+        <div class="dropdown">
+            <label for="menu2">Carport længde</label>
+            <select id="menu2" name="length" required>
+                <option disabled selected value=""></option>
+                <option value="240">240 cm</option>
+                <option value="270">270 cm</option>
+                <option value="300">300 cm</option>
+                <option value="330">330 cm</option>
+                <option value="360">360 cm</option>
+                <option value="390">390 cm</option>
+                <option value="420">420 cm</option>
+                <option value="450">450 cm</option>
+                <option value="480">480 cm</option>
+                <option value="510">510 cm</option>
+                <option value="540">540 cm</option>
+                <option value="570">570 cm</option>
+                <option value="600">600 cm</option>
+                <option value="630">630 cm</option>
+                <option value="660">660 cm</option>
+                <option value="690">690 cm</option>
+                <option value="720">720 cm</option>
+                <option value="750">750 cm</option>
+                <option value="780">780 cm</option>
+            </select>
+        </div>
+        <div>
+            <input class="checkout-button" type="submit" value="Gå til kasse">
+        </div>
+    </div>
 </form>
 
 </body>

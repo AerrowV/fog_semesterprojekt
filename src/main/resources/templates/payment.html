@@ -2,49 +2,52 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Payment Page</title>
-    <link rel="stylesheet" href="../public/css/paymentStyle.css" th:href="@{/css/paymentStyle.css}">
+    <link href="../public/css/paymentStyle.css" rel="stylesheet" th:href="@{/css/paymentStyle.css}">
 </head>
 <body>
 <div class="payment-container">
     <h1>Payment and Billing</h1>
 
-    <form th:action="@{/payment/complete}" method="post">
-        <input type="hidden" name="orderId" th:value="${param.orderId}" />
+    <form method="post" th:action="@{/payment/complete}">
+        <input name="orderId" th:value="${param.orderId}" type="hidden"/>
 
         <h2>Billing Information</h2>
         <label for="email">E-mail</label>
-        <input type="email" id="email" name="email" placeholder="Enter your E-mail" required />
+        <input id="email" name="email" placeholder="Enter your E-mail" required type="email"/>
 
         <label for="first-name">First Name</label>
-        <input type="text" id="first-name" name="first-name" placeholder="Enter your first name" required />
+        <input id="first-name" name="first-name" placeholder="Enter your first name" required type="text"/>
 
         <label for="last-name">Last Name</label>
-        <input type="text" id="last-name" name="last-name" placeholder="Enter your last name" required />
+        <input id="last-name" name="last-name" placeholder="Enter your last name" required type="text"/>
 
         <label for="street-name">Street Name</label>
-        <input type="text" id="street-name" name="street-name" placeholder="Enter your street name" required />
+        <input id="street-name" name="street-name" placeholder="Enter your street name" required type="text"/>
 
         <label for="house-number">House Number</label>
-        <input type="text" id="house-number" name="house-number" placeholder="Enter your house number" required />
+        <input id="house-number" name="house-number" placeholder="Enter your house number" required type="text"/>
 
         <label for="zip">ZIP Code</label>
-        <input type="number" id="zip" name="zip" placeholder="Enter ZIP code" required />
+        <input id="zip" name="zip" placeholder="Enter ZIP code" required type="number"/>
 
         <h2>Payment Information</h2>
         <label for="card-number">Card Number</label>
-        <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456" required maxlength="19" pattern="\d{4} \d{4} \d{4} \d{4}" />
+        <input id="card-number" maxlength="19" name="card-number" pattern="\d{4} \d{4} \d{4} \d{4}" placeholder="1234 5678 9012 3456" required
+               type="text"/>
 
         <div class="payment-details">
             <div class="row">
                 <div class="col">
                     <label for="expiry-date">Expiry Date</label>
-                    <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YY" required maxlength="5" pattern="\d{2}/\d{2}" />
+                    <input id="expiry-date" maxlength="5" name="expiry-date" pattern="\d{2}/\d{2}" placeholder="MM/YY" required
+                           type="text"/>
                 </div>
                 <div class="col">
                     <label for="cvv">CVV</label>
-                    <input type="password" id="cvv" name="cvv" placeholder="123" required maxlength="3" pattern="\d{3}" />
+                    <input id="cvv" maxlength="3" name="cvv" pattern="\d{3}" placeholder="123" required
+                           type="password"/>
                 </div>
             </div>
         </div>

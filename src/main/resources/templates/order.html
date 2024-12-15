@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Your Orders</title>
-    <link href="../public/css/order.css" th:href="@{/css/order.css}" rel="stylesheet">
+    <link href="../public/css/order.css" rel="stylesheet" th:href="@{/css/order.css}">
 </head>
 <body>
 <header class="top-bar">
     <div class="header-container">
         <div class="logo-container">
-            <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+            <img alt="Fog Logo" class="logo" th:src="@{/images/img.png}">
             <span>Bolig & design</span>
         </div>
         <nav class="menu-container">
-            <a th:href="@{/}" class="nav-link">Home</a>
+            <a class="nav-link" th:href="@{/}">Home</a>
         </nav>
     </div>
 </header>
@@ -22,15 +22,15 @@
 <main class="content-container">
     <h1>Your Orders</h1>
 
-    <div th:if="${message}" class="alert">
+    <div class="alert" th:if="${message}">
         <p th:text="${message}"></p>
     </div>
 
-    <div th:if="${orders == null || orders.isEmpty()}" class="empty-orders">
+    <div class="empty-orders" th:if="${orders == null || orders.isEmpty()}">
         <p>No orders found.</p>
     </div>
 
-    <div th:if="${orders != null && !orders.isEmpty()}" class="orders-table-container">
+    <div class="orders-table-container" th:if="${orders != null && !orders.isEmpty()}">
         <table class="orders-table">
             <thead>
             <tr>
@@ -48,20 +48,25 @@
                 <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd')}"></td>
                 <td th:text="${order.orderStatus}"></td>
                 <td>
-                    <span th:if="${orderPrices[order.orderId] != null}" th:text="${orderPrices[order.orderId]}">DKK</span>
+                    <span th:if="${orderPrices[order.orderId] != null}"
+                          th:text="${orderPrices[order.orderId]}">DKK</span>
                     <span th:if="${orderPrices[order.orderId] == null}">N/A</span>
                 </td>
                 <td>
-                    <span th:if="${paidDates[order.orderId] != null}" th:text="${#dates.format(paidDates[order.orderId], 'yyyy-MM-dd')}"></span>
+                    <span th:if="${paidDates[order.orderId] != null}"
+                          th:text="${#dates.format(paidDates[order.orderId], 'yyyy-MM-dd')}"></span>
                     <span th:if="${paidDates[order.orderId] == null}">N/A</span>
                 </td>
                 <td>
                     <div class="action-buttons">
-                        <a th:href="@{/orders/details/{id}(id=${order.orderId})}" class="button-primary">View Details</a>
-                        <a th:href="@{/payment(orderId=${order.orderId})}" th:if="${order.orderStatus == 'Approved'}" class="button-secondary">Proceed to Payment</a>
-                        <form th:if="${order.orderStatus == 'Approved'}" th:action="@{/orders/reject}" method="post" class="block-form">
-                            <input type="hidden" name="order_id" th:value="${order.orderId}">
-                            <button type="submit" class="button-third">Reject Offer</button>
+                        <a class="button-primary" th:href="@{/orders/details/{id}(id=${order.orderId})}">View
+                            Details</a>
+                        <a class="button-secondary" th:href="@{/payment(orderId=${order.orderId})}"
+                           th:if="${order.orderStatus == 'Approved'}">Proceed to Payment</a>
+                        <form class="block-form" method="post" th:action="@{/orders/reject}"
+                              th:if="${order.orderStatus == 'Approved'}">
+                            <input name="order_id" th:value="${order.orderId}" type="hidden">
+                            <button class="button-third" type="submit">Reject Offer</button>
                         </form>
                     </div>
                 </td>

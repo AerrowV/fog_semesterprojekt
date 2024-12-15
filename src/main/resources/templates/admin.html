@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
-    <link href="../public/css/admin-Dashboard.css" th:href="@{/css/admin-Dashboard.css}" rel="stylesheet">
+    <link href="../public/css/admin-Dashboard.css" rel="stylesheet" th:href="@{/css/admin-Dashboard.css}">
 </head>
 <body>
 <h1>Admin Dashboard</h1>
@@ -12,8 +12,8 @@
     <a class="button" th:href="@{/materials/create}">Add New Materials</a>
     <a class="button" th:href="@{/admin/orders}">Manage Orders</a>
     <a class="button" th:href="@{/admin/emails}">Send Email</a>
-    <form th:action="@{/logout}" method="post" style="display: inline;">
-        <button type="submit" class="button">Logout</button>
+    <form method="post" style="display: inline;" th:action="@{/logout}">
+        <button class="button" type="submit">Logout</button>
     </form>
 </div>
 <footer>

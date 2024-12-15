@@ -2,19 +2,19 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Materials</title>
-    <link href="../public/css/materialStyleSheet.css" th:href="@{/css/materialStyleSheet.css}" rel="stylesheet">
+    <link href="../public/css/materialStyleSheet.css" rel="stylesheet" th:href="@{/css/materialStyleSheet.css}">
 </head>
 <body>
 <header class="top-bar">
     <div class="header-container">
         <div class="logo-container">
-            <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+            <img alt="Fog Logo" class="logo" th:src="@{/images/img.png}">
             <span>Bolig & design</span>
         </div>
         <nav class="menu-container">
-            <a th:href="@{/admin}" class="nav-link">Dashboard</a>
+            <a class="nav-link" th:href="@{/admin}">Dashboard</a>
         </nav>
     </div>
 </header>
@@ -44,10 +44,10 @@
             <td th:text="${material.function}"></td>
             <td th:text="${material.price} + ' DKK'"></td>
             <td>
-                <a th:href="@{/materials/update(id=${material.materialId})}" class="primary-button">Update</a>
-                <form th:action="@{/materials/delete}" method="post" class="inline-form">
-                    <input type="hidden" name="id" th:value="${material.materialId}">
-                    <button type="submit" class="primary-button delete-button">Delete</button>
+                <a class="primary-button" th:href="@{/materials/update(id=${material.materialId})}">Update</a>
+                <form class="inline-form" method="post" th:action="@{/materials/delete}">
+                    <input name="id" th:value="${material.materialId}" type="hidden">
+                    <button class="primary-button delete-button" type="submit">Delete</button>
                 </form>
             </td>
         </tr>

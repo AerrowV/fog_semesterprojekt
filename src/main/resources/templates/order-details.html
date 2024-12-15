@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Order Details</title>
-    <link href="../public/css/stylesOrderDetails.css" th:href="@{/css/stylesOrderDetails.css}" rel="stylesheet">
+    <link href="../public/css/stylesOrderDetails.css" rel="stylesheet" th:href="@{/css/stylesOrderDetails.css}">
 </head>
 
 
@@ -11,12 +11,12 @@
 <header class="top-bar">
     <div class="header-container">
         <div class="logo-container">
-            <img th:src="@{/images/img.png}" alt="Fog Logo" class="logo">
+            <img alt="Fog Logo" class="logo" th:src="@{/images/img.png}">
             <span>Bolig & design</span>
         </div>
         <nav class="menu-container">
-            <a th:href="@{/}" class="nav-link">Home</a>
-            <a th:href="@{/orders}" class="nav-link">Orders</a>
+            <a class="nav-link" th:href="@{/}">Home</a>
+            <a class="nav-link" th:href="@{/orders}">Orders</a>
         </nav>
     </div>
 </header>
@@ -44,7 +44,7 @@
 </section>
 
 <div th:if="${order.orderstatus == 'Completed'}">
-    <div th:utext="${svg}" class="carport-drawing-container"></div>
+    <div class="carport-drawing-container" th:utext="${svg}"></div>
 </div>
 </body>
 </html>

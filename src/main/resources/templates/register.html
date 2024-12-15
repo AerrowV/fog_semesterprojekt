@@ -2,25 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <title>Create Account</title>
-    <link href="../public/css/style-login-register.css" th:href="@{/css/style-login-register.css}" rel="stylesheet"/>
+    <link href="../public/css/style-login-register.css" rel="stylesheet" th:href="@{/css/style-login-register.css}"/>
 </head>
 <body>
 <div class="login-container">
     <div class="login-box">
-        <img src="../public/images/img.png" alt="Fog Logo" class="logo"
+        <img alt="Fog Logo" class="logo" src="../public/images/img.png"
              th:src="@{/images/img.png}">
         <h1>Opret en konto</h1>
         <p>Udfyld felterne for at oprette en ny konto</p>
         <form method="post">
             <label>Mailadresse</label>
-            <input type="email" name="email" placeholder="Mailadresse" required>
+            <input name="email" placeholder="Mailadresse" required type="email">
             <label>Adgangskode</label>
-            <input type="password" name="password1" placeholder="Adgangskode" required>
+            <input name="password1" placeholder="Adgangskode" required type="password">
             <label>Bekræft adgangskode</label>
-            <input type="password" name="password2" placeholder="Bekræft adgangskode" required>
-            <button type="submit" class="login-button" formaction="/register">Opret konto</button>
+            <input name="password2" placeholder="Bekræft adgangskode" required type="password">
+            <button class="login-button" formaction="/register" type="submit">Opret konto</button>
             <p class="errormessage" th:text="${#ctx.message}"></p>
         </form>
         <p class="create-account">
