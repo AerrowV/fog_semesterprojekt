@@ -51,8 +51,6 @@ public class CarportController {
     }
 
 
-
-    //Understernbrædder	til	for og bag enden
     public static Material underFasciaBoardFrontandBack(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 0;
@@ -80,7 +78,6 @@ public class CarportController {
         return material;
     }
 
-    //Understernbrædder	til	siderne
     public static Material underFasciaBoardSides(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 0;
@@ -123,7 +120,6 @@ public class CarportController {
         return material;
     }
 
-    //Oversternbrædder til forenden
     public static Material overFasciaBoardFront(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 0;
@@ -157,7 +153,6 @@ public class CarportController {
         return material;
     }
 
-    //Oversternbrædder	til	siderne
     public static Material overFasciaBoardSides(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 0;
@@ -200,7 +195,6 @@ public class CarportController {
         return material;
     }
 
-    //vandbrædt på stern i forende
     public static Material outerWaterBoardFrontend(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         Material material = null;
@@ -228,7 +222,6 @@ public class CarportController {
     }
 
 
-    //vandbrædt på stern i sider
     public static Material outerWaterBoardSides(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 1;
@@ -266,8 +259,6 @@ public class CarportController {
         return material;
     }
 
-
-    //Stolper til carport
     public static Material carportPosts(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int postId = 45;
         Material post = MaterialMapper.getMaterialById(postId, connectionPool);
@@ -281,7 +272,6 @@ public class CarportController {
         return post;
     }
 
-    //Bræt
     public static Material sternBoard(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int boardId = 0;
         int amount = 2;
@@ -319,7 +309,6 @@ public class CarportController {
         return material;
     }
 
-    //Spær
     public static Material carportRafter(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
         int amount = 0;
         int rafterId = 0;
@@ -384,7 +373,6 @@ public class CarportController {
             CarportMapper.saveMaterialSpec(carportId, material.getMaterialId(), material.getAmount(), connectionPool);
             MaterialMapper.updateMaterialAmount(material.getMaterialId(), material.getAmount(), connectionPool);
         }
-
     }
 
     public static double calculatorForPrice(double length, double width, boolean hasRoof, ConnectionPool connectionPool) throws DatabaseException {
@@ -405,7 +393,6 @@ public class CarportController {
         return totalPrice - ((percentage / 100) * totalPrice);
 
     }
-
 }
 
 

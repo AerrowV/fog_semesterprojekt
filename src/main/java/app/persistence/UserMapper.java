@@ -208,5 +208,4 @@ public class UserMapper {
             throw new DatabaseException("Error retrieving user details: " + e.getMessage());
         }
     }
-
 }
