@@ -61,7 +61,7 @@ public class PaymentController {
                             </head>
                             <body>
                                 <h1>Payment Successful</h1>
-                                <p>Your payment was successful. You will be redirected to the home page in 5 seconds.</p>
+                                <p>Payment was successful. You will receive an order confirmation with your parts list. You will be redirected to the home page in 5 seconds.</p>
                                 <p>If not, click <a href="/">here</a>.</p>
                             </body>
                             </html>
