@@ -8,29 +8,29 @@
 </head>
 <body>
 <div class="payment-container">
-    <h1>Payment and Billing</h1>
+    <h1>Betaling og fakturering</h1>
 
     <form method="post" th:action="@{/payment/complete}">
         <input name="orderId" th:value="${param.orderId}" type="hidden"/>
 
         <h2>Billing Information</h2>
         <label for="email">E-mail</label>
-        <input id="email" name="email" placeholder="Enter your E-mail" required type="email"/>
+        <input id="email" name="email" placeholder="Indtast din Email" required type="email"/>
 
         <label for="first-name">First Name</label>
-        <input id="first-name" name="first-name" placeholder="Enter your first name" required type="text"/>
+        <input id="first-name" name="first-name" placeholder="Indtast dit fornavn" required type="text"/>
 
         <label for="last-name">Last Name</label>
-        <input id="last-name" name="last-name" placeholder="Enter your last name" required type="text"/>
+        <input id="last-name" name="last-name" placeholder="Indtast dit efternavn" required type="text"/>
 
         <label for="street-name">Street Name</label>
-        <input id="street-name" name="street-name" placeholder="Enter your street name" required type="text"/>
+        <input id="street-name" name="street-name" placeholder="Indtast dit gadenavn" required type="text"/>
 
         <label for="house-number">House Number</label>
-        <input id="house-number" name="house-number" placeholder="Enter your house number" required type="text"/>
+        <input id="house-number" name="house-number" placeholder="Indtast dit husnummer" required type="text"/>
 
         <label for="zip">ZIP Code</label>
-        <input id="zip" name="zip" placeholder="Enter ZIP code" required type="number"/>
+        <input id="zip" name="zip" placeholder="Indtast postnummer" required type="number"/>
 
         <h2>Payment Information</h2>
         <label for="card-number">Card Number</label>
@@ -54,7 +54,7 @@
             </div>
         </div>
 
-        <button type="submit">Complete Payment</button>
+        <button type="submit">Gennemfør Betaling</button>
     </form>
 </div>
 </body>

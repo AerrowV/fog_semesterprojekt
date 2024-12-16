@@ -14,7 +14,7 @@
             <span>Bolig & design</span>
         </div>
         <nav class="menu-container">
-            <a class="nav-link" th:href="@{/admin}">Dashboard</a>
+            <a class="nav-link" th:href="@{/admin}">Panel</a>
         </nav>
     </div>
 </header>
@@ -24,15 +24,15 @@
         <p th:text="${message}"></p>
     </div>
     <div class="table-container">
-        <h1>Admin Order Management</h1>
+        <h1>Admin Ordrestyring</h1>
         <table class="order-table">
             <thead>
             <tr>
-                <th>Order ID</th>
-                <th>Date</th>
+                <th>Ordre ID</th>
+                <th>Dato</th>
                 <th>Status</th>
-                <th>Price</th>
-                <th>Details</th>
+                <th>Pris</th>
+                <th>Detaljer</th>
             </tr>
             </thead>
             <tbody>
@@ -56,16 +56,16 @@
                                 Completed
                             </option>
                         </select>
-                        <input class="form-input" name="percentage" placeholder="Price %" required step="0.01"
+                        <input class="form-input" name="percentage" placeholder="Pris %" required step="0.01"
                                type="number"/>
-                        <button class="primary-button" type="submit">Update</button>
+                        <button class="primary-button" type="submit">Opdater</button>
                     </form>
                 </td>
                 <td th:text="${orderWithPrice.price} + ' DKK'"></td>
                 <td>
                     <a class="primary-button"
                        th:href="@{/admin/orders/details/{id}(id=${orderWithPrice.order.orderId})}">
-                        View Details
+                        Se Detaljer
                     </a>
                 </td>
             </tr>

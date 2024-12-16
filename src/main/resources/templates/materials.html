@@ -14,24 +14,24 @@
             <span>Bolig & design</span>
         </div>
         <nav class="menu-container">
-            <a class="nav-link" th:href="@{/admin}">Dashboard</a>
+            <a class="nav-link" th:href="@{/admin}">Panel</a>
         </nav>
     </div>
 </header>
 
 <main class="content-container">
-    <h1>Materials List</h1>
+    <h1>Materiale Liste</h1>
     <table class="material-table">
         <thead>
         <tr>
             <th>ID</th>
-            <th>Description</th>
-            <th>Length</th>
-            <th>Amount</th>
-            <th>Unit</th>
-            <th>Function</th>
-            <th>Price</th>
-            <th>Actions</th>
+            <th>Beskrivelse</th>
+            <th>Længde</th>
+            <th>Antal</th>
+            <th>Enhed</th>
+            <th>Funktion</th>
+            <th>Pris</th>
+            <th>Handling</th>
         </tr>
         </thead>
         <tbody>
@@ -44,10 +44,10 @@
             <td th:text="${material.function}"></td>
             <td th:text="${material.price} + ' DKK'"></td>
             <td>
-                <a class="primary-button" th:href="@{/materials/update(id=${material.materialId})}">Update</a>
+                <a class="primary-button" th:href="@{/materials/update(id=${material.materialId})}">Opdater</a>
                 <form class="inline-form" method="post" th:action="@{/materials/delete}">
                     <input name="id" th:value="${material.materialId}" type="hidden">
-                    <button class="primary-button delete-button" type="submit">Delete</button>
+                    <button class="primary-button delete-button" type="submit">Slet</button>
                 </form>
             </td>
         </tr>

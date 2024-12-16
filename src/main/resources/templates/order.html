@@ -20,26 +20,26 @@
 </header>
 
 <main class="content-container">
-    <h1>Your Orders</h1>
+    <h1>Dine Ordre</h1>
 
     <div class="alert" th:if="${message}">
         <p th:text="${message}"></p>
     </div>
 
     <div class="empty-orders" th:if="${orders == null || orders.isEmpty()}">
-        <p>No orders found.</p>
+        <p>Ingen ordre fundet.</p>
     </div>
 
     <div class="orders-table-container" th:if="${orders != null && !orders.isEmpty()}">
         <table class="orders-table">
             <thead>
             <tr>
-                <th>Order ID</th>
-                <th>Date</th>
+                <th>Ordre ID</th>
+                <th>Dato</th>
                 <th>Status</th>
-                <th>Price</th>
-                <th>Paid Date</th>
-                <th>Actions</th>
+                <th>Pris</th>
+                <th>Betalt Dato</th>
+                <th>Handling</th>
             </tr>
             </thead>
             <tbody>
@@ -59,14 +59,13 @@
                 </td>
                 <td>
                     <div class="action-buttons">
-                        <a class="button-primary" th:href="@{/orders/details/{id}(id=${order.orderId})}">View
-                            Details</a>
+                        <a class="button-primary" th:href="@{/orders/details/{id}(id=${order.orderId})}">Se Detaljer</a>
                         <a class="button-secondary" th:href="@{/payment(orderId=${order.orderId})}"
-                           th:if="${order.orderStatus == 'Approved'}">Proceed to Payment</a>
+                           th:if="${order.orderStatus == 'Approved'}">Forsæt til Betaling</a>
                         <form class="block-form" method="post" th:action="@{/orders/reject}"
                               th:if="${order.orderStatus == 'Approved'}">
                             <input name="order_id" th:value="${order.orderId}" type="hidden">
-                            <button class="button-third" type="submit">Reject Offer</button>
+                            <button class="button-third" type="submit">Afvis Tilbud</button>
                         </form>
                     </div>
                 </td>

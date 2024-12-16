@@ -53,16 +53,16 @@ public class PaymentController {
 
                 String htmlResponse = """
                             <!DOCTYPE html>
-                            <html lang="en">
+                            <html lang="da">
                             <head>
                                 <meta charset="UTF-8">
                                 <meta http-equiv="refresh" content="5;url=/">
-                                <title>Payment Successful</title>
+                                <title>Betaling Gennemført</title>
                             </head>
                             <body>
-                                <h1>Payment Successful</h1>
-                                <p>Payment was successful. You will receive an order confirmation with your parts list. You will be redirected to the home page in 5 seconds.</p>
-                                <p>If not, click <a href="/">here</a>.</p>
+                                <h1>Betaling Gennemført</h1>
+                                <p>Betalingen blev gennemført. Du vil modtage en ordrebekræftelse med din stykliste. Du bliver omdirigeret til forsiden om 5 sekunder.</p>
+                                <p>Hvis ikke, klik <a href="/">her</a>.</p>
                             </body>
                             </html>
                         """;

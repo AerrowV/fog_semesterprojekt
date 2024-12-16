@@ -14,8 +14,8 @@
             <span>Bolig & design</span>
         </div>
         <nav class="menu-container">
-            <a class="nav-link" th:href="@{/admin}">Dashboard</a>
-            <a class="nav-link" th:href="@{/materials}">Materials</a>
+            <a class="nav-link" th:href="@{/admin}">Panel</a>
+            <a class="nav-link" th:href="@{/materials}">Materialer</a>
         </nav>
     </div>
 </header>
@@ -25,25 +25,25 @@
     <form class="form-container" method="post" th:action="@{/materials/update}">
         <input name="id" th:value="${material.materialId}" type="hidden"/>
 
-        <label for="description">Description:</label>
+        <label for="description">Beskrivelse:</label>
         <input id="description" name="description" required th:value="${material.description}" type="text">
 
-        <label for="length">Length:</label>
+        <label for="length">Længde:</label>
         <input id="length" name="length" th:value="${material.length}" type="number">
 
-        <label for="amount">Amount:</label>
+        <label for="amount">Antal:</label>
         <input id="amount" name="amount" required th:value="${material.amount}" type="number">
 
-        <label for="unit">Unit:</label>
+        <label for="unit">Enhed:</label>
         <input id="unit" name="unit" required th:value="${material.unit}" type="text">
 
-        <label for="function">Function:</label>
+        <label for="function">Funktion:</label>
         <input id="function" name="function" required th:value="${material.function}" type="text">
 
-        <label for="price">Price:</label>
+        <label for="price">Pris:</label>
         <input id="price" name="price" required th:value="${material.price}" type="number">
 
-        <button class="button-primary" type="submit">Update Material</button>
+        <button class="button-primary" type="submit">Opdater Materiale</button>
         <p class="errormessage" th:text="${#ctx.message}"></p>
     </form>
 </main>

@@ -27,7 +27,7 @@
                     Mine Ordre
                 </a>
                 <form method="get" th:action="@{/contact}">
-                    <button class="contact" type="submit">Contact Us</button>
+                    <button class="contact" type="submit">Kontakt Os</button>
                 </form>
                 <form method="post" style="display: inline;" th:action="@{/logout}">
                     <button class="logout-link" type="submit">
@@ -58,11 +58,11 @@
     <div class="button-content">
         <h1>Johannesfog.dk</h1>
         <form method="get" th:action="@{/chooseCarport}" th:if="${isLoggedIn}">
-            <button class="button-button" type="submit">Quick Selv-Byg Carport</button>
+            <button class="button-button" type="submit">Quick-Byg Carport</button>
         </form>
 
         <form method="get" th:action="@{/login}" th:unless="${isLoggedIn}">
-            <button class="button-button" type="submit">Quick Selv-Byg Carport</button>
+            <button class="button-button" type="submit">Quick-Byg Carport</button>
         </form>
     </div>
     <div class="carport-image-container">

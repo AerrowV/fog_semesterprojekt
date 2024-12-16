@@ -13,34 +13,34 @@
             <span>Bolig & design</span>
         </div>
         <nav class="menu-container">
-            <a class="nav-link" th:href="@{/admin}">Dashboard</a>
-            <a class="nav-link" th:href="@{/materials}">Materials</a>
+            <a class="nav-link" th:href="@{/admin}">Panel</a>
+            <a class="nav-link" th:href="@{/materials}">Materialer</a>
         </nav>
     </div>
 </header>
 
 <main class="content-container">
-    <h1>Create New Material</h1>
+    <h1>Tilføj Nye Materialer</h1>
     <form class="form-container" method="post" th:action="@{/materials/create}">
-        <label for="description">Description:</label>
+        <label for="description">Beskrivelse:</label>
         <input id="description" name="description" required type="text">
 
-        <label for="length">Length:</label>
+        <label for="length">Længde:</label>
         <input id="length" name="length" type="number">
 
-        <label for="amount">Amount:</label>
+        <label for="amount">Antal:</label>
         <input id="amount" name="amount" required type="number">
 
-        <label for="unit">Unit:</label>
+        <label for="unit">Enhed:</label>
         <input id="unit" name="unit" required type="text">
 
-        <label for="function">Function:</label>
+        <label for="function">Funktion:</label>
         <input id="function" name="function" required type="text">
 
-        <label for="price">Price:</label>
+        <label for="price">Pris:</label>
         <input id="price" name="price" required type="number">
 
-        <button class="button-primary" type="submit">Create Material</button>
+        <button class="button-primary" type="submit">Tilføj Materiale</button>
         <p class="errormessage" th:text="${#ctx.message}"></p>
     </form>
 </main>
