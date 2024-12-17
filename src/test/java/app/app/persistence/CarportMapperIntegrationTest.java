@@ -13,6 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -61,30 +63,56 @@ class CarportMapperIntegrationTest {
     @BeforeEach
     void insertTestData() throws Exception {
         try (Connection connection = connectionPool.getConnection()) {
+            String cleanupSql = """
+            TRUNCATE TABLE material_spec RESTART IDENTITY CASCADE;
+            TRUNCATE TABLE material RESTART IDENTITY CASCADE;
+            TRUNCATE TABLE carport_spec RESTART IDENTITY CASCADE;
+        """;
             String insertCarportSpecSql = """
-                        INSERT INTO carport_spec (carport_length, carport_width, carport_roof)
-                        VALUES (600, 300, true) RETURNING carport_id;
-                    """;
+            INSERT INTO carport_spec (carport_length, carport_width, carport_roof)
+            VALUES (600, 300, true) RETURNING carport_id;
+        """;
+
             String insertMaterialSql = """
-                        INSERT INTO material (material_description, material_length, material_amount, material_unit, material_function, material_price)
-                        VALUES ('Test Material', 100, 50, 'pcs', 'Test Function', 200);
-                    """;
+            INSERT INTO material (material_description, material_length, material_amount, material_unit, material_function, material_price)
+            VALUES  ('Test Material1', 100, 50, 'pcs', 'Test Function', 200),
+                    ('Test Material2', 100, 50, 'pcs', 'Test Function', 200)
+            RETURNING material_id;
+        """;
             String insertMaterialSpecSql = """
-                        INSERT INTO material_spec (carport_id, material_id, material_order_amount)
-                        SELECT carport_id, material_id, 10 FROM carport_spec, material
-                        WHERE carport_spec.carport_length = 600 AND material.material_description = 'Test Material';
-                    """;
-            try (PreparedStatement ps1 = connection.prepareStatement(insertCarportSpecSql)) {
-                ps1.execute();
+            INSERT INTO material_spec (carport_id, material_id, material_order_amount)
+            VALUES (?, ?, 10);
+        """;
+
+            try (PreparedStatement cleanup = connection.prepareStatement(cleanupSql)) {
+                cleanup.execute();
             }
-            try (PreparedStatement ps2 = connection.prepareStatement(insertMaterialSql)) {
-                ps2.execute();
+
+            int carportId;
+            try (PreparedStatement psCarport = connection.prepareStatement(insertCarportSpecSql);
+                 ResultSet rs = psCarport.executeQuery()) {
+                rs.next();
+                carportId = rs.getInt("carport_id");
             }
-            try (PreparedStatement ps3 = connection.prepareStatement(insertMaterialSpecSql)) {
-                ps3.execute();
+
+            List<Integer> materialIds = new ArrayList<>();
+            try (PreparedStatement psMaterial = connection.prepareStatement(insertMaterialSql);
+                 ResultSet rs = psMaterial.executeQuery()) {
+                while (rs.next()) {
+                    materialIds.add(rs.getInt("material_id"));
+                }
+            }
+
+            try (PreparedStatement psMaterialSpec = connection.prepareStatement(insertMaterialSpecSql)) {
+                for (int materialId : materialIds) {
+                    psMaterialSpec.setInt(1, carportId);
+                    psMaterialSpec.setInt(2, materialId);
+                    psMaterialSpec.executeUpdate();
+                }
             }
         }
     }
+
 
     @AfterEach
     void cleanTestData() throws Exception {
@@ -113,8 +141,11 @@ class CarportMapperIntegrationTest {
         int carportId = CarportMapper.getCarportId(600, 300, true, connectionPool);
         CarportMapper.saveMaterialSpec(carportId, 1, 10, connectionPool);
         List<MaterialSpec> specs = MaterialMapper.getMaterialSpecsByCarportId(carportId, connectionPool);
+
+        assertFalse(specs.isEmpty(), "Material specs should not be empty");
         assertEquals(10, specs.get(0).getMaterialOrderAmount());
     }
+
 
     @Test
     void testGetCarportSpecsById() throws DatabaseException {
