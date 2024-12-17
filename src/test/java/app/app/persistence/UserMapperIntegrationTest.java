@@ -116,9 +116,9 @@ public class UserMapperIntegrationTest {
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement stmt = connection.prepareStatement("""
-                            DROP TABLE IF EXISTS "user" CASCADE;
-                            DROP TABLE IF EXISTS address CASCADE;
-                            DROP TABLE IF EXISTS zip_code CASCADE;
+                            DELETE FROM \"user\" CASCADE;
+                            DELETE FROM address CASCADE;
+                            DELETE FROM zip_code CASCADE;
                     """)) {
                 stmt.executeUpdate();
             }

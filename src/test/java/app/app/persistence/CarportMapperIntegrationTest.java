@@ -64,25 +64,25 @@ class CarportMapperIntegrationTest {
     void insertTestData() throws Exception {
         try (Connection connection = connectionPool.getConnection()) {
             String cleanupSql = """
-            TRUNCATE TABLE material_spec RESTART IDENTITY CASCADE;
-            TRUNCATE TABLE material RESTART IDENTITY CASCADE;
-            TRUNCATE TABLE carport_spec RESTART IDENTITY CASCADE;
-        """;
+                        TRUNCATE TABLE material_spec RESTART IDENTITY CASCADE;
+                        TRUNCATE TABLE material RESTART IDENTITY CASCADE;
+                        TRUNCATE TABLE carport_spec RESTART IDENTITY CASCADE;
+                    """;
             String insertCarportSpecSql = """
-            INSERT INTO carport_spec (carport_length, carport_width, carport_roof)
-            VALUES (600, 300, true) RETURNING carport_id;
-        """;
+                        INSERT INTO carport_spec (carport_length, carport_width, carport_roof)
+                        VALUES (600, 300, true) RETURNING carport_id;
+                    """;
 
             String insertMaterialSql = """
-            INSERT INTO material (material_description, material_length, material_amount, material_unit, material_function, material_price)
-            VALUES  ('Test Material1', 100, 50, 'pcs', 'Test Function', 200),
-                    ('Test Material2', 100, 50, 'pcs', 'Test Function', 200)
-            RETURNING material_id;
-        """;
+                        INSERT INTO material (material_description, material_length, material_amount, material_unit, material_function, material_price)
+                        VALUES  ('Test Material1', 100, 50, 'pcs', 'Test Function', 200),
+                                ('Test Material2', 100, 50, 'pcs', 'Test Function', 200)
+                        RETURNING material_id;
+                    """;
             String insertMaterialSpecSql = """
-            INSERT INTO material_spec (carport_id, material_id, material_order_amount)
-            VALUES (?, ?, 10);
-        """;
+                        INSERT INTO material_spec (carport_id, material_id, material_order_amount)
+                        VALUES (?, ?, 10);
+                    """;
 
             try (PreparedStatement cleanup = connection.prepareStatement(cleanupSql)) {
                 cleanup.execute();
@@ -117,7 +117,12 @@ class CarportMapperIntegrationTest {
     @AfterEach
     void cleanTestData() throws Exception {
         try (Connection connection = connectionPool.getConnection()) {
-            String deleteDataSql = "DELETE FROM material_spec; DELETE FROM material; DELETE FROM carport_spec;";
+            String deleteDataSql = """
+                        TRUNCATE TABLE \"order\" CASCADE;
+                        TRUNCATE TABLE material_spec CASCADE;
+                        TRUNCATE TABLE material CASCADE;
+                        TRUNCATE TABLE carport_spec CASCADE;
+                    """;
             try (PreparedStatement ps = connection.prepareStatement(deleteDataSql)) {
                 ps.execute();
             }

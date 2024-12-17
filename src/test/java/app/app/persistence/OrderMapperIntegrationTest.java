@@ -101,8 +101,8 @@ public class OrderMapperIntegrationTest {
     public void tearDown() throws SQLException {
         try (Connection connection = connectionPool.getConnection()) {
             String deleteDataSql = """
-                        DELETE FROM "order";
-                        DELETE FROM carport_spec;
+                        TRUNCATE TABLE \"order\" CASCADE;
+                        TRUNCATE TABLE carport_spec CASCADE;
                     """;
             try (PreparedStatement ps = connection.prepareStatement(deleteDataSql)) {
                 ps.executeUpdate();
@@ -113,7 +113,7 @@ public class OrderMapperIntegrationTest {
 
     @Test
     public void testCreateOrder() throws DatabaseException {
-        Order order = new Order(1, null, "Processing", 1, 1); // user_id = 1, carport_id = 1
+        Order order = new Order(0, null, "Processing", 1, 1); // user_id = 1, carport_id = 1
         int orderId = OrderMapper.createOrder(order, connectionPool);
         assertTrue(orderId > 0, "Order ID should be greater than 0");
 
