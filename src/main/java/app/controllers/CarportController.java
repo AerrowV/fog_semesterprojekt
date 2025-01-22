@@ -6,6 +6,7 @@ import app.exceptions.DatabaseException;
 import app.persistence.*;
 import io.javalin.http.Context;
 
+import javax.xml.crypto.Data;
 import java.util.ArrayList;
 
 public class CarportController {
@@ -332,6 +333,7 @@ public class CarportController {
             amount = 15;
         }
 
+
         if (width >= 240 && width <= 300) {
             rafterId = 34;
         } else if (width >= 301 && width <= 360) {
@@ -352,6 +354,23 @@ public class CarportController {
 
         return rafter;
     }
+/*
+    public static Material getRafter(double length, double width, ConnectionPool connectionPool) throws DatabaseException {
+        Material material = MaterialMapper.getMaterialByFunctionAndLength(length, "spær", connectionPool);
+
+        int spacing = 55;
+        int calculatedAmountLength = (int) Math.ceil(length / material.getLength());
+        int calculatedAmountWidth = (int) Math.ceil(width / spacing);
+
+        int totalAmount = calculatedAmountLength * calculatedAmountWidth;
+
+        material.setAmount(totalAmount);
+        material.setPrice(material.getAmount() * material.getPrice());
+
+        System.out.println("Material selected: " + material);
+        return material;
+    }
+*/
 
     public static ArrayList<Material> carportStykListe(double length, double width, int carportId, ConnectionPool connectionPool) throws DatabaseException {
         ArrayList<Material> stykliste = new ArrayList<>();

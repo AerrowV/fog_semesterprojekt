@@ -195,5 +195,34 @@ public class MaterialMapper {
             throw new DatabaseException("Failed to update material amount: " + e.getMessage());
         }
     }
+
+    public static Material getMaterialByFunctionAndLength(double length, String function, ConnectionPool connectionPool) throws DatabaseException {
+        String sql = "SELECT * FROM material WHERE material_length >= ? AND LOWER(material_function) LIKE LOWER(?) ORDER BY material_length ASC";
+
+        try (Connection connection = connectionPool.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
+
+            ps.setDouble(1, length);
+            ps.setString(2, "%" + function + "%");
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return new Material(
+                        rs.getInt("material_id"),
+                        rs.getString("material_description"),
+                        rs.getInt("material_length"),
+                        rs.getInt("material_amount"),
+                        rs.getString("material_unit"),
+                        rs.getString("material_function"),
+                        rs.getInt("material_price")
+                );
+            } else {
+                throw new DatabaseException("No material found for function: " + function + " and length >= " + length);
+            }
+        } catch (SQLException e) {
+            throw new DatabaseException("Database error: " + e.getMessage());
+        }
+    }
+
 }
 

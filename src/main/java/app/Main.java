@@ -2,6 +2,7 @@ package app;
 
 import app.config.ThymeleafConfig;
 import app.controllers.*;
+import app.exceptions.DatabaseException;
 import app.persistence.ConnectionPool;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
@@ -17,7 +18,10 @@ public class Main {
 
     private static final ConnectionPool connectionPool = ConnectionPool.getInstance(USER, PASSWORD, URL, DB);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DatabaseException {
+
+        /*CarportController carportController = new CarportController();
+        carportController.getRafter(610, 720,  connectionPool);*/
 
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/public");
