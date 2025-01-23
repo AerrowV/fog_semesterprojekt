@@ -20,8 +20,7 @@ public class Main {
 
     public static void main(String[] args) throws DatabaseException {
 
-        /*CarportController carportController = new CarportController();
-        carportController.getRafter(610, 720,  connectionPool);*/
+        CarportController.getRafter(629, 720,  connectionPool);
 
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add("/public");
